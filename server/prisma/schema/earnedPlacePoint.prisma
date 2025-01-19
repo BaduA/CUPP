@@ -1,9 +1,9 @@
 model EarnedPlacePoint {
-    id              Int           @id @default(autoincrement())
-    earnedPoint     Int
-    earnedMenuItem  PlaceMenuItem @relation(fields: [earnedMenuItemId], references: [id])
-    earnedMenuItemId Int
-    userRecord      PlaceUserRecord @relation(fields: [userRecordId], references: [id])
-    userRecordId    Int
+    id               Int             @id @default(autoincrement())
+    earnedPoint      Int
+    earnedPointMenuItems EarnedPointMenuItem[]
+    userRecord       PlaceUserRecord @relation(fields: [userRecordId], references: [id])
+    userRecordId     Int
+    createdAt        DateTime        @default(now())
     @@map("earnedPlacePoints")
 }

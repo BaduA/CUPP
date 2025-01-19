@@ -2,8 +2,10 @@ model PlaceMenuItem {
     id Int @id @default(autoincrement())
     name String
     imageAddress String
+    price Float
+    pointValue Float
     place      Place    @relation(fields: [placeId], references: [id])
     placeId    Int
-    earnedUserPoints EarnedPlacePoint[]
+    earnedPointMenuItems EarnedPointMenuItem[]
     @@map("placeMenuItems")
 }

@@ -1,7 +1,9 @@
 model FranchiseCompany {
-    id Int @id @default(autoincrement())
-    name String
+    id                  Int      @id @default(autoincrement())
+    name                String
     brandPictureAddress String
-    branches Place[]
+    branches            Place[]
+    createdAt           DateTime @default(now())
+
     @@map("franchiseCompanies")
 }

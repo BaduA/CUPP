@@ -1,0 +1,7 @@
+model EarnedPointMenuItem {
+    menuItem           PlaceMenuItem    @relation(fields: [menuItemId], references: [id])
+    menuItemId         Int
+    earnedPlacePoint   EarnedPlacePoint @relation(fields: [earnedPlacePointId], references: [id])
+    earnedPlacePointId Int
+    @@id([menuItemId, earnedPlacePointId])
+}
