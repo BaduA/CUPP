@@ -1,0 +1,9 @@
+model PlaceMenuItem {
+    id Int @id @default(autoincrement())
+    name String
+    imageAddress String
+    place      Place    @relation(fields: [placeId], references: [id])
+    placeId    Int
+    earnedUserPoints EarnedPlacePoint[]
+    @@map("placeMenuItems")
+}

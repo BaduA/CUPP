@@ -1,0 +1,23 @@
+model User {
+  id Int @id @default(autoincrement())
+  name String
+  lastname String
+  username String @unique
+  email String @unique
+  password String
+  phoneNumber String @unique
+  profilePictureAddress String?
+  totalPoints Int
+  role UserRole
+  placeUserRecords PlaceUserRecord[]
+  verified Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("users")
+}
+
+enum UserRole{
+    APP_OWNER
+    COMPANY_ADMIN
+    USER
+}

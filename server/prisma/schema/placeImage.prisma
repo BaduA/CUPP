@@ -1,0 +1,7 @@
+model PlaceImage{
+    id Int @id @default(autoincrement())
+    imageAddress String
+    place Place @relation(fields: [placeId], references: [id])
+    placeId Int
+    @@map("placeImages")
+}

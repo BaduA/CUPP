@@ -1,0 +1,7 @@
+model FranchiseCompany {
+    id Int @id @default(autoincrement())
+    name String
+    brandPictureAddress String
+    branches Place[]
+    @@map("franchiseCompanies")
+}
