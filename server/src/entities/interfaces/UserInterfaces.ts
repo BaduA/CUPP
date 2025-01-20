@@ -22,7 +22,7 @@ export interface IChangeProfilePicture {
 }
 export interface IChangePassword {
     id: number
-    oldPassword: string
+    lastPassword: string
     newPassword: string
 }
 export interface ISignIn {

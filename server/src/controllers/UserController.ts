@@ -31,7 +31,7 @@ export class UserController {
   }
   async onChangePassword(req: Request, res: Response, next: NextFunction) {
     ChangePasswordSchema.parse(req.body);
-    var result = await (this.userInteractor.changePassword({ id: req.user.id, oldPassword: req.body.oldPassword, newPassword: req.body.newPassword }))
+    var result = await (this.userInteractor.changePassword({ id: req.user.id, lastPassword: req.body.lastPassword, newPassword: req.body.newPassword }))
     return res.json(result);
   }
   async onFindWithId(req: Request, res: Response, next: NextFunction) {

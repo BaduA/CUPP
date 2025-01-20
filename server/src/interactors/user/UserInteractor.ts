@@ -77,7 +77,8 @@ export class UserInteractor implements IUserInteractor {
     async changePassword(input: IChangePassword) {
         var user = await this.repository.findUnique({ id: input.id })
         if (user == null) throw new BadRequestsException("User with id not found", ErrorCode.USER_NOT_FOUND)
-        if (!compareSync(input.oldPassword, user.password))
+        console.log(input.lastPassword, user.password)
+        if (!compareSync(input.lastPassword, user.password))
             throw new BadRequestsException(
                 "Old password does not match.",
                 ErrorCode.INCORRECT_PASSWORD

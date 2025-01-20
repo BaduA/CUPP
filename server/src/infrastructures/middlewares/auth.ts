@@ -7,9 +7,9 @@ import { IRepository } from "../repositories/IRepository";
 const jwt = require("jsonwebtoken");
 
 export class AuthMiddleware {
-  private repository: IRepository;
+  private static repository: IRepository;
   constructor(repository: IRepository) {
-    this.repository = repository;
+    AuthMiddleware.repository = repository;
   }
 
   authorizeUser(req: Request, res: Response, next: NextFunction) {
@@ -19,12 +19,8 @@ export class AuthMiddleware {
       return next(
         new UnauthorizedException("Unauthorized", ErrorCode.UNAUTHORIZED)
       );
-    console.log("QQQQQ")
-    var repo = this.repository
-    console.log("MMMM")
     jwt.verify(token, JWT_SECRET, async (err: any, user: any) => {
       if (err) {
-        console.log(err)
         return next(
           new UnauthorizedException(
             "Some Error Occured",
@@ -32,12 +28,9 @@ export class AuthMiddleware {
           )
         );
       }
-      const userFromId = await repo.findFirst(
+      const userFromId = await AuthMiddleware.repository.findFirst(
         {
-          id: user.userId,
-        },
-        {},
-        {
+          id: user.userId
         }
       );
       if (!userFromId)
@@ -47,6 +40,13 @@ export class AuthMiddleware {
       req.user = userFromId!;
 
       next();
-    });
+    })
+  }
+  private static async findFirstWithId(id: number) {
+    return await this.repository.findFirst(
+      {
+        id
+      },
+    );
   }
 }
