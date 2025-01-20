@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { UnauthorizedException } from "../../entities/exceptions/unauthorized"; 
+import { UnauthorizedException } from "../../entities/exceptions/unauthorized";
 import { ErrorCode } from "../../entities/exceptions/root";
 import { JWT_SECRET } from "../../secrets";
-import { IRepository } from "../repositories/IRepository"; 
+import { IRepository } from "../repositories/IRepository";
 
 const jwt = require("jsonwebtoken");
 
@@ -19,16 +19,20 @@ export class AuthMiddleware {
       return next(
         new UnauthorizedException("Unauthorized", ErrorCode.UNAUTHORIZED)
       );
-
+    console.log("QQQQQ")
+    var repo = this.repository
+    console.log("MMMM")
     jwt.verify(token, JWT_SECRET, async (err: any, user: any) => {
-      if (err)
+      if (err) {
+        console.log(err)
         return next(
           new UnauthorizedException(
             "Some Error Occured",
             ErrorCode.UNAUTHORIZED
           )
         );
-      const userFromId = await this.repository.findFirst(
+      }
+      const userFromId = await repo.findFirst(
         {
           id: user.userId,
         },

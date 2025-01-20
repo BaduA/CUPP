@@ -7,8 +7,8 @@ model User {
   password String
   phoneNumber String @unique
   profilePictureAddress String?
-  totalPoints Int
-  role UserRole
+  totalPoints Int @default(0)
+  role UserRole @default(USER)
   placeUserRecords PlaceUserRecord[]
   verified Boolean @default(true)
   createdAt DateTime @default(now())
@@ -17,7 +17,6 @@ model User {
 }
 
 enum UserRole{
-    APP_OWNER
-    COMPANY_ADMIN
+    APP_ADMIN
     USER
 }

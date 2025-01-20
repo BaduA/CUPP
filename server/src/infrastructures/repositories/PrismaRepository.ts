@@ -60,3 +60,5 @@ export class PrismaRepository implements IRepository {
     });
   }
 }
+
+export const userRepository = new PrismaRepository("user")

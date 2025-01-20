@@ -1,15 +1,18 @@
 model Place {
-    id         Int    @id @default(autoincrement())
-    name       String
-    address    String
-    latitude   Float
-    longtitude Float
-    placeImages PlaceImage[]
-    placePromotion PlacePromotion[]
-    placeUserRecords PlaceUserRecord[]
-    placeMenuItem PlaceMenuItem[]
-    franchiseCompany FranchiseCompany @relation(fields: [franchiseCompanyId], references: [id])
+    id                 Int               @id @default(autoincrement())
+    name               String
+    address            String
+    city               String
+    district           String
+    latitude           Float
+    longtitude         Float
+    placeImages        PlaceImage[]
+    placePromotion     PlacePromotion[]
+    placeUserRecords   PlaceUserRecord[]
+    placeMenuItem      PlaceMenuItem[]
+    franchiseCompany   FranchiseCompany  @relation(fields: [franchiseCompanyId], references: [id])
     franchiseCompanyId Int
-    createdAt DateTime @default(now())
+    createdAt          DateTime          @default(now())
+
     @@map("places")
 }

@@ -6,7 +6,7 @@ model PlaceUserRecord {
     user              User               @relation(fields: [userId], references: [id])
     userId            Int
     placeId           Int
-    totalPoint        Int
+    totalPoint        Int                @default(0)
     createdAt         DateTime           @default(now())
     @@map("placeUserRecords")
 }
