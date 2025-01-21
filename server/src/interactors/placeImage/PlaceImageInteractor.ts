@@ -13,7 +13,7 @@ export class PlaceImageInteractor implements IPlaceImageInteractor {
     this.imageService = imageService;
   }
   async uploadImages(input: ICreatePlaceImages) {
-    var fileNames = await this.imageService.uploadManyImages(input.files, "places/" + input.rootFolderName + "/images/");
+    var fileNames = await this.imageService.uploadManyImages(input.files, "places/" + input.placeId + "/images/");
     for (let i = 0; i < fileNames!.length; i++) {
       await this.repository.create({
         imageAddress: fileNames![i],
@@ -23,7 +23,7 @@ export class PlaceImageInteractor implements IPlaceImageInteractor {
     return true;
   }
   async uploadImage(input: ICreatePlaceImage) {
-    var fileName = await this.imageService.uploadSingleImage(input.file, "places/" + input.rootFolderName + "/images/");
+    var fileName = await this.imageService.uploadSingleImage(input.file, "places/" + input.placeId + "/images/");
     return await this.repository.create({
       imageAddress: fileName,
       placeId: input.placeId

@@ -8,5 +8,5 @@ export interface ChangeFranchiseCompanyName {
 }
 export interface ChangeFranchiseCompanyPicture {
     id:number;
-    file?: Express.Multer.File;
+    file: Express.Multer.File;
 }

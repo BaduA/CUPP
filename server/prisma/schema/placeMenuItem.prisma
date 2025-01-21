@@ -4,6 +4,7 @@ model PlaceMenuItem {
     imageAddress String
     price Float
     pointValue Float
+    size String
     place      Place    @relation(fields: [placeId], references: [id])
     placeId    Int
     earnedPointMenuItems EarnedPointMenuItem[]
