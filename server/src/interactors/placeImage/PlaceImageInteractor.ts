@@ -1,3 +1,5 @@
+import { BadRequestsException } from "../../entities/exceptions/bad-request";
+import { ErrorCode } from "../../entities/exceptions/root";
 import { ICreatePlaceImage, ICreatePlaceImages } from "../../entities/interfaces/PlaceImageInterfaces";
 import { IRepository } from "../../infrastructures/repositories/IRepository";
 import { IImageUploadService } from "../../infrastructures/services/IImageUploadService";
@@ -34,8 +36,10 @@ export class PlaceImageInteractor implements IPlaceImageInteractor {
     }
     return images
   }
-  async deleteImage(key: string, id: number) {
-    this.imageService.delete(key)
+  async deleteImage(id: number) {
+    var image = await this.repository.findUnique({id})
+    if(!image) throw new BadRequestsException("Wrong Image ID",ErrorCode.ENTITY_NOT_FOUND)
+    this.imageService.delete(image.imageAddress)
     await this.repository.delete(id)
     return true
   }

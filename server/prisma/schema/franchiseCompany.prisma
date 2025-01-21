@@ -4,6 +4,5 @@ model FranchiseCompany {
     brandPictureAddress String
     branches            Place[]
     createdAt           DateTime @default(now())
-
     @@map("franchiseCompanies")
 }

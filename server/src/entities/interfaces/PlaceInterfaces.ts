@@ -19,3 +19,9 @@ export interface IUpdatePlace {
     longtitude?: number;
 }
 
+export interface IFindClosestPlace {
+    latitude: number
+    longtitude: number
+    city: string
+    page: number
+  }
