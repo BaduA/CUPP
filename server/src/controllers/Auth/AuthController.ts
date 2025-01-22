@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { IUserInteractor } from "../interactors/user/IUserInteractor";
-import { ChangePasswordSchema, CreateUserSchema, SignInSchema, UpdateUserSchema } from "../entities/schemas/UserSchemas";
+import { IUserInteractor } from "../../interactors/user/IUserInteractor";
+import { ChangePasswordSchema, CreateUserSchema, SignInSchema, UpdateUserSchema } from "../../entities/schemas/UserSchemas";
 
 export class UserController {
   private userInteractor: IUserInteractor;

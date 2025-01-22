@@ -1,0 +1,13 @@
+model PlaceWorker {
+    place   Place @relation(fields: [placeId], references: [id])
+    user    User  @relation(fields: [userId], references: [id])
+    userId  Int
+    placeId Int
+    role PlaceWorkerRole
+    @@id([userId, placeId])
+}
+
+enum PlaceWorkerRole {
+  ADMIN
+  WAITER
+}

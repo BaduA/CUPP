@@ -23,6 +23,11 @@ export class PrismaRepository implements IRepository {
     else if (type == "place") this.entity = prismaClient.place;
     else if (type == "user") this.entity = prismaClient.user;
   }
+  async deleteWithUniqueData(data: any) {
+    return await this.entity!.delete({
+      where: data,
+    });
+  }
   async findUnique(whereData: any, selectData: any = null) {
     return await this.entity!.findUnique({
       where: whereData,

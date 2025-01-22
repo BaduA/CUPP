@@ -1,5 +1,5 @@
 
-export interface ICreatePlace {
+export interface ICreateFranchisePlace {
     name: String
     city: String
     district: String
@@ -7,7 +7,9 @@ export interface ICreatePlace {
     latitude: number
     longtitude: number
     franchiseCompanyId?: number
-    images?: Express.Multer.File[];
+}
+export interface ICreatePlace {
+    name: String
 }
 export interface IUpdatePlace {
     id: number

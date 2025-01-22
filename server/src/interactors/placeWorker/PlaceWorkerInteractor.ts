@@ -1,0 +1,35 @@
+import { ICreatePlaceWorker } from "../../entities/interfaces/PlaceWorkerInterface";
+import { IRepository } from "../../infrastructures/repositories/IRepository";
+import { IPlaceWorkerInteractor } from "./IPlaceWorkerInteractor";
+
+enum PlaceWorkerRole {
+    ADMIN,
+    WAITER
+}
+export class PlaceWorkerInteractor implements IPlaceWorkerInteractor {
+    private repository: IRepository;
+    constructor(repository: IRepository) {
+        this.repository = repository;
+    }
+    async deleteWorkerFromPlace(workerId: number, placeId: number) {
+        return await this.repository.deleteWithUniqueData({ userId: workerId, placeId })
+    }
+    async addAdminToPlace(input: ICreatePlaceWorker) {
+        return await this.repository.create({ userId: input.userId, placeId: input.placeId, role: PlaceWorkerRole.ADMIN })
+    }
+    async addWaiterToPlace(input: ICreatePlaceWorker) {
+        return await this.repository.create({ userId: input.userId, placeId: input.placeId, role: PlaceWorkerRole.WAITER })
+    }
+    async getWaiters(placeId: number) {
+        return await this.repository.findMany({ placeId, role: PlaceWorkerRole.WAITER })
+    }
+    async getAdmins(placeId: number) {
+        return await this.repository.findMany({ placeId, role: PlaceWorkerRole.ADMIN })
+    }
+    async getWithId(placeId: number, userId: number) {
+        return await this.repository.findMany({ placeId, userId })
+    }
+    async getAll(placeId: number) {
+        return await this.repository.findMany({ placeId })
+    }
+}

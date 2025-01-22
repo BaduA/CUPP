@@ -5,7 +5,7 @@ import { userRepository } from "../repositories/PrismaRepository";
 import { S3ImageService } from "../services/S3ImageService";
 import multer from "multer";
 import { UserInteractor } from "../../interactors/user/UserInteractor";
-import { UserController } from "../../controllers/UserController";
+import { UserController } from "../../controllers/Auth/AuthController";
 
 
 const userInteractor = (new UserInteractor(userRepository, new S3ImageService()));

@@ -1,15 +1,17 @@
 model Place {
     id                 Int               @id @default(autoincrement())
     name               String
-    address            String
-    city               String
-    district           String
-    latitude           Float
-    longtitude         Float
+    address            String?
+    city               String?
+    district           String?
+    latitude           Float?
+    longtitude         Float?
+    isComplete         Boolean @default(false)
     placeImages        PlaceImage[]
     placePromotion     PlacePromotion[]
     placeUserRecords   PlaceUserRecord[]
     placeMenuItem      PlaceMenuItem[]
+    workers            PlaceWorker[]
     franchiseCompany   FranchiseCompany  @relation(fields: [franchiseCompanyId], references: [id])
     franchiseCompanyId Int
     createdAt          DateTime          @default(now())

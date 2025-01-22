@@ -1,9 +1,10 @@
-import { ICreatePlace, IUpdatePlace } from "../../entities/interfaces/PlaceInterfaces";
+import {  ICreateFranchisePlace, ICreatePlace, IUpdatePlace } from "../../entities/interfaces/PlaceInterfaces";
 
 export interface IPlaceInteractor {
-  create(input: ICreatePlace): any;
+  createPlace(input: ICreatePlace): any;
+  createWithFranchisePlace(input: ICreateFranchisePlace): any;
   findByName(name: string):any;
-  findWithId(id:number):any;
+  findWithId(id:number,includeData?:any):any;
   findWithLocation(city:String, district:string):any;
   updatePlace(input: IUpdatePlace):any
   deletePlace(id:number) :any
