@@ -1,9 +1,7 @@
 import { BadRequestsException } from "../../entities/exceptions/bad-request";
 import { ErrorCode } from "../../entities/exceptions/root";
 import { IRepository } from "../../infrastructures/repositories/IRepository";
-import { IImageUploadService } from "../../infrastructures/services/IImageUploadService";
 import { IPlaceUserRecordInteractor } from "./IPlaceUserRecordInteractor";
-
 
 export class PlaceUserRecordInteractor implements IPlaceUserRecordInteractor {
     private repository: IRepository;

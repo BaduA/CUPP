@@ -5,7 +5,6 @@ model PlacePromotion {
     place        Place           @relation(fields: [placeId], references: [id])
     placeId      Int
     pointValue   Int
-    userRecord   PlaceUserRecord @relation(fields: [userRecordId], references: [id])
-    userRecordId Int
+    usedPromotionReferences UsedPromotion[]
     @@map("placePromotions")
 }
