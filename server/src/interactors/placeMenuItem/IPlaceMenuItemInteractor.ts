@@ -6,4 +6,5 @@ export interface IPlaceMenuItemInteractor{
     deletePlaceMenuItem(id:number):any
     getPlaceMenuItemsByName(input: IGetMenuItemsByName):any
     getAllMenuItems(id:number):any
+    getMenuItemById(id:number):any
 }

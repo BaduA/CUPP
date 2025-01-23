@@ -12,6 +12,9 @@ export class PlacePromotionInteractor implements IPlacePromotionInteractor {
         this.repository = repository;
         this.imageService = imageService;
     }
+    async getPlacePromotionById(promotionId: number) {
+        return await this.repository.findUnique({ id: promotionId })
+    }
     async createPlacePromotion(input: ICreatePlacePromotion) {
         return await this.repository.create({
             name: input.name,

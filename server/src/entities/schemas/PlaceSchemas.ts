@@ -19,11 +19,24 @@ export const DeletePlaceImageSchema = z.object({
 export const GetPlaceImagesSchema = z.object({
     placeId: z.number()
 })
-
 export const CreateMenuItemSchema = z.object({
-    name:z.string(),
-    price:z.string(),
+    name: z.string(),
+    price: z.string(),
     pointValue: z.string(),
-    placeId:z.string()
+    placeId: z.string()
+})
+export const UpdateMenuItemSchema = z.object({
+    id: z.string(),
+    name: z.string().optional(),
+    price: z.string().optional(),
+    pointValue: z.string().optional(),
+})
+export const DeleteMenuItemSchema = z.object({
+    menuItemId: z.number()
+})
+
+export const AddWorkerSchema = z.object({
+    userId: z.number(),
+    placeId: z.number()
 })
 

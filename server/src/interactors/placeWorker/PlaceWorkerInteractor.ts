@@ -1,4 +1,4 @@
-import { ICreatePlaceWorker } from "../../entities/interfaces/PlaceWorkerInterface";
+import { ICreatePlaceWorker, IDeletePlaceWorker } from "../../entities/interfaces/PlaceWorkerInterface";
 import { IRepository } from "../../infrastructures/repositories/IRepository";
 import { IPlaceWorkerInteractor } from "./IPlaceWorkerInteractor";
 
@@ -11,8 +11,8 @@ export class PlaceWorkerInteractor implements IPlaceWorkerInteractor {
     constructor(repository: IRepository) {
         this.repository = repository;
     }
-    async deleteWorkerFromPlace(workerId: number, placeId: number) {
-        return await this.repository.deleteWithUniqueData({ userId: workerId, placeId })
+    async deleteWorkerFromPlace(input: IDeletePlaceWorker) {
+        return await this.repository.deleteWithUniqueData({ userId: input.workerId, placeId: input.placeId })
     }
     async addAdminToPlace(input: ICreatePlaceWorker) {
         return await this.repository.create({ userId: input.userId, placeId: input.placeId, role: PlaceWorkerRole.ADMIN })

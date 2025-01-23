@@ -13,6 +13,9 @@ export class PlaceMenuItemInteractor implements IPlaceMenuItemInteractor {
         this.repository = repository;
         this.imageService = imageService;
     }
+    async getMenuItemById(id: number) {
+        return await this.repository.findUnique({ id })
+    }
 
     async createPlaceMenuItem(input: ICreatePlaceMenuItem) {
         if (await this.repository.findFirst({ name: input.name, size: input.size })) throw new BadRequestsException("Bu isim ve bu boyda bir ürün bulunmakta.", ErrorCode.ENTITY_ALREADY_EXISTS)

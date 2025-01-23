@@ -9,6 +9,7 @@ export interface ICreatePlaceMenuItem {
 }
 export interface IUpdatePlaceMenuItem {
     id: number
+    name?: string
     price?: number
     pointValue?: number
 }
