@@ -30,3 +30,8 @@ export interface ISignIn {
     email?: string
     password: string
 }
+
+export interface IUserPoint{
+    userId: number
+    point : number
+}

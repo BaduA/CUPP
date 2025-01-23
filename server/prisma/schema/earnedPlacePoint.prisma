@@ -1,9 +1,10 @@
 model EarnedPlacePoint {
-    id               Int             @id @default(autoincrement())
-    earnedPoint      Int
+    id                   Int                   @id @default(autoincrement())
+    earnedPoint          Int
+    totalMoney           Float
     earnedPointMenuItems EarnedPointMenuItem[]
-    userRecord       PlaceUserRecord @relation(fields: [userRecordId], references: [id])
-    userRecordId     Int
-    createdAt        DateTime        @default(now())
+    userRecord           PlaceUserRecord       @relation(fields: [userRecordId], references: [id])
+    userRecordId         Int
+    createdAt            DateTime              @default(now())
     @@map("earnedPlacePoints")
 }

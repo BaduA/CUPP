@@ -6,5 +6,8 @@ const orderMenuItemSchema = z.object({
 })
 export const ProcessUserOrderSchema = z.object({
     userId:z.number(),
-    menuItems: z.array(orderMenuItemSchema)
+    menuItems: z.array(orderMenuItemSchema),
+    totalMoney:z.number(),
+    totalEarnedPoint:z.number(),
+    placeId: z.number()
 })

@@ -1,7 +1,7 @@
 import { compareSync, hashSync } from "bcrypt";
 import { BadRequestsException } from "../../entities/exceptions/bad-request";
 import { ErrorCode } from "../../entities/exceptions/root";
-import { IChangePassword, IChangeProfilePicture, ISignIn, ISignUp, IUpdateUser } from "../../entities/interfaces/UserInterfaces";
+import { IChangePassword, IChangeProfilePicture, ISignIn, ISignUp, IUpdateUser, IUserPoint } from "../../entities/interfaces/UserInterfaces";
 import { IRepository } from "../../infrastructures/repositories/IRepository";
 import { IImageUploadService } from "../../infrastructures/services/IImageUploadService";
 import { IUserInteractor } from "./IUserInteractor";
@@ -14,6 +14,17 @@ export class UserInteractor implements IUserInteractor {
     constructor(repository: IRepository, imageService: IImageUploadService) {
         this.repository = repository;
         this.imageService = imageService;
+    }
+    async increaseUserPoint(input: IUserPoint) {
+        var user = await this.repository.findUnique({ id: input.userId })
+        if (user == null) throw new BadRequestsException("User not found.", ErrorCode.ENTITY_NOT_FOUND)
+        return await this.repository.update(input.userId, { totalPoints: user.totalPoints + input.point })
+    }
+    async decreaseUserPoint(input: IUserPoint) {
+        var user = await this.repository.findUnique({ id: input.userId })
+        if (user == null) throw new BadRequestsException("User not found.", ErrorCode.ENTITY_NOT_FOUND)
+        if (user.totalPoints < input.point) throw new BadRequestsException("Not enough points.", ErrorCode.INSUFFICIENT)
+        return await this.repository.update(input.userId, { totalPoints: user.totalPoints - input.point })
     }
     async signUp(input: ISignUp) {
         var user = await this.repository.findFirst({

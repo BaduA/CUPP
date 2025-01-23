@@ -1,5 +1,7 @@
+import { ICreateEarnedPlacePoint } from "../../entities/interfaces/EarnedPlacePointInterfaces"
+
 export interface IEarnedPlacePointInteractor{
-    createEarnedPlacePoint(userRecordId:number, earnedPoint:number):any
+    createEarnedPlacePoint(input: ICreateEarnedPlacePoint):any
     getAllEarnedPlacePoints(userId:number):any
     getEarnedPlacePoints(userId:number, placeId:number):any
 }

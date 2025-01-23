@@ -1,4 +1,4 @@
-export interface ICreatePlaceImage {
+export interface ICreateEarnedPointMenuItem {
     menuItemId:number
+    amount:number
 }
-  
