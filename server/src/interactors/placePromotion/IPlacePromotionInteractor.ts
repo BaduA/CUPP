@@ -6,5 +6,6 @@ export interface IPlacePromotionInteractor {
     updatePlacePromotion(): any
     getPlacePromotions(placeId: number): any
     getPlacePromotionById(promotionId: number): any
+    getPlacePromotionsByName(placeId: number, promotionName:string):any
     getPlacePromotionsByPoint(placeId: number, pointValue:number): any
 }

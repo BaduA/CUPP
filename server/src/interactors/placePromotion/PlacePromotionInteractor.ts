@@ -35,6 +35,9 @@ export class PlacePromotionInteractor implements IPlacePromotionInteractor {
     async getPlacePromotions(placeId: number) {
         return await this.repository.findMany({ placeId })
     }
+    async getPlacePromotionsByName(placeId: number, promotionName:string) {
+        return await this.repository.findMany({ placeId, name:promotionName })
+    }
     async getPlacePromotionsByPoint(placeId: number, pointValue: number) {
         return await this.repository.findMany({
             placeId, pointValue: {

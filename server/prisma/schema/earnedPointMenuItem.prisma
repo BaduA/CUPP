@@ -3,6 +3,7 @@ model EarnedPointMenuItem {
     menuItemId         Int
     earnedPlacePoint   EarnedPlacePoint @relation(fields: [earnedPlacePointId], references: [id])
     earnedPlacePointId Int
+    amount             Int
     @@id([menuItemId, earnedPlacePointId])
     @@map("earnedPointtMenuItems")
 }

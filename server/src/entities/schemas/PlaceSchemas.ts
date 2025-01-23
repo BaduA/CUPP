@@ -34,6 +34,9 @@ export const UpdateMenuItemSchema = z.object({
 export const DeleteMenuItemSchema = z.object({
     menuItemId: z.number()
 })
+export const GetMenuItemsByNameSchema = z.object({
+    name: z.string()
+})
 
 export const AddWorkerSchema = z.object({
     userId: z.number(),

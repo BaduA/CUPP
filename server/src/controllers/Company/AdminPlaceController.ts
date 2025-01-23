@@ -102,8 +102,6 @@ export class PlaceController {
         this.placeAdminValidator(req.body.placeId, req.user.id)
         this.placeWorkerInteractor.deleteWorkerFromPlace({ workerId: req.body.userId, placeId: req.body.placeId })
     }
-
-
     private async placeAdminValidator(placeId: number, userId: number) {
         var worker = await this.placeWorkerInteractor.getWithId(placeId, userId)
         if (!worker) throw new BadRequestsException("Bu kullanıcı mekanın çalışanı değil.", ErrorCode.UNAUTHORIZED)
