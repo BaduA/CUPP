@@ -5,7 +5,6 @@ export const CreatePlaceSchema = z.object({
     name: z.string(),
 })
 export const UpdatePlaceSchema = z.object({
-    id: z.number(),
     name: z.string().optional(),
     city: z.string().optional(),
     district: z.string().optional(),
@@ -18,9 +17,6 @@ export const GetPlacesByArea = z.object({
     district: z.string().optional()
 })
 
-export const DeletePlaceImageSchema = z.object({
-    imageId: z.number()
-})
 export const GetPlaceImagesSchema = z.object({
     placeId: z.number()
 })

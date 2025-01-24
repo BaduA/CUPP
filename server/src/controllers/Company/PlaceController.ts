@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { DeletePlaceImageSchema, GetPlaceImagesSchema, GetPlacesByArea, UpdatePlaceSchema } from "../../entities/schemas/PlaceSchemas";
+import { GetPlaceImagesSchema, GetPlacesByArea, UpdatePlaceSchema } from "../../entities/schemas/PlaceSchemas";
 import { IPlaceInteractor } from "../../interactors/place/IPlaceInteractor";
 import { IPlaceImageInteractor } from "../../interactors/placeImage/IPlaceImageInteractor";
 import { IPlaceWorkerInteractor } from "../../interactors/placeWorker/IPlaceWorkerInteractor";
@@ -15,15 +15,14 @@ export class PlaceController extends Validator {
     }
     async onUpdatePlace(req: Request, res: Response, next: NextFunction) {
         UpdatePlaceSchema.parse(req.body)
-        const { id } = req.body
+        const id = parseInt(req.params.placeId)
         await this.placeAdminValidator(id, req.user.id)
         if (req.file != null) await this.placeImageInteractor.uploadImage({ file: req.file, placeId: id })
         var place = await this.placeInteractor.updatePlace(req.body)
         res.json(place)
     }
     async onDeletePlaceImage(req: Request, res: Response, next: NextFunction) {
-        DeletePlaceImageSchema.parse(req.body)
-        const { imageId } = req.body
+        const imageId = parseInt(req.params.imageId)
         var image = await this.placeImageInteractor.getImage(imageId)
         await this.placeAdminValidator(image.placeId, req.user.id)
         var image = await this.placeImageInteractor.deleteImage(imageId)

@@ -9,17 +9,17 @@ export class EarnedPointController extends Validator {
         super(placeWorkerInteractor)
         this.earnedPointInteractor = earnedPointInteractor
     }
-    async getCurrentUserPoints(req: Request, res: Response, next: NextFunction) {
+    async onGetCurrentUserPoints(req: Request, res: Response, next: NextFunction) {
         var record = await this.earnedPointInteractor.getAllEarnedPlacePoints(req.user.id)
         res.json(record)
     }
-    async getPlaceEarnedPoints(req: Request, res: Response, next: NextFunction) {
+    async onGetPlaceEarnedPoints(req: Request, res: Response, next: NextFunction) {
         var placeId = parseInt(req.params.placeId)
         await this.placeAdminValidator(placeId, req.user.id)
         var points = await this.earnedPointInteractor.getEarnedPlacePoints(placeId)
         res.json(points)
     }
-    async getPlaceUserEarnedPoints(req: Request, res: Response, next: NextFunction) {
+    async onGetPlaceUserEarnedPoints(req: Request, res: Response, next: NextFunction) {
         var placeId = parseInt(req.params.placeId)
         var userId = parseInt(req.params.userId)
         var points = await this.earnedPointInteractor.getUsersEarnedPlacePoints(userId, placeId)

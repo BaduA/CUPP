@@ -2,7 +2,7 @@ model PlacePromotion {
     id           Int             @id @default(autoincrement())
     name         String
     imageAddress String
-    place        Place           @relation(fields: [placeId], references: [id])
+    place        Place           @relation(fields: [placeId], references: [id], onDelete: Cascade)
     placeId      Int
     pointValue   Int
     usedPromotionReferences UsedPromotion[]

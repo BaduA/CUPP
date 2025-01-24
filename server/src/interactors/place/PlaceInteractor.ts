@@ -26,8 +26,8 @@ export class PlaceInteractor implements IPlaceInteractor {
     async findByName(name: string) {
         return await this.repository.findMany({ where: { name: { startsWith: name } } })
     }
-    async findWithId(id: number,includeData?: any) {
-        return await this.repository.findUnique({ id },{},includeData)
+    async findWithId(id: number, includeData?: any) {
+        return await this.repository.findUnique({ id }, {}, includeData)
     }
     async findWithLocation(city: String, district: string) {
         return await this.repository.findMany({ where: { city, district } })
@@ -63,6 +63,7 @@ export class PlaceInteractor implements IPlaceInteractor {
         return;
     }
     async deletePlace(id: number) {
+        var place = await this.repository.findUnique({ id })
         return await this.repository.delete(id)
     }
 }

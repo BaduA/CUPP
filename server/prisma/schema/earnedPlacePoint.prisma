@@ -3,8 +3,9 @@ model EarnedPlacePoint {
     earnedPoint          Int
     totalMoney           Float
     earnedPointMenuItems EarnedPointMenuItem[]
-    userRecord           PlaceUserRecord       @relation(fields: [userRecordId], references: [id])
+    userRecord           PlaceUserRecord       @relation(fields: [userRecordId], references: [id], onDelete: Cascade)
     userRecordId         Int
     createdAt            DateTime              @default(now())
+
     @@map("earnedPlacePoints")
 }

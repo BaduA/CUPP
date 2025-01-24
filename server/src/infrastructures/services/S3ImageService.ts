@@ -24,7 +24,6 @@ export class S3ImageService implements IImageUploadService {
         },
     });
 
-
     async uploadSinglePdf(file: Express.Multer.File, rootFolderName: string): Promise<string> {
         const address = rootFolderName + this.generateFileName() + path.extname(file.originalname).toLowerCase()
         const convertedfile: any = file.buffer;
@@ -110,4 +109,5 @@ export class S3ImageService implements IImageUploadService {
     }
 
 
-}
+} 
+export const s3ImageService = new S3ImageService()

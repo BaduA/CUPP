@@ -1,7 +1,7 @@
 model PlaceImage{
     id Int @id @default(autoincrement())
     imageAddress String
-    place Place @relation(fields: [placeId], references: [id])
+    place Place @relation(fields: [placeId], references: [id], onDelete: Cascade)
     placeId Int
     @@map("placeImages")
 }

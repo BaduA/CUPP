@@ -28,6 +28,7 @@ export class PrismaRepository implements IRepository {
     else if (type == "place") this.entity = prismaClient.place;
     else if (type == "user") this.entity = prismaClient.user;
     else if (type == "placeWorker") this.entity = prismaClient.placeWorker;
+    else if (type == "earnedPlacePoint") this.entity = prismaClient.earnedPlacePoint;
   }
   async deleteWithUniqueData(data: any) {
     return await this.entity!.delete({
@@ -61,6 +62,7 @@ export class PrismaRepository implements IRepository {
     });
   }
   async delete(id: any) {
+    console.log(id)
     return await this.entity!.delete({
       where: { id },
     });
@@ -76,4 +78,6 @@ export class PrismaRepository implements IRepository {
 
 export const userRepository = new PrismaRepository("user")
 export const placeRepository = new PrismaRepository("place")
+export const earnedPlacePointRepository = new PrismaRepository("earnedPlacePoint")
+export const placeImageRepository = new PrismaRepository("placeImage")
 export const placeWorkerRepository = new PrismaRepository("placeWorker")

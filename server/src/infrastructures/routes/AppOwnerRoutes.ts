@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { AuthMiddleware } from "../middlewares/auth";
+import { AuthMiddleware, authorizePrismaMiddleware } from "../middlewares/auth";
 import { errorHandler } from "../middlewares/error-handler";
 import { placeRepository, placeWorkerRepository, userRepository } from "../repositories/PrismaRepository";
 import { S3ImageService } from "../services/S3ImageService";
@@ -14,9 +14,10 @@ import { PlaceWorkerInteractor } from "../../interactors/placeWorker/PlaceWorker
 const placeInteractor = new PlaceInteractor(placeRepository)
 const placeWorkerInteractor = new PlaceWorkerInteractor(placeWorkerRepository)
 const controller = new AppOwnerController(placeInteractor, placeWorkerInteractor);
-const authorizeMiddleware = new AuthMiddleware(userRepository);
+
 const appOwnerRoutes: Router = Router();
 
-appOwnerRoutes.post("/createPlace", authorizeMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onCreatePlace(req, res, next))))
+appOwnerRoutes.post("/createPlace", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onCreatePlace(req, res, next))))
+appOwnerRoutes.delete("/deletePlace/:placeId", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onDeletePlace(req, res, next))))
 
 export default appOwnerRoutes;

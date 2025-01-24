@@ -3,6 +3,7 @@ import { UnauthorizedException } from "../../entities/exceptions/unauthorized";
 import { ErrorCode } from "../../entities/exceptions/root";
 import { JWT_SECRET } from "../../secrets";
 import { IRepository } from "../repositories/IRepository";
+import { userRepository } from "../repositories/PrismaRepository";
 
 const jwt = require("jsonwebtoken");
 
@@ -50,3 +51,5 @@ export class AuthMiddleware {
     );
   }
 }
+
+export const authorizePrismaMiddleware = new AuthMiddleware(userRepository);
