@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import { IPlaceInteractor } from "../../interactors/place/IPlaceInteractor";
 import { IPlaceWorkerInteractor } from "../../interactors/placeWorker/IPlaceWorkerInteractor";
 import { CreatePlaceSchema } from "../../entities/schemas/AppOwnerSchemas";
+import { BadRequestsException } from "../../entities/exceptions/bad-request";
+import { ErrorCode } from "../../entities/exceptions/root";
 
 export class AppOwnerController {
     private placeInteractor: IPlaceInteractor;
@@ -11,6 +13,7 @@ export class AppOwnerController {
         this.placeWorkerInteractor = placeWorkerInteractor
     }
     async onCreatePlace(req: Request, res: Response, next: NextFunction) {
+        if (req.user.role != "APP_ADMIN") throw new BadRequestsException("Not authorized", ErrorCode.UNAUTHORIZED)
         CreatePlaceSchema.parse(req.body)
         const { name, workerAdminId } = req.body
         const place = await this.placeInteractor.createPlace({ name })

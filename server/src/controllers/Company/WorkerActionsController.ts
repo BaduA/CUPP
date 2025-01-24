@@ -24,12 +24,12 @@ export class PlaceController extends Validator {
     async processUserOrder(req: Request, res: Response, next: NextFunction) {
         ProcessUserOrderSchema.parse(req.body)
         const { userId, menuItems, totalMoney, totalEarnedPoint, placeId } = req.body
-        await this.placeWorkerValidator(placeId, req.user.id)
+        await this.placeWorkerValidator(placeId, req.user)
         await this.userInteractor.increaseUserPoint({ userId, point: totalEarnedPoint })
         var record = await this.placeRecordInteractor.addPoints(userId, placeId, totalEarnedPoint)
         var earnedPlacePoint = await this.earnedPlacePointInteractor.createEarnedPlacePoint({ userRecordId: record.id, earnedPoint: totalEarnedPoint, totalMoney: totalMoney })
         menuItems.forEach(async (menuItem: any) => {
-            await this.earnedPointMenuItemInteractor.createEarnedPointMenuItem({ amount: menuItem.amount, menuItemId: menuItem.menuItemId })
+            await this.earnedPointMenuItemInteractor.createEarnedPointMenuItem({ amount: menuItem.amount, menuItemId: menuItem.menuItemId, earnedPlacePointId: earnedPlacePoint.id })
         });
         res.json(earnedPlacePoint)
     }

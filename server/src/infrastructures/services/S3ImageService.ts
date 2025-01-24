@@ -9,7 +9,10 @@ import { BadRequestsException } from "../../entities/exceptions/bad-request";
 import { ErrorCode } from "../../entities/exceptions/root";
 
 export class S3ImageService implements IImageUploadService {
-    private bucketName = S3_BUCKET_NAME;
+    get(key: string): Promise<string> {
+        throw new Error("Method not implemented.");
+    }
+    private static bucketName = S3_BUCKET_NAME;
     private static region = S3_REGION;
     private static accessKeyId = S3_ACCESS_KEY;
     private static secretAccessKey = S3_SECRET_KEY;
@@ -26,7 +29,7 @@ export class S3ImageService implements IImageUploadService {
         const address = rootFolderName + this.generateFileName() + path.extname(file.originalname).toLowerCase()
         const convertedfile: any = file.buffer;
         const uploadParams = {
-            Bucket: this.bucketName,
+            Bucket: S3ImageService.bucketName,
             Body: Buffer.from(convertedfile.data, 'binary'),
             Key: address,
             ContentType: file.mimetype,
@@ -40,13 +43,13 @@ export class S3ImageService implements IImageUploadService {
         }
     }
     async uploadSingleImage(file: any, rootFolderName: string): Promise<string> {
-        if(!this.cheackForImage(file)) throw new BadRequestsException("Unsupported file extension for image",ErrorCode.UNSUPPORTED_FILE_TYPE)
+        if (!this.cheackForImage(file)) throw new BadRequestsException("Unsupported file extension for image", ErrorCode.UNSUPPORTED_FILE_TYPE)
         const address = rootFolderName + this.generateFileName() + path.extname(file.originalname).toLowerCase()
         const fileBuffer = await sharp(Buffer.from(file.buffer, 'binary'))
             .resize({ height: 1920, width: 1080, fit: "contain" })
             .toBuffer();
         const uploadParams = {
-            Bucket: this.bucketName,
+            Bucket: S3ImageService.bucketName,
             Body: fileBuffer,
             Key: address,
             ContentType: file.mimetype,
@@ -66,7 +69,7 @@ export class S3ImageService implements IImageUploadService {
 
     delete(fileName: string): boolean {
         const deleteParams = {
-            Bucket: this.bucketName,
+            Bucket: S3ImageService.bucketName,
             Key: fileName,
         };
 
@@ -77,7 +80,7 @@ export class S3ImageService implements IImageUploadService {
             throw err;
         }
     }
-    async get(key: string): Promise<string> {
+    static async get(key: string): Promise<string> {
         const params = {
             Bucket: this.bucketName,
             Key: key,
@@ -92,7 +95,7 @@ export class S3ImageService implements IImageUploadService {
         crypto.randomBytes(bytes).toString("hex");
 
 
-    public cheackForImage(file: any):boolean {
+    public cheackForImage(file: any): boolean {
         const filetypes = /jpeg|jpg|png/;
 
         const extname = filetypes.test(path.extname(file.originalname).toLowerCase());

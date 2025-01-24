@@ -11,7 +11,7 @@ export const CreateUserSchema = z.object({
 export const SignInSchema = z.object({
     username: z.string().optional(),
     email: z.string().optional(),
-    password: z.string().optional(),
+    password: z.string(),
 })
 export const UpdateUserSchema = z.object({
     id:z.number(),

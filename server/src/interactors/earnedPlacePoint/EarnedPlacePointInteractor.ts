@@ -11,9 +11,12 @@ export class EarnedPlacePointInteractor implements IEarnedPlacePointInteractor {
         return await this.repository.create({ userRecordId: input.userRecordId, earnedPoint: input.earnedPoint, totalMoney: input.totalMoney })
     }
     async getAllEarnedPlacePoints(userId: number) {
-        return await this.repository.findMany({ userRecord: { userId: userId } })
+        return await this.repository.findMany({ userRecord: { userId: userId } }, {}, { earnedPointMenuItems: true })
     }
-    async getEarnedPlacePoints(userId: number, placeId: number) {
+    async getUsersEarnedPlacePoints(userId: number, placeId: number) {
         return await this.repository.findMany({ userRecord: { userId: userId, placeId: placeId } })
+    }
+    async getEarnedPlacePoints(placeId: number) {
+        return await this.repository.findMany({ userRecord: { placeId: placeId } })
     }
 }
