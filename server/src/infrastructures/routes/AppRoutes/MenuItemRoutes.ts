@@ -1,0 +1,23 @@
+import { NextFunction, Request, Response, Router } from "express";
+import { PlaceMenuItemInteractor } from "../../../interactors/placeMenuItem/PlaceMenuItemInteractor";
+import { menuItemRepository, placeWorkerRepository } from "../../repositories/PrismaRepository";
+import { s3ImageService } from "../../services/S3ImageService";
+import { PlaceWorkerInteractor } from "../../../interactors/placeWorker/PlaceWorkerInteractor";
+import { MenuItemController } from "../../../controllers/Company/MenuItemController";
+import { authorizePrismaMiddleware } from "../../middlewares/auth";
+import { errorHandler } from "../../middlewares/error-handler";
+
+
+const menuItemAdminRoutes: Router = Router();
+const menuItemWorkerRoutes: Router = Router();
+
+const menuItemInteractor = new PlaceMenuItemInteractor(menuItemRepository, s3ImageService)
+const placeWorkerInteractor = new PlaceWorkerInteractor(placeWorkerRepository)
+const menuItemController = new MenuItemController(placeWorkerInteractor, menuItemInteractor)
+
+menuItemAdminRoutes.post("/createMenuItem",authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (menuItemController.onCreateMenuItem(req, res, next))))
+menuItemAdminRoutes.post("/deleteMenuItem",authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (menuItemController.onCreateMenuItem(req, res, next))))
+menuItemAdminRoutes.post("/updateMenuItem",authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (menuItemController.onCreateMenuItem(req, res, next))))
+
+menuItemWorkerRoutes.get("/getMenuItemsByName/:placeId/:name",authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (menuItemController.onGetMenuItemsByName(req, res, next))))
+menuItemWorkerRoutes.get("/getMenuItems/:placeId",authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (menuItemController.onGetAllMenuItems(req, res, next))))

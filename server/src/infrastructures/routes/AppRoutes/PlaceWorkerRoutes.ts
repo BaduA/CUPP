@@ -11,6 +11,6 @@ const placeWorkerAdminRoutes: Router = Router();
 var placeWorkerInteractor = new PlaceWorkerInteractor(placeWorkerRepository)
 var controller = new PlaceWorkerController(placeWorkerInteractor)
 
-placeWorkerAdminRoutes.use("/addAdmin/:placeId/:userId", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onAddAdmin(req, res, next))))
-placeWorkerAdminRoutes.use("/addWorker/:placeId/:userId", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onAddWorker(req, res, next))))
-placeWorkerAdminRoutes.use("/deleteWorker/:placeId/:userId", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onDeleteWorker(req, res, next))))
+placeWorkerAdminRoutes.post("/addAdmin/:placeId/:userId", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onAddAdmin(req, res, next))))
+placeWorkerAdminRoutes.post("/addWorker/:placeId/:userId", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onAddWorker(req, res, next))))
+placeWorkerAdminRoutes.delete("/deleteWorker/:placeId/:userId", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onDeleteWorker(req, res, next))))

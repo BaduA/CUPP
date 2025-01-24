@@ -16,7 +16,6 @@ export class MenuItemController extends Validator {
         var body = { name: req.body.name, price: parseInt(req.body.price), pointValue: parseInt(req.body.pointValue), size: req.body.size, placeId: parseInt(req.body.placeId), image: req.file }
         var menuItem = await this.placeMenuItemInteractor.createPlaceMenuItem(body)
         res.json(menuItem)
-
     }
     async onDeleteMenuItem(req: Request, res: Response, next: NextFunction) {
         DeleteMenuItemSchema.parse(req.body)
@@ -34,14 +33,14 @@ export class MenuItemController extends Validator {
         var place = await this.placeMenuItemInteractor.updatePlaceMenuItem(body)
         res.json(place)
     }
-    async getMenuItemsByName(req: Request, res: Response, next: NextFunction) {
+    async onGetMenuItemsByName(req: Request, res: Response, next: NextFunction) {
         GetMenuItemsByNameSchema.parse(req.body)
         var placeId = parseInt(req.params.placeId)
         var menuItemName = (req.params.menuItemName)
         await this.placeWorkerValidator(placeId, req.user.id)
         res.json(this.placeMenuItemInteractor.getPlaceMenuItemsByName({ id: placeId, name: menuItemName }))
     }
-    async getAllMenuItems(req: Request, res: Response, next: NextFunction) {
+    async onGetAllMenuItems(req: Request, res: Response, next: NextFunction) {
         var placeId = parseInt(req.params.placeId)
         await this.placeWorkerValidator(placeId, req.user.id)
         res.json(this.placeMenuItemInteractor.getAllMenuItems(placeId))
