@@ -9,6 +9,7 @@ export class PlaceUserRecordInteractor implements IPlaceUserRecordInteractor {
         this.repository = repository;
     }
 
+
     async createPlaceUserRecord(userId: number, placeId: number) {
         if (await this.repository.findFirst(({ userId, placeId }))) throw new BadRequestsException("Already a record found", ErrorCode.ENTITY_ALREADY_EXISTS)
         return await this.repository.create({ userId, placeId })

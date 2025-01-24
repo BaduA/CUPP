@@ -5,5 +5,6 @@ const rootRouter: Router = Router();
 
 // rootRouter.use("/place", placeRoutes);
 rootRouter.use("/user", userRoutes);
+rootRouter.use("/admin", userRoutes);
 
 export default rootRouter;

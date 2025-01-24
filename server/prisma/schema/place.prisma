@@ -15,6 +15,5 @@ model Place {
     franchiseCompany   FranchiseCompany  @relation(fields: [franchiseCompanyId], references: [id])
     franchiseCompanyId Int
     createdAt          DateTime          @default(now())
-
     @@map("places")
 }

@@ -40,10 +40,12 @@ export class PrismaRepository implements IRepository {
       select: selectData,
     });
   }
-  async findMany(whereData: any, selectData: any = null) {
+  async findMany(whereData: any, selectData: any = null,skip:any=null, take:any=null) {
     return await this.entity!.findMany({
       where: whereData,
       select: selectData,
+      skip,
+      take
     });
   }
   async create(data: any, selectData: any = null) {

@@ -13,6 +13,11 @@ export const UpdatePlaceSchema = z.object({
     latitude: z.number().optional(),
     longtitude: z.number().optional(),
 })
+export const GetPlacesByArea = z.object({
+    city:z.string(),
+    district: z.string().optional()
+})
+
 export const DeletePlaceImageSchema = z.object({
     imageId: z.number()
 })
@@ -41,5 +46,11 @@ export const GetMenuItemsByNameSchema = z.object({
 export const AddWorkerSchema = z.object({
     userId: z.number(),
     placeId: z.number()
+})
+
+export const CreatePromotionSchema = z.object({
+    pointValue: z.number(),
+    name: z.string()
+
 })
 
