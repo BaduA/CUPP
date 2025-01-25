@@ -7,7 +7,7 @@ import { IPlaceUserRecordInteractor } from "../../interactors/placeUserRecord/IP
 import { IUserInteractor } from "../../interactors/user/IUserInteractor";
 import { Validator } from "../Validator";
 
-export class PlaceController extends Validator {
+export class WorkerActionsController extends Validator {
 
     private earnedPointMenuItemInteractor: IEarnedPointMenuItemInteractor;
     private earnedPlacePointInteractor: IEarnedPlacePointInteractor;
@@ -21,7 +21,7 @@ export class PlaceController extends Validator {
         this.userInteractor = userInteractor
     }
 
-    processUserOrder = async (req: Request, res: Response, next: NextFunction) => {
+    onProcessUserOrder = async (req: Request, res: Response, next: NextFunction) => {
         ProcessUserOrderSchema.parse(req.body)
         const { userId, menuItems, totalMoney, totalEarnedPoint, placeId } = req.body
         await this.placeWorkerValidator(placeId, req.user)

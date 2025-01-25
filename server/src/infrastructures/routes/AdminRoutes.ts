@@ -1,4 +1,4 @@
 import { Router } from "express";
 
 
-const adminRoutes: Router = Router();
+export const adminRoutes: Router = Router();
