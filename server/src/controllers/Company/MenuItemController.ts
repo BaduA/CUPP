@@ -10,14 +10,14 @@ export class MenuItemController extends Validator {
         super(placeWorkerInteractor)
         this.placeMenuItemInteractor = placeMenuItemInteractor
     }
-    async onCreateMenuItem(req: Request, res: Response, next: NextFunction) {
+    onCreateMenuItem = async (req: Request, res: Response, next: NextFunction) => {
         CreateMenuItemSchema.parse(req.body)
         await this.placeAdminValidator(req.body.placeId, req.user.id)
         var body = { name: req.body.name, price: parseInt(req.body.price), pointValue: parseInt(req.body.pointValue), size: req.body.size, placeId: parseInt(req.body.placeId), image: req.file }
         var menuItem = await this.placeMenuItemInteractor.createPlaceMenuItem(body)
         res.json(menuItem)
     }
-    async onDeleteMenuItem(req: Request, res: Response, next: NextFunction) {
+    onDeleteMenuItem = async (req: Request, res: Response, next: NextFunction) => {
         DeleteMenuItemSchema.parse(req.body)
         const { menuItemId } = req.body
         var menuItem = await this.placeMenuItemInteractor.getMenuItemById(menuItemId)
@@ -25,7 +25,7 @@ export class MenuItemController extends Validator {
         var menuItem = await this.placeMenuItemInteractor.deletePlaceMenuItem(menuItemId)
         res.json(menuItem)
     }
-    async onUpdateMenuItem(req: Request, res: Response, next: NextFunction) {
+    onUpdateMenuItem = async (req: Request, res: Response, next: NextFunction) => {
         UpdateMenuItemSchema.parse(req.body)
         const body = { id: parseInt(req.body.id), name: req.body.name, price: parseInt(req.body.price), pointValue: parseInt(req.body.pointValue) }
         var menuItem = await this.placeMenuItemInteractor.getMenuItemById(body.id)
@@ -33,14 +33,14 @@ export class MenuItemController extends Validator {
         var place = await this.placeMenuItemInteractor.updatePlaceMenuItem(body)
         res.json(place)
     }
-    async onGetMenuItemsByName(req: Request, res: Response, next: NextFunction) {
+    onGetMenuItemsByName = async (req: Request, res: Response, next: NextFunction) => {
         GetMenuItemsByNameSchema.parse(req.body)
         var placeId = parseInt(req.params.placeId)
         var menuItemName = (req.params.menuItemName)
         await this.placeWorkerValidator(placeId, req.user.id)
         res.json(this.placeMenuItemInteractor.getPlaceMenuItemsByName({ id: placeId, name: menuItemName }))
     }
-    async onGetAllMenuItems(req: Request, res: Response, next: NextFunction) {
+    onGetAllMenuItems = async (req: Request, res: Response, next: NextFunction) => {
         var placeId = parseInt(req.params.placeId)
         await this.placeWorkerValidator(placeId, req.user.id)
         res.json(this.placeMenuItemInteractor.getAllMenuItems(placeId))

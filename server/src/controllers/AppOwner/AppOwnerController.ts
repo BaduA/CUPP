@@ -12,7 +12,7 @@ export class AppOwnerController {
         this.placeInteractor = placeInteractor;
         this.placeWorkerInteractor = placeWorkerInteractor
     }
-    async onCreatePlace(req: Request, res: Response, next: NextFunction) {
+    onCreatePlace = async (req: Request, res: Response, next: NextFunction) => {
         if (req.user.role != "APP_ADMIN") throw new BadRequestsException("Not authorized", ErrorCode.UNAUTHORIZED)
         CreatePlaceSchema.parse(req.body)
         const { name, workerAdminId } = req.body
@@ -20,7 +20,7 @@ export class AppOwnerController {
         await this.placeWorkerInteractor.addAdminToPlace({ placeId: place.id, userId: workerAdminId })
         res.json(place)
     }
-    async onDeletePlace(req: Request, res: Response, next: NextFunction) {
+    onDeletePlace = async (req: Request, res: Response, next: NextFunction) => {
         if (req.user.role != "APP_ADMIN") throw new BadRequestsException("Not authorized", ErrorCode.UNAUTHORIZED)
         const placeId = parseInt(req.params.placeId)
         var result = await this.placeInteractor.deletePlace(placeId)

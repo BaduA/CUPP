@@ -13,7 +13,7 @@ export class PlaceController extends Validator {
         this.placeInteractor = placeInteractor;
         this.placeImageInteractor = placeImageInteractor;
     }
-    async onUpdatePlace(req: Request, res: Response, next: NextFunction) {
+    onUpdatePlace = async (req: Request, res: Response, next: NextFunction) => {
         UpdatePlaceSchema.parse(req.body)
         const id = parseInt(req.params.placeId)
         await this.placeAdminValidator(id, req.user.id)
@@ -21,14 +21,14 @@ export class PlaceController extends Validator {
         var place = await this.placeInteractor.updatePlace(req.body)
         res.json(place)
     }
-    async onDeletePlaceImage(req: Request, res: Response, next: NextFunction) {
+    onDeletePlaceImage = async (req: Request, res: Response, next: NextFunction) => {
         const imageId = parseInt(req.params.imageId)
         var image = await this.placeImageInteractor.getImage(imageId)
         await this.placeAdminValidator(image.placeId, req.user.id)
         var image = await this.placeImageInteractor.deleteImage(imageId)
         res.json(image)
     }
-    async onGetPlaceImages(req: Request, res: Response, next: NextFunction) {
+    onGetPlaceImages = async (req: Request, res: Response, next: NextFunction) => {
         GetPlaceImagesSchema.parse(req.body)
         let placeId: any = req.params.placeId
         placeId = parseInt(placeId)
@@ -36,17 +36,17 @@ export class PlaceController extends Validator {
         var images = await this.placeImageInteractor.getImages(placeId)
         res.json(images)
     }
-    async onGetPlacesByName(req: Request, res: Response, next: NextFunction) {
+    onGetPlacesByName = async (req: Request, res: Response, next: NextFunction) => {
         let name = req.params.name
         var places = await this.placeInteractor.findByName(name)
         res.json(places)
     }
-    async onGetPlacesById(req: Request, res: Response, next: NextFunction) {
+    onGetPlacesById = async (req: Request, res: Response, next: NextFunction) => {
         let placeId = parseInt(req.params.placeId)
         var place = await this.placeInteractor.findWithId(placeId)
         res.json(place)
     }
-    async onGetPlacesWithArea(req: Request, res: Response, next: NextFunction) {
+    onGetPlacesWithArea = async (req: Request, res: Response, next: NextFunction) => {
         GetPlacesByArea.parse(req.body)
         const { city, district } = req.body
         var place = await this.placeInteractor.findWithLocation(city, district)

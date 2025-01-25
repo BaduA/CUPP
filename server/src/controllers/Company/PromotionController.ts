@@ -12,7 +12,7 @@ export class PromotionController extends Validator {
         super(placeWorkerInteractor)
         this.placePromotionInteractor = placePromotionInteractor
     }
-    async onCreatePromotion(req: Request, res: Response, next: NextFunction) {
+    onCreatePromotion = async (req: Request, res: Response, next: NextFunction) => {
         CreatePromotionSchema.parse(req.body)
         var placeId: any = req.params.placeId
         await this.placeAdminValidator(placeId, req.user.id)
@@ -21,7 +21,7 @@ export class PromotionController extends Validator {
         var promotion = await this.placePromotionInteractor.createPlacePromotion(body)
         res.json(promotion)
     }
-    async onDeletePromotion(req: Request, res: Response, next: NextFunction) {
+    onDeletePromotion = async (req: Request, res: Response, next: NextFunction) => {
         var promotionId: any = parseInt(req.params.promotionId)
         var promotion = await this.placePromotionInteractor.getPlacePromotionById(promotionId)
         if (promotion == null) throw new BadRequestsException("No promotion found", ErrorCode.ENTITY_NOT_FOUND)

@@ -8,17 +8,17 @@ export class PlaceWorkerController extends Validator {
     constructor(placeWorkerInteractor: IPlaceWorkerInteractor) {
         super(placeWorkerInteractor)
     }
-    async onAddAdmin(req: Request, res: Response, next: NextFunction) {
+    onAddAdmin = async (req: Request, res: Response, next: NextFunction) => {
         AddWorkerSchema.parse(req.body)
         await this.placeAdminValidator(req.body.placeId, req.user.id)
         await this.placeWorkerInteractor.addAdminToPlace({ userId: req.body.userId, placeId: req.body.placeId })
     }
-    async onAddWorker(req: Request, res: Response, next: NextFunction) {
+    onAddWorker = async (req: Request, res: Response, next: NextFunction) => {
         AddWorkerSchema.parse(req.body)
         await this.placeAdminValidator(req.body.placeId, req.user.id)
         await this.placeWorkerInteractor.addWaiterToPlace({ userId: req.body.userId, placeId: req.body.placeId })
     }
-    async onDeleteWorker(req: Request, res: Response, next: NextFunction) {
+    onDeleteWorker = async (req: Request, res: Response, next: NextFunction) => {
         AddWorkerSchema.parse(req.body)
         await this.placeAdminValidator(req.body.placeId, req.user.id)
         await this.placeWorkerInteractor.deleteWorkerFromPlace({ workerId: req.body.userId, placeId: req.body.placeId })

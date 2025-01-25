@@ -9,7 +9,7 @@ export class UserRecordController extends Validator {
         super(placeWorkerInteractor)
         this.placeRecordInteractor = placeRecordInteractor
     }
-    async onGetUserRecord(req: Request, res: Response, next: NextFunction) {
+    onGetUserRecord = async (req: Request, res: Response, next: NextFunction) => {
         const placeId = parseInt(req.params.placeId)
         let userId = req.user.id;
         if (req.params.userId) {

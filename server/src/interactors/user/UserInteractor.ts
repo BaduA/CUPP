@@ -39,7 +39,6 @@ export class UserInteractor implements IUserInteractor {
                 }
             ]
         })
-        console.log(input)
         if (user) throw new BadRequestsException("User with this email or phone number already exists.", ErrorCode.ENTITY_ALREADY_EXISTS)
         return await this.repository.create({
             name: input.name,
@@ -52,11 +51,9 @@ export class UserInteractor implements IUserInteractor {
         })
     }
     async signIn(input: ISignIn) {
-        console.log(input)
         let user = await this.repository.findFirst({
             OR: [{ email: input.email?.toLowerCase() }, { username: input.username }],
         });
-        console.log("ZZZ")
         if (!user)
             throw new BadRequestsException(
                 "Bu email veya username kayıtlı değil",

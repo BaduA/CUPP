@@ -17,7 +17,7 @@ const controller = new AppOwnerController(placeInteractor, placeWorkerInteractor
 
 const appOwnerRoutes: Router = Router();
 
-appOwnerRoutes.post("/createPlace", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onCreatePlace(req, res, next))))
-appOwnerRoutes.delete("/deletePlace/:placeId", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onDeletePlace(req, res, next))))
+appOwnerRoutes.post("/createPlace", authorizePrismaMiddleware.authorizeUser, errorHandler(controller.onCreatePlace))
+appOwnerRoutes.delete("/deletePlace/:placeId", authorizePrismaMiddleware.authorizeUser, errorHandler(controller.onDeletePlace))
 
 export default appOwnerRoutes;

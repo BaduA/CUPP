@@ -16,11 +16,11 @@ const upload = multer({ storage: storage });
 
 const userRoutes: Router = Router();
 
-userRoutes.post("/signUp", upload.single("profilePicture"), errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onSignUp(req, res, next))))
-userRoutes.post("/signIn", errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onSignIn(req, res, next))))
-userRoutes.put("/update", errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onUpdate(req, res, next))))
-userRoutes.put("/changePassword", authorizeMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onChangePassword(req, res, next))))
-userRoutes.put("/changeProfilePicture", [authorizeMiddleware.authorizeUser, upload.single("profilePicture")], errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onChangeProfilePicture(req, res, next))))
-userRoutes.get("/:id", errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onFindWithId(req, res, next))))
+userRoutes.post("/signUp", upload.single("profilePicture"), errorHandler(controller.onSignUp))
+userRoutes.post("/signIn", errorHandler(controller.onSignIn))
+userRoutes.put("/update", errorHandler(controller.onUpdate))
+userRoutes.put("/changePassword", authorizeMiddleware.authorizeUser, errorHandler(controller.onChangePassword))
+userRoutes.put("/changeProfilePicture", [authorizeMiddleware.authorizeUser, upload.single("profilePicture")], errorHandler(controller.onChangeProfilePicture))
+userRoutes.get("/:id", errorHandler(controller.onFindWithId))
 
 export default userRoutes;

@@ -15,5 +15,5 @@ const placeWorkerInteractor = new PlaceWorkerInteractor(placeWorkerRepository)
 const userRecordInteractor = new PlaceUserRecordInteractor(userRecordRepository)
 const controller = new UserRecordController(placeWorkerInteractor, userRecordInteractor)
 
-userRecordRoutes.get("/getCurrentUserRecord/:placeId", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onGetUserRecord(req, res, next))))
-userRecordWorkerRoutes.get("/getCurrentUserRecord/:placeId/:userId", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onGetUserRecord(req, res, next))))
+userRecordRoutes.get("/getCurrentUserRecord/:placeId", authorizePrismaMiddleware.authorizeUser, errorHandler(controller.onGetUserRecord))
+userRecordWorkerRoutes.get("/getCurrentUserRecord/:placeId/:userId", authorizePrismaMiddleware.authorizeUser, errorHandler(controller.onGetUserRecord))

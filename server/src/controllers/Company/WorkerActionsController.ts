@@ -21,7 +21,7 @@ export class PlaceController extends Validator {
         this.userInteractor = userInteractor
     }
 
-    async processUserOrder(req: Request, res: Response, next: NextFunction) {
+    processUserOrder = async (req: Request, res: Response, next: NextFunction) => {
         ProcessUserOrderSchema.parse(req.body)
         const { userId, menuItems, totalMoney, totalEarnedPoint, placeId } = req.body
         await this.placeWorkerValidator(placeId, req.user)

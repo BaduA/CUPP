@@ -19,9 +19,9 @@ var placeImageInteractor = new PlaceImageInteractor(placeImageRepository, s3Imag
 var controller = new PlaceController(placeInteractor, placeImageInteractor, placeWorkerInteractor)
 
 
-placeRoutes.get("/getByName/:name", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onGetPlacesByName(req, res, next))))
-placeRoutes.get("/getById/:placeId", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onGetPlacesById(req, res, next))))
-placeRoutes.get("/getPlacesInArea", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onGetPlacesWithArea(req, res, next))))
+placeRoutes.get("/getByName/:name", authorizePrismaMiddleware.authorizeUser, errorHandler(controller.onGetPlacesByName))
+placeRoutes.get("/getById/:placeId", authorizePrismaMiddleware.authorizeUser, errorHandler(controller.onGetPlacesById))
+placeRoutes.get("/getPlacesInArea", authorizePrismaMiddleware.authorizeUser, errorHandler(controller.onGetPlacesWithArea))
 
-placeAdminRoutes.put("/updatePlace/:placeId", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onUpdatePlace(req, res, next))))
-placeAdminRoutes.delete("/deletePlaceImage/:imageId", authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (controller.onDeletePlaceImage(req, res, next))))
+placeAdminRoutes.put("/updatePlace/:placeId", authorizePrismaMiddleware.authorizeUser, errorHandler(controller.onUpdatePlace))
+placeAdminRoutes.delete("/deletePlaceImage/:imageId", authorizePrismaMiddleware.authorizeUser, errorHandler(controller.onDeletePlaceImage))

@@ -15,9 +15,9 @@ const menuItemInteractor = new PlaceMenuItemInteractor(menuItemRepository, s3Ima
 const placeWorkerInteractor = new PlaceWorkerInteractor(placeWorkerRepository)
 const menuItemController = new MenuItemController(placeWorkerInteractor, menuItemInteractor)
 
-menuItemAdminRoutes.post("/createMenuItem",authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (menuItemController.onCreateMenuItem(req, res, next))))
-menuItemAdminRoutes.post("/deleteMenuItem",authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (menuItemController.onCreateMenuItem(req, res, next))))
-menuItemAdminRoutes.post("/updateMenuItem",authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (menuItemController.onCreateMenuItem(req, res, next))))
+menuItemAdminRoutes.post("/createMenuItem", authorizePrismaMiddleware.authorizeUser, errorHandler(menuItemController.onCreateMenuItem))
+menuItemAdminRoutes.post("/deleteMenuItem", authorizePrismaMiddleware.authorizeUser, errorHandler(menuItemController.onDeleteMenuItem))
+menuItemAdminRoutes.post("/updateMenuItem", authorizePrismaMiddleware.authorizeUser, errorHandler(menuItemController.onUpdateMenuItem))
 
-menuItemWorkerRoutes.get("/getMenuItemsByName/:placeId/:name",authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (menuItemController.onGetMenuItemsByName(req, res, next))))
-menuItemWorkerRoutes.get("/getMenuItems/:placeId",authorizePrismaMiddleware.authorizeUser, errorHandler((req: Request, res: Response, next: NextFunction) => (menuItemController.onGetAllMenuItems(req, res, next))))
+menuItemWorkerRoutes.get("/getMenuItemsByName/:placeId/:name", authorizePrismaMiddleware.authorizeUser, errorHandler(menuItemController.onGetMenuItemsByName))
+menuItemWorkerRoutes.get("/getMenuItems/:placeId", authorizePrismaMiddleware.authorizeUser, errorHandler(menuItemController.onGetAllMenuItems))
