@@ -5,12 +5,12 @@ export const CreatePlaceSchema = z.object({
     name: z.string(),
 })
 export const UpdatePlaceSchema = z.object({
-    name: z.string().optional(),
-    city: z.string().optional(),
-    district: z.string().optional(),
-    address: z.string().optional(),
-    latitude: z.number().optional(),
-    longtitude: z.number().optional(),
+    name: z.string().optional().nullable(),
+    city: z.string().optional().nullable(),
+    district: z.string().optional().nullable(),
+    address: z.string().optional().nullable(),
+    latitude: z.number().optional().nullable(),
+    longtitude: z.number().optional().nullable(),
 })
 export const GetPlacesByArea = z.object({
     city:z.string(),

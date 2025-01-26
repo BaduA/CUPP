@@ -8,8 +8,8 @@ import { authorizePrismaMiddleware } from "../../middlewares/auth";
 import { errorHandler } from "../../middlewares/error-handler";
 
 
-const menuItemAdminRoutes: Router = Router();
-const menuItemWorkerRoutes: Router = Router();
+export const menuItemAdminRoutes: Router = Router();
+export const menuItemWorkerRoutes: Router = Router();
 
 const menuItemInteractor = new PlaceMenuItemInteractor(menuItemRepository, s3ImageService)
 const placeWorkerInteractor = new PlaceWorkerInteractor(placeWorkerRepository)

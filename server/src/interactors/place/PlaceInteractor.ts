@@ -24,7 +24,7 @@ export class PlaceInteractor implements IPlaceInteractor {
         })
     }
     async findByName(name: string) {
-        return await this.repository.findMany({ where: { name: { startsWith: name } } })
+        return await this.repository.findMany({ name: { startsWith: name,mode:"insensitive" } })
     }
     async findWithId(id: number, includeData?: any) {
         return await this.repository.findUnique({ id }, {}, includeData)
@@ -54,13 +54,13 @@ export class PlaceInteractor implements IPlaceInteractor {
         return await this.repository.update(input.id, data)
     }
     async checkIsComplete(placeId: number) {
-        var place = await this.repository.findUnique({ id: placeId }, {}, { placeImages: true })
+        var place = await this.repository.findUnique({ id: placeId }, null, { placeImages: true })
         var ifHasNull = place.name == null || place.address == null || place.city == null || place.city == null || place.district == null || place.latitude == null || place.longtitude == null || place.placeImages.length == 0
         if (ifHasNull && place.isComplete == true)
-            await this.repository.update(place.id, { isComplete: false })
+            place = await this.repository.update(place.id, { isComplete: false })
         else if (!ifHasNull && place.isComplete == false)
-            await this.repository.update(place.id, { isComplete: true })
-        return;
+            place = await this.repository.update(place.id, { isComplete: true })
+        return place;
     }
     async deletePlace(id: number) {
         var place = await this.repository.findUnique({ id })

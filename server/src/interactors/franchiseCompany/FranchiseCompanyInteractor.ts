@@ -16,7 +16,8 @@ export class FranchiseCompanyInteractor implements IFranchiseCompanyInteractor {
     async getFranchiseCompanyByName(name: string) {
         return await this.repository.findMany({
             name: {
-                startsWith: name
+                startsWith: name,
+                mode:"insensitive"
             }
         })
     }

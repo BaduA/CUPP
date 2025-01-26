@@ -6,7 +6,7 @@ import { errorHandler } from "../../middlewares/error-handler";
 import { authorizePrismaMiddleware } from "../../middlewares/auth";
 
 
-const placeWorkerAdminRoutes: Router = Router();
+export const placeWorkerAdminRoutes: Router = Router();
 
 var placeWorkerInteractor = new PlaceWorkerInteractor(placeWorkerRepository)
 var controller = new PlaceWorkerController(placeWorkerInteractor)

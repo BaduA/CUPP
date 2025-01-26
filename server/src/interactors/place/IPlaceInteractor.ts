@@ -9,4 +9,5 @@ export interface IPlaceInteractor {
   findClosest(input: IFindClosestPlace):any;
   updatePlace(input: IUpdatePlace):any
   deletePlace(id:number) :any
+  checkIsComplete(id:number) :any
 }

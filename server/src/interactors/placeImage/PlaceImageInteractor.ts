@@ -13,7 +13,9 @@ export class PlaceImageInteractor implements IPlaceImageInteractor {
     this.imageService = imageService;
   }
   async getImage(id: number) {
-    return await this.repository.findUnique({ id })
+    var image = await this.repository.findUnique({ id })
+    if (!image) throw new BadRequestsException("No image found", ErrorCode.ENTITY_NOT_FOUND)
+    return image
   }
   async uploadImages(input: ICreatePlaceImages) {
     var fileNames = await this.imageService.uploadManyImages(input.files, "places/" + input.placeId + "/images/");
@@ -40,6 +42,7 @@ export class PlaceImageInteractor implements IPlaceImageInteractor {
     return images
   }
   async deleteImage(id: number) {
+    console.log(id)
     var image = await this.repository.findUnique({ id })
     if (!image) throw new BadRequestsException("Wrong Image ID", ErrorCode.ENTITY_NOT_FOUND)
     this.imageService.delete(image.imageAddress)

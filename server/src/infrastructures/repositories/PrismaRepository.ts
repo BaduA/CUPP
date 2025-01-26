@@ -38,10 +38,11 @@ export class PrismaRepository implements IRepository {
       where: data,
     });
   }
-  async findUnique(whereData: any, selectData: any = null) {
+  async findUnique(whereData: any, selectData: any = null, includeData:any=null) {
     return await this.entity!.findUnique({
       where: whereData,
       select: selectData,
+      include:includeData
     });
   }
   async findFirst(whereData: any, selectData: any = null) {
@@ -50,7 +51,7 @@ export class PrismaRepository implements IRepository {
       select: selectData,
     });
   }
-  async findMany(whereData: any, selectData: any = null, skip: any = null, take: any = null) {
+  async findMany(whereData: any, selectData: any = null, skip: any = 0, take: any = 5) {
     return await this.entity!.findMany({
       where: whereData,
       select: selectData,

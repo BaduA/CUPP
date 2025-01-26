@@ -4,6 +4,8 @@ import { IPlaceInteractor } from "../../interactors/place/IPlaceInteractor";
 import { IPlaceImageInteractor } from "../../interactors/placeImage/IPlaceImageInteractor";
 import { IPlaceWorkerInteractor } from "../../interactors/placeWorker/IPlaceWorkerInteractor";
 import { Validator } from "../Validator";
+import { BadRequestsException } from "../../entities/exceptions/bad-request";
+import { ErrorCode } from "../../entities/exceptions/root";
 
 export class PlaceController extends Validator {
     private placeInteractor: IPlaceInteractor;
@@ -18,15 +20,17 @@ export class PlaceController extends Validator {
         const id = parseInt(req.params.placeId)
         await this.placeAdminValidator(id, req.user.id)
         if (req.file != null) await this.placeImageInteractor.uploadImage({ file: req.file, placeId: id })
-        var place = await this.placeInteractor.updatePlace(req.body)
+        await this.placeInteractor.updatePlace({ ...req.body, id })
+        var place = await this.placeInteractor.checkIsComplete(id)
         res.json(place)
     }
     onDeletePlaceImage = async (req: Request, res: Response, next: NextFunction) => {
         const imageId = parseInt(req.params.imageId)
         var image = await this.placeImageInteractor.getImage(imageId)
         await this.placeAdminValidator(image.placeId, req.user.id)
-        var image = await this.placeImageInteractor.deleteImage(imageId)
-        res.json(image)
+        var deletedImage = await this.placeImageInteractor.deleteImage(imageId)
+        var place = await this.placeInteractor.checkIsComplete(image.placeId)
+        res.json(place)
     }
     onGetPlaceImages = async (req: Request, res: Response, next: NextFunction) => {
         GetPlaceImagesSchema.parse(req.body)

@@ -6,8 +6,8 @@ import { EarnedPointController } from "../../../controllers/Company/EarnedPointC
 import { authorizePrismaMiddleware } from "../../middlewares/auth";
 import { errorHandler } from "../../middlewares/error-handler";
 
-const earnedPointAdminRoutes: Router = Router();
-const earnedPointRoutes: Router = Router();
+export const earnedPointAdminRoutes: Router = Router();
+export const earnedPointRoutes: Router = Router();
 
 var earnedPointInteractor = new EarnedPlacePointInteractor(earnedPlacePointRepository)
 var placeWorkerInteractor = new PlaceWorkerInteractor(placeWorkerRepository)

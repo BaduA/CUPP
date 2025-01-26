@@ -8,8 +8,8 @@ import { errorHandler } from "../../middlewares/error-handler";
 
 
 
-const userRecordWorkerRoutes: Router = Router();
-const userRecordRoutes: Router = Router();
+export const userRecordWorkerRoutes: Router = Router();
+export const userRecordRoutes: Router = Router();
 
 const placeWorkerInteractor = new PlaceWorkerInteractor(placeWorkerRepository)
 const userRecordInteractor = new PlaceUserRecordInteractor(userRecordRepository)

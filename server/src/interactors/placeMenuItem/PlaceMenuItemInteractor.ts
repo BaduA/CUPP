@@ -37,7 +37,7 @@ export class PlaceMenuItemInteractor implements IPlaceMenuItemInteractor {
         return await this.repository.delete(id)
     }
     async getPlaceMenuItemsByName(input: IGetMenuItemsByName) {
-        return await this.repository.findMany({ placeId: input.id, name: { startsWith: input.name } })
+        return await this.repository.findMany({ placeId: input.id, name: { startsWith: input.name, mode: "insensitive" } })
     }
     async getAllMenuItems(id: number) {
         return await this.repository.findMany({ placeId: id })

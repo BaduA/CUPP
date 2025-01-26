@@ -8,7 +8,7 @@ import { s3ImageService } from "../../services/S3ImageService";
 import { PromotionController } from "../../../controllers/Company/PromotionController";
 
 
-const promotionAdminRouter: Router = Router();
+export const promotionAdminRouter: Router = Router();
 
 var placeWorkerInteractor = new PlaceWorkerInteractor(placeWorkerRepository)
 var promotionInteractor = new PlacePromotionInteractor(promotionRepository, s3ImageService)

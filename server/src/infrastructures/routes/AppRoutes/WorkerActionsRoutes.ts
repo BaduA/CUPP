@@ -13,7 +13,7 @@ import { WorkerActionsController } from "../../../controllers/Company/WorkerActi
 
 
 
-const workerActionsRouter: Router = Router();
+export const workerActionsRouter: Router = Router();
 
 const earnedPointMenuItemInteractor = new EarnedPointMenuItemInteractor(earnedPlacePointMenuItemRepository)
 const earnedPlacePointInteractor = new EarnedPlacePointInteractor(earnedPlacePointRepository)

@@ -27,7 +27,7 @@ export class PlaceWorkerInteractor implements IPlaceWorkerInteractor {
         return await this.repository.findMany({ placeId, role: "ADMIN" })
     }
     async getWithId(placeId: number, userId: number) {
-        return await this.repository.findMany({ placeId, userId })
+        return await this.repository.findUnique({ userId_placeId: { placeId, userId } })
     }
     async getAll(placeId: number) {
         return await this.repository.findMany({ placeId })
