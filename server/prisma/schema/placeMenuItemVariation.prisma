@@ -1,0 +1,11 @@
+model PlaceMenuItemVariation {
+    id                   Int                   @id @default(autoincrement())
+    price                Float
+    pointValue           Float
+    size                 String
+    isWithDiscount       Boolean
+    menuItem             PlaceMenuItem         @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+    menuItemId           Int
+    earnedPointMenuItems EarnedPointMenuItem[]
+    @@map("placeMenuItemVariations")
+}

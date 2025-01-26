@@ -14,16 +14,18 @@ export class PlaceMenuItemInteractor implements IPlaceMenuItemInteractor {
         this.imageService = imageService;
     }
     async getMenuItemById(id: number) {
-        return await this.repository.findUnique({ id })
+        return await this.repository.findUnique({ id }, null, { variations: true })
     }
-
+    async getMenuItemWithDiscounts(id: number) {
+        return await this.repository.findUnique({ id }, null, { variations: { where: { isWithDiscount: true } } })
+    }
+    async getMenuItemWithoutDiscounts(id: number) {
+        return await this.repository.findUnique({ id }, null, { variations: { where: { isWithDiscount: false } } })
+    }
     async createPlaceMenuItem(input: ICreatePlaceMenuItem) {
-        if (await this.repository.findFirst({ name: input.name, size: input.size })) throw new BadRequestsException("Bu isim ve bu boyda bir ürün bulunmakta.", ErrorCode.ENTITY_ALREADY_EXISTS)
+        if (await this.repository.findFirst({ name: input.name })) throw new BadRequestsException("Bu isimde bir ürün bulunmakta.", ErrorCode.ENTITY_ALREADY_EXISTS)
         return await this.repository.create({
             name: input.name,
-            size: input.size,
-            price: input.price,
-            pointValue: input.pointValue,
             place: input.place,
             imageAddress: input.image == null ? null : await this.imageService.uploadSingleImage(input.image, "places/" + input.place.connect.id + "/menuItems/")
         })

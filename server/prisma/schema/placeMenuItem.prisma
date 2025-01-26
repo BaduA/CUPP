@@ -1,13 +1,9 @@
 model PlaceMenuItem {
-    id                   Int                   @id @default(autoincrement())
-    name                 String
-    imageAddress         String?
-    price                Float
-    pointValue           Float
-    size                 String
-    place                Place                 @relation(fields: [placeId], references: [id], onDelete: Cascade)
-    placeId              Int
-    earnedPointMenuItems EarnedPointMenuItem[]
-
+    id                  Int                      @id @default(autoincrement())
+    name                String
+    imageAddress        String?
+    variations          PlaceMenuItemVariation[]
+    place               Place                    @relation(fields: [placeId], references: [id], onDelete: Cascade)
+    placeId             Int
     @@map("placeMenuItems")
 }

@@ -1,5 +1,5 @@
 export interface ICreateEarnedPointMenuItem {
-    menuItemId:number
+    menuItemVariationId:number
     earnedPlacePointId:number
     amount:number
 }

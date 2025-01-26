@@ -9,7 +9,8 @@ export class PlaceInteractor implements IPlaceInteractor {
     }
     async createPlace(input: ICreatePlace) {
         return await this.repository.create({
-            name: input.name
+            name: input.name,
+            appFeedingRate: input.appFeedingRate
         })
     }
     async createWithFranchisePlace(input: ICreateFranchisePlace) {
@@ -24,7 +25,7 @@ export class PlaceInteractor implements IPlaceInteractor {
         })
     }
     async findByName(name: string) {
-        return await this.repository.findMany({ name: { startsWith: name,mode:"insensitive" } })
+        return await this.repository.findMany({ name: { startsWith: name, mode: "insensitive" } })
     }
     async findWithId(id: number, includeData?: any) {
         return await this.repository.findUnique({ id }, {}, includeData)

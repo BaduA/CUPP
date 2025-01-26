@@ -1,9 +1,10 @@
 model EarnedPointMenuItem {
-    menuItem           PlaceMenuItem    @relation(fields: [menuItemId], references: [id])
-    menuItemId         Int
-    earnedPlacePoint   EarnedPlacePoint @relation(fields: [earnedPlacePointId], references: [id])
-    earnedPlacePointId Int
-    amount             Int
-    @@id([menuItemId, earnedPlacePointId])
+    earnedPlacePoint         EarnedPlacePoint        @relation(fields: [earnedPlacePointId], references: [id])
+    earnedPlacePointId       Int
+    amount                   Int
+    placeMenuItemVariation   PlaceMenuItemVariation @relation(fields: [placeMenuItemVariationId], references: [id])
+    placeMenuItemVariationId Int
+
+    @@id([placeMenuItemVariationId, earnedPlacePointId])
     @@map("earnedPointtMenuItems")
 }

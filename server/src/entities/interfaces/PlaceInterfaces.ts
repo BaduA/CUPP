@@ -10,6 +10,7 @@ export interface ICreateFranchisePlace {
 }
 export interface ICreatePlace {
     name: String
+    appFeedingRate : number
 }
 export interface IUpdatePlace {
     id: number

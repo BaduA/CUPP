@@ -9,6 +9,6 @@ export class EarnedPointMenuItemInteractor implements IEarnedPointMenuItemIntera
         this.repository = repository;
     }
     async createEarnedPointMenuItem(input: ICreateEarnedPointMenuItem) {
-        return await this.repository.create({ menuItemId: input.menuItemId, earnedPlacePointId: input.earnedPlacePointId, amount: input.amount })
+        return await this.repository.create({ placeMenuItemVariationId: input.menuItemVariationId, earnedPlacePointId: input.earnedPlacePointId, amount: input.amount })
     }
 }

@@ -25,12 +25,11 @@ export const CreateMenuItemSchema = z.object({
     price: z.string(),
     pointValue: z.string(),
     placeId: z.string(),
-    size: z.string()
+    size: z.string(),
+    isWithDiscount: z.boolean()
 })
 export const UpdateMenuItemSchema = z.object({
     name: z.string().optional(),
-    price: z.number().optional(),
-    pointValue: z.number().optional(),
 })
 
 
