@@ -24,16 +24,26 @@ export class PlaceMenuItemInteractor implements IPlaceMenuItemInteractor {
             size: input.size,
             price: input.price,
             pointValue: input.pointValue,
-            placeId: input.placeId,
-            imageAddress: input.image == null ? null : await this.imageService.uploadSingleImage(input.image, "places/" + input.placeId + "/menuItems/")
+            place: input.place,
+            imageAddress: input.image == null ? null : await this.imageService.uploadSingleImage(input.image, "places/" + input.place.connect.id + "/menuItems/")
         })
     }
     async updatePlaceMenuItem(input: IUpdatePlaceMenuItem) {
         var data: any = { ...input }
         delete data.id
+        if (input.image) {
+            var menuItem = await this.repository.findUnique({ id: input.id })
+            if (menuItem.imageAddress) this.imageService.delete(menuItem.imageAddress)
+            return await this.repository.update(input.id, { imageAddress: await this.imageService.uploadSingleImage(input.image, "places/" + menuItem.placeId + "/menuItems/") })
+        }
         return await this.repository.update(input.id, data)
     }
     async deletePlaceMenuItem(id: number) {
+        var menuItem = await this.repository.findUnique({ id })
+        if (!menuItem) throw new BadRequestsException("Menu Item Not Found", ErrorCode.ENTITY_NOT_FOUND)
+        if (menuItem.imageAddress) {
+            this.imageService.delete(menuItem.imageAddress)
+        }
         return await this.repository.delete(id)
     }
     async getPlaceMenuItemsByName(input: IGetMenuItemsByName) {

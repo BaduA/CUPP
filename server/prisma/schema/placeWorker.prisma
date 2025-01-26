@@ -6,6 +6,7 @@ model PlaceWorker {
   role    PlaceWorkerRole
 
   @@id([userId, placeId])
+  @@map("placeWorkers")
 }
 
 enum PlaceWorkerRole {

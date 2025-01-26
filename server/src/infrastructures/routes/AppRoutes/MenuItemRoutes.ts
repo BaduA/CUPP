@@ -6,6 +6,7 @@ import { PlaceWorkerInteractor } from "../../../interactors/placeWorker/PlaceWor
 import { MenuItemController } from "../../../controllers/Company/MenuItemController";
 import { authorizePrismaMiddleware } from "../../middlewares/auth";
 import { errorHandler } from "../../middlewares/error-handler";
+import multer from "multer";
 
 
 export const menuItemAdminRoutes: Router = Router();
@@ -15,9 +16,12 @@ const menuItemInteractor = new PlaceMenuItemInteractor(menuItemRepository, s3Ima
 const placeWorkerInteractor = new PlaceWorkerInteractor(placeWorkerRepository)
 const menuItemController = new MenuItemController(placeWorkerInteractor, menuItemInteractor)
 
-menuItemAdminRoutes.post("/createMenuItem", authorizePrismaMiddleware.authorizeUser, errorHandler(menuItemController.onCreateMenuItem))
-menuItemAdminRoutes.post("/deleteMenuItem", authorizePrismaMiddleware.authorizeUser, errorHandler(menuItemController.onDeleteMenuItem))
-menuItemAdminRoutes.post("/updateMenuItem", authorizePrismaMiddleware.authorizeUser, errorHandler(menuItemController.onUpdateMenuItem))
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
-menuItemWorkerRoutes.get("/getMenuItemsByName/:placeId/:name", authorizePrismaMiddleware.authorizeUser, errorHandler(menuItemController.onGetMenuItemsByName))
+menuItemAdminRoutes.post("/createMenuItem", [upload.single("menuItemImage"), authorizePrismaMiddleware.authorizeUser], errorHandler(menuItemController.onCreateMenuItem))
+menuItemAdminRoutes.delete("/deleteMenuItem/:menuItemId", authorizePrismaMiddleware.authorizeUser, errorHandler(menuItemController.onDeleteMenuItem))
+menuItemAdminRoutes.put("/updateMenuItem/:menuItemId", [upload.single("menuItemImage"), authorizePrismaMiddleware.authorizeUser], errorHandler(menuItemController.onUpdateMenuItem))
+
+menuItemWorkerRoutes.get("/getMenuItemsByName/:placeId/:menuItemName", authorizePrismaMiddleware.authorizeUser, errorHandler(menuItemController.onGetMenuItemsByName))
 menuItemWorkerRoutes.get("/getMenuItems/:placeId", authorizePrismaMiddleware.authorizeUser, errorHandler(menuItemController.onGetAllMenuItems))

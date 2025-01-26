@@ -5,13 +5,14 @@ export interface ICreatePlaceMenuItem {
     price: number
     pointValue: number
     size: string
-    placeId: number
+    place: any
 }
 export interface IUpdatePlaceMenuItem {
     id: number
     name?: string
     price?: number
     pointValue?: number
+    image?: Express.Multer.File;
 }
 export interface IGetMenuItemsByName {
     id: number

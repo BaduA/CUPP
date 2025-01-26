@@ -15,6 +15,5 @@ export abstract class Validator {
     async placeWorkerValidator(placeId: number, userId: number) {
         var worker = await this.placeWorkerInteractor.getWithId(placeId, userId)
         if (!worker) throw new BadRequestsException("Bu kullanıcı mekanın çalışanı değil.", ErrorCode.UNAUTHORIZED)
-        if (worker.role != "WAITER") throw new BadRequestsException("Bu kullanıcı mekanın garsonu değil.", ErrorCode.UNAUTHORIZED)
     }
 }

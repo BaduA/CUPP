@@ -24,20 +24,15 @@ export const CreateMenuItemSchema = z.object({
     name: z.string(),
     price: z.string(),
     pointValue: z.string(),
-    placeId: z.string()
+    placeId: z.string(),
+    size: z.string()
 })
 export const UpdateMenuItemSchema = z.object({
-    id: z.string(),
     name: z.string().optional(),
-    price: z.string().optional(),
-    pointValue: z.string().optional(),
+    price: z.number().optional(),
+    pointValue: z.number().optional(),
 })
-export const DeleteMenuItemSchema = z.object({
-    menuItemId: z.number()
-})
-export const GetMenuItemsByNameSchema = z.object({
-    name: z.string()
-})
+
 
 export const AddWorkerSchema = z.object({
     userId: z.number(),
