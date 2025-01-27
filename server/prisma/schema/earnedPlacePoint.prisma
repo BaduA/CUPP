@@ -1,4 +1,4 @@
-model EarnedPlacePoint {
+model Order {
     id                   Int                   @id @default(autoincrement())
     earnedPoint          Int
     totalMoney           Float
@@ -6,6 +6,5 @@ model EarnedPlacePoint {
     userRecord           PlaceUserRecord       @relation(fields: [userRecordId], references: [id], onDelete: Cascade)
     userRecordId         Int
     createdAt            DateTime              @default(now())
-
-    @@map("earnedPlacePoints")
+    @@map("orders")
 }

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { ProcessUserOrderSchema, ProcessUserPromotionSchema } from "../../entities/schemas/WorkerSchemas";
 import { IPlaceWorkerInteractor } from "../../interactors/placeWorker/IPlaceWorkerInteractor";
 import { IEarnedPointMenuItemInteractor } from "../../interactors/earnedPointMenuItem/IEarnedPointMenuItemInteractor";
-import { IEarnedPlacePointInteractor } from "../../interactors/earnedPlacePoint/IEarnedPlacePointInteractor";
+import { IOrderInteractor } from "../../interactors/order/IOrderInteractor";
 import { IPlaceUserRecordInteractor } from "../../interactors/placeUserRecord/IPlaceUserRecordInteractor";
 import { IUserInteractor } from "../../interactors/user/IUserInteractor";
 import { Validator } from "../Validator";
@@ -12,16 +12,16 @@ import { IUsedPromotionInteractor } from "../../interactors/usedPromotion/IUsedP
 
 export class WorkerActionsController extends Validator {
     private earnedPointMenuItemInteractor: IEarnedPointMenuItemInteractor;
-    private earnedPlacePointInteractor: IEarnedPlacePointInteractor;
+    private orderInteractor: IOrderInteractor;
     private placeRecordInteractor: IPlaceUserRecordInteractor;
     private placeInteractor: IPlaceInteractor;
     private userInteractor: IUserInteractor;
     private placePromotionInteractor: IPlacePromotionInteractor;
     private usedPromotionInteractor: IUsedPromotionInteractor;
-    constructor(placeWorkerInteractor: IPlaceWorkerInteractor, earnedPointMenuItemInteractor: IEarnedPointMenuItemInteractor, earnedPlacePointInteractor: IEarnedPlacePointInteractor, placeRecordInteractor: IPlaceUserRecordInteractor, userInteractor: IUserInteractor, placeInteractor: IPlaceInteractor, placePromotionInteractor: IPlacePromotionInteractor, usedPromotionInteractor: IUsedPromotionInteractor) {
+    constructor(placeWorkerInteractor: IPlaceWorkerInteractor, earnedPointMenuItemInteractor: IEarnedPointMenuItemInteractor, orderInteractor: IOrderInteractor, placeRecordInteractor: IPlaceUserRecordInteractor, userInteractor: IUserInteractor, placeInteractor: IPlaceInteractor, placePromotionInteractor: IPlacePromotionInteractor, usedPromotionInteractor: IUsedPromotionInteractor) {
         super(placeWorkerInteractor)
         this.earnedPointMenuItemInteractor = earnedPointMenuItemInteractor
-        this.earnedPlacePointInteractor = earnedPlacePointInteractor
+        this.orderInteractor = orderInteractor
         this.placeRecordInteractor = placeRecordInteractor
         this.userInteractor = userInteractor
         this.placeInteractor = placeInteractor
@@ -36,7 +36,7 @@ export class WorkerActionsController extends Validator {
         await this.placeInteractor.addGivenPoints({ id: placeId, points: totalEarnedPoint })
         await this.userInteractor.increaseUserPoint({ userId, point: totalEarnedPoint })
         var record = await this.placeRecordInteractor.addPoints(userId, placeId, totalEarnedPoint)
-        var earnedPlacePoint = await this.earnedPlacePointInteractor.createEarnedPlacePoint({ userRecordId: record.id, earnedPoint: totalEarnedPoint, totalMoney: totalMoney })
+        var earnedPlacePoint = await this.orderInteractor.createOrder({ userRecordId: record.id, earnedPoint: totalEarnedPoint, totalMoney: totalMoney })
         await menuItemVariations.forEach(async (menuItemVariation: any) => {
             await this.earnedPointMenuItemInteractor.createEarnedPointMenuItem({ amount: menuItemVariation.amount, menuItemVariationId: menuItemVariation.menuItemVariationId, earnedPlacePointId: earnedPlacePoint.id })
         });

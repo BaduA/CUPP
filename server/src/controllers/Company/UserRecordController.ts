@@ -16,7 +16,7 @@ export class UserRecordController extends Validator {
             await this.placeWorkerValidator(placeId, req.user.id)
             userId = parseInt(req.params.userId)
         }
-        var record = await this.placeRecordInteractor.getPlaceUserRecord(req.user.id, placeId)
+        var record = await this.placeRecordInteractor.getPlaceUserRecord(userId, placeId)
         res.json(record)
     }
 }

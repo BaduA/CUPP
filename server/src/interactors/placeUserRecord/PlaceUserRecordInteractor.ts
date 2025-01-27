@@ -25,6 +25,7 @@ export class PlaceUserRecordInteractor implements IPlaceUserRecordInteractor {
         return await this.repository.update(record.id, { totalPoints: record.totalPoints - value })
     }
     async getPlaceUserRecord(userId: number, placeId: number) {
+        console.log(userId, placeId)
         var record = await this.repository.findFirst({ userId, placeId }, null, { usedPromotions: true, earnedPlacePoints: true })
         return await record
     }

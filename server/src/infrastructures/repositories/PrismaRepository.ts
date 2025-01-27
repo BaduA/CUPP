@@ -28,7 +28,7 @@ export class PrismaRepository implements IRepository {
     else if (type == "place") this.entity = prismaClient.place;
     else if (type == "user") this.entity = prismaClient.user;
     else if (type == "placeWorker") this.entity = prismaClient.placeWorker;
-    else if (type == "earnedPlacePoint") this.entity = prismaClient.earnedPlacePoint;
+    else if (type == "order") this.entity = prismaClient.order;
     else if (type == "earnedPlacePointMenuItem") this.entity = prismaClient.earnedPointMenuItem;
     else if (type == "menuItem") this.entity = prismaClient.placeMenuItem;
     else if (type == "userRecord") this.entity = prismaClient.placeUserRecord;
@@ -41,23 +41,25 @@ export class PrismaRepository implements IRepository {
       where: data,
     });
   }
-  async findUnique(whereData: any, selectData: any = null, includeData:any=null) {
+  async findUnique(whereData: any, selectData: any = null, includeData: any = null) {
     return await this.entity!.findUnique({
       where: whereData,
       select: selectData,
-      include:includeData
+      include: includeData
     });
   }
-  async findFirst(whereData: any, selectData: any = null) {
+  async findFirst(whereData: any, selectData: any = null, includeData: any = null) {
     return await this.entity!.findFirst({
       where: whereData,
       select: selectData,
+      include: includeData
     });
   }
-  async findMany(whereData: any, selectData: any = null, skip: any = 0, take: any = 5) {
+  async findMany(whereData: any, selectData: any = null,includeData:any=null, skip: any = 0, take: any = 5) {
     return await this.entity!.findMany({
       where: whereData,
       select: selectData,
+      include:includeData,
       skip,
       take
     });
@@ -85,7 +87,7 @@ export class PrismaRepository implements IRepository {
 
 export const userRepository = new PrismaRepository("user")
 export const placeRepository = new PrismaRepository("place")
-export const earnedPlacePointRepository = new PrismaRepository("earnedPlacePoint")
+export const orderRepository = new PrismaRepository("order")
 export const placeImageRepository = new PrismaRepository("placeImage")
 export const placeWorkerRepository = new PrismaRepository("placeWorker")
 export const menuItemRepository = new PrismaRepository("menuItem")

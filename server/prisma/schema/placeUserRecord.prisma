@@ -1,6 +1,6 @@
 model PlaceUserRecord {
     id                Int                @id @default(autoincrement())
-    earnedPlacePoints EarnedPlacePoint[]
+    orders Order[]
     usedPromotions    UsedPromotion[]
     place             Place              @relation(fields: [placeId], references: [id], onDelete: Cascade)
     user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)

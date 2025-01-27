@@ -1,22 +1,22 @@
 import { ICreateEarnedPlacePoint } from "../../entities/interfaces/EarnedPlacePointInterfaces";
 import { IRepository } from "../../infrastructures/repositories/IRepository";
-import { IEarnedPlacePointInteractor } from "./IEarnedPlacePointInteractor";
+import { IOrderInteractor } from "./IOrderInteractor";
 
-export class EarnedPlacePointInteractor implements IEarnedPlacePointInteractor {
+export class OrderInteracor implements IOrderInteractor {
     private repository: IRepository;
     constructor(repository: IRepository) {
         this.repository = repository;
     }
-    async createEarnedPlacePoint(input: ICreateEarnedPlacePoint) {
+    async createOrder(input: ICreateEarnedPlacePoint) {
         return await this.repository.create({ userRecordId: input.userRecordId, earnedPoint: input.earnedPoint, totalMoney: input.totalMoney })
     }
-    async getAllEarnedPlacePoints(userId: number) {
-        return await this.repository.findMany({ userRecord: { userId: userId } }, {}, { earnedPointMenuItems: true })
+    async getUserOrders(userId: number) {
+        return await this.repository.findMany({ userRecord: { userId: userId } }, null, { earnedPointMenuItems: true })
     }
-    async getUsersEarnedPlacePoints(userId: number, placeId: number) {
+    async getUserPlaceOrders(userId: number, placeId: number) {
         return await this.repository.findMany({ userRecord: { userId: userId, placeId: placeId } })
     }
-    async getEarnedPlacePoints(placeId: number) {
+    async getPlaceOrders(placeId: number) {
         return await this.repository.findMany({ userRecord: { placeId: placeId } })
     }
 }
