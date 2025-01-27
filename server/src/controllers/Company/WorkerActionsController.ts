@@ -6,30 +6,34 @@ import { IEarnedPlacePointInteractor } from "../../interactors/earnedPlacePoint/
 import { IPlaceUserRecordInteractor } from "../../interactors/placeUserRecord/IPlaceUserRecordInteractor";
 import { IUserInteractor } from "../../interactors/user/IUserInteractor";
 import { Validator } from "../Validator";
+import { IPlaceInteractor } from "../../interactors/place/IPlaceInteractor";
 
 export class WorkerActionsController extends Validator {
 
     private earnedPointMenuItemInteractor: IEarnedPointMenuItemInteractor;
     private earnedPlacePointInteractor: IEarnedPlacePointInteractor;
     private placeRecordInteractor: IPlaceUserRecordInteractor;
+    private placeInteractor: IPlaceInteractor;
     private userInteractor: IUserInteractor
-    constructor(placeWorkerInteractor: IPlaceWorkerInteractor, earnedPointMenuItemInteractor: IEarnedPointMenuItemInteractor, earnedPlacePointInteractor: IEarnedPlacePointInteractor, placeRecordInteractor: IPlaceUserRecordInteractor, userInteractor: IUserInteractor) {
+    constructor(placeWorkerInteractor: IPlaceWorkerInteractor, earnedPointMenuItemInteractor: IEarnedPointMenuItemInteractor, earnedPlacePointInteractor: IEarnedPlacePointInteractor, placeRecordInteractor: IPlaceUserRecordInteractor, userInteractor: IUserInteractor, placeInteractor: IPlaceInteractor) {
         super(placeWorkerInteractor)
         this.earnedPointMenuItemInteractor = earnedPointMenuItemInteractor
         this.earnedPlacePointInteractor = earnedPlacePointInteractor
         this.placeRecordInteractor = placeRecordInteractor
         this.userInteractor = userInteractor
+        this.placeInteractor = placeInteractor
     }
 
     onProcessUserOrder = async (req: Request, res: Response, next: NextFunction) => {
         ProcessUserOrderSchema.parse(req.body)
-        const { userId, menuItems, totalMoney, totalEarnedPoint, placeId } = req.body
+        const { userId, menuItemVariations, totalMoney, totalEarnedPoint, placeId } = req.body
         await this.placeWorkerValidator(placeId, req.user)
+        await this.placeInteractor.addGivenPoints(totalEarnedPoint)
         await this.userInteractor.increaseUserPoint({ userId, point: totalEarnedPoint })
         var record = await this.placeRecordInteractor.addPoints(userId, placeId, totalEarnedPoint)
         var earnedPlacePoint = await this.earnedPlacePointInteractor.createEarnedPlacePoint({ userRecordId: record.id, earnedPoint: totalEarnedPoint, totalMoney: totalMoney })
-        menuItems.forEach(async (menuItem: any) => {
-            await this.earnedPointMenuItemInteractor.createEarnedPointMenuItem({ amount: menuItem.amount, menuItemId: menuItem.menuItemId, earnedPlacePointId: earnedPlacePoint.id })
+        menuItemVariations.forEach(async (menuItemVariation: any) => {
+            await this.earnedPointMenuItemInteractor.createEarnedPointMenuItem({ amount: menuItemVariation.amount, menuItemVariationId: menuItemVariation.menuItemVariationId, earnedPlacePointId: earnedPlacePoint.id })
         });
         res.json(earnedPlacePoint)
     }

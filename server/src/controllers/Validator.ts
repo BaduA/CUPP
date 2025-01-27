@@ -9,11 +9,11 @@ export abstract class Validator {
     }
     async placeAdminValidator(placeId: number, userId: number) {
         var worker = await this.placeWorkerInteractor.getWithId(placeId, userId)
-        if (!worker) throw new BadRequestsException("Bu kullanıcı mekanın çalışanı değil.", ErrorCode.UNAUTHORIZED)
+        if (!worker) throw new BadRequestsException("Bu kullanıcı mekanın çalışanı değil veya mekan mevcut değil.", ErrorCode.UNAUTHORIZED)
         if (worker.role != "ADMIN") throw new BadRequestsException("Bu kullanıcı mekanın admini değil.", ErrorCode.UNAUTHORIZED)
     }
     async placeWorkerValidator(placeId: number, userId: number) {
         var worker = await this.placeWorkerInteractor.getWithId(placeId, userId)
-        if (!worker) throw new BadRequestsException("Bu kullanıcı mekanın çalışanı değil.", ErrorCode.UNAUTHORIZED)
+        if (!worker) throw new BadRequestsException("Bu kullanıcı mekanın çalışanı değil veya mekan mevcut değil.", ErrorCode.UNAUTHORIZED)
     }
 }

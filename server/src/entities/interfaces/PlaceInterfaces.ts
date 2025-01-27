@@ -21,6 +21,10 @@ export interface IUpdatePlace {
     latitude?: number;
     longtitude?: number;
 }
+export interface IAddGivenPoints {
+    id: number
+    points: number
+}
 
 export interface IFindClosestPlace {
     latitude: number

@@ -1,4 +1,6 @@
-import { ICreateFranchisePlace, ICreatePlace, IFindClosestPlace, IUpdatePlace } from "../../entities/interfaces/PlaceInterfaces";
+import { BadRequestsException } from "../../entities/exceptions/bad-request";
+import { ErrorCode } from "../../entities/exceptions/root";
+import { IAddGivenPoints, ICreateFranchisePlace, ICreatePlace, IFindClosestPlace, IUpdatePlace } from "../../entities/interfaces/PlaceInterfaces";
 import { IRepository } from "../../infrastructures/repositories/IRepository";
 import { IPlaceInteractor } from "./IPlaceInteractor";
 
@@ -28,7 +30,7 @@ export class PlaceInteractor implements IPlaceInteractor {
         return await this.repository.findMany({ name: { startsWith: name, mode: "insensitive" } })
     }
     async findWithId(id: number, includeData?: any) {
-        return await this.repository.findUnique({ id }, {}, includeData)
+        return await this.repository.findUnique({ id }, null, includeData)
     }
     async findWithLocation(city: String, district: string) {
         return await this.repository.findMany({ where: { city, district } })
@@ -53,6 +55,13 @@ export class PlaceInteractor implements IPlaceInteractor {
         var data: any = { ...input }
         delete data.id
         return await this.repository.update(input.id, data)
+    }
+    async addGivenPoints(input: IAddGivenPoints) {
+        var place = await this.repository.findUnique({id:input.id})
+        if(!place) throw new BadRequestsException("Place Not Found", ErrorCode.ENTITY_NOT_FOUND)
+        var data: any = { ...input }
+        delete data.id
+        return await this.repository.update(input.id, {totalGivenPoints:place.totalGivenPoints+input.points})
     }
     async checkIsComplete(placeId: number) {
         var place = await this.repository.findUnique({ id: placeId }, null, { placeImages: true })

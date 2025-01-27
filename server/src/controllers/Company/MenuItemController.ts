@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { CreateMenuItemSchema, UpdateMenuItemSchema } from "../../entities/schemas/PlaceSchemas";
+import { CreateMenuItemSchema, CreateMenuItemVariationSchema, UpdateMenuItemSchema, UpdateMenuItemVariationSchema } from "../../entities/schemas/PlaceSchemas";
 import { IPlaceMenuItemInteractor } from "../../interactors/placeMenuItem/IPlaceMenuItemInteractor";
 import { IPlaceWorkerInteractor } from "../../interactors/placeWorker/IPlaceWorkerInteractor";
 import { Validator } from "../Validator";
@@ -20,7 +20,7 @@ export class MenuItemController extends Validator {
         await this.placeAdminValidator(parseInt(req.body.placeId), req.user.id)
         var bodyMenuItem = { name: req.body.name, place: { connect: { id: parseInt(req.body.placeId) } }, image: req.file }
         var menuItem = await this.placeMenuItemInteractor.createPlaceMenuItem(bodyMenuItem)
-        var bodyMenuItemVariation = { price: parseFloat(req.body.price), pointValue: parseFloat(req.body.pointValue), size: req.body.size, isWithDiscount: req.body.isWithDiscount, menuItemId: menuItem.id }
+        var bodyMenuItemVariation = { price: parseFloat(req.body.price), pointValue: parseFloat(req.body.pointValue), size: req.body.size, isWithDiscount: req.body.isWithDiscount === "true", menuItemId: menuItem.id }
         var menuItemVariation = await this.placeMenuItemVariationInteractor.createPlaceMenuItemVariation(bodyMenuItemVariation)
         res.json(menuItem)
     }
@@ -41,6 +41,27 @@ export class MenuItemController extends Validator {
         var place = await this.placeMenuItemInteractor.updatePlaceMenuItem({ ...req.body, id, image: file })
         res.json(place)
     }
+    onCreateMenuItemVariation = async (req: Request, res: Response, next: NextFunction) => {
+        CreateMenuItemVariationSchema.parse(req.body)
+        var menuItem = await this.placeMenuItemInteractor.getMenuItemById(req.body.menuItemId)
+        await this.placeAdminValidator(menuItem.placeId, req.user.id)
+        res.json(await this.placeMenuItemVariationInteractor.createPlaceMenuItemVariation(req.body))
+    }
+    onUpdateMenuItemVariation = async (req: Request, res: Response, next: NextFunction) => {
+        UpdateMenuItemVariationSchema.parse(req.body)
+        var id = parseInt(req.params.variationId)
+        var variation = await this.placeMenuItemVariationInteractor.getPlaceMenuVariationById(id)
+        var menuItem = await this.placeMenuItemInteractor.getMenuItemById(variation.menuItemId)
+        await this.placeAdminValidator(menuItem.placeId, req.user.id)
+        res.json(await this.placeMenuItemVariationInteractor.updatePlaceMenuItemVariation(req.body))
+    }
+    onDeleteMenuItemVariation = async (req: Request, res: Response, next: NextFunction) => {
+        var id = parseInt(req.params.variationId)
+        var variation = await this.placeMenuItemVariationInteractor.getPlaceMenuVariationById(id)
+        var menuItem = await this.placeMenuItemInteractor.getMenuItemById(variation.menuItemId)
+        await this.placeAdminValidator(menuItem.placeId, req.user.id)
+        res.json(await this.placeMenuItemVariationInteractor.deletePlaceMenuItemVariation(id))
+    }
     onGetMenuItemsByName = async (req: Request, res: Response, next: NextFunction) => {
         var placeId = parseInt(req.params.placeId)
         var menuItemName = (req.params.menuItemName)
@@ -51,5 +72,12 @@ export class MenuItemController extends Validator {
         var placeId = parseInt(req.params.placeId)
         await this.placeWorkerValidator(placeId, req.user.id)
         res.json(await this.placeMenuItemInteractor.getAllMenuItems(placeId))
+    }
+    onGetMenuItemById = async (req: Request, res: Response, next: NextFunction) => {
+        var menuItemId = parseInt(req.params.menuItemId)
+        var menuItem = await this.placeMenuItemInteractor.getMenuItemById(menuItemId)
+        if (!menuItem) throw new BadRequestsException("Menu Item Not Found", ErrorCode.ENTITY_NOT_FOUND)
+        await this.placeAdminValidator(menuItem.placeId, req.user.id)
+        res.json(await this.placeMenuItemInteractor.getMenuItemById(menuItemId))
     }
 }

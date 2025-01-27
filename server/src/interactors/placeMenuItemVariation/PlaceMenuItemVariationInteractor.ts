@@ -10,11 +10,19 @@ export class PlaceMenuItemVariationInteractor implements IPlaceMenuItemVariation
     constructor(repository: IRepository) {
         this.repository = repository;
     }
+    async getPlaceMenuVariationById(id: number) {
+        var variation = await this.repository.findUnique({ id })
+        if (!variation) throw new BadRequestsException("Variation not found", ErrorCode.ENTITY_NOT_FOUND)
+        return variation
+    }
+    async getPlaceMenuVariations(menuItemId: number) {
+        var variations = await this.repository.findMany({ menuItemId })
+        return variations
+    }
     async createPlaceMenuItemVariation(input: ICreatePlaceMenuItemVariation) {
-        if (await this.repository.findFirst({ menuItemId: input.menuItemId, size: input.size }))
-            throw new BadRequestsException("Already have this size on this item", ErrorCode.ENTITY_ALREADY_EXISTS)
-        return await this.repository.create({ size: input.size, isWithDiscount: input.isWithDiscount, price: input.price, pointValue: input.pointValue })
-
+        if (await this.repository.findFirst({ menuItemId: input.menuItemId, size: input.size, isWithDiscount:input.isWithDiscount }))
+            throw new BadRequestsException("Already have this item", ErrorCode.ENTITY_ALREADY_EXISTS)
+        return await this.repository.create({ size: input.size, isWithDiscount: input.isWithDiscount, price: input.price, pointValue: input.pointValue, menuItemId:input.menuItemId })
     }
     async deletePlaceMenuItemVariation(id: number) {
         if (!await this.repository.findUnique({ id }))
@@ -25,7 +33,7 @@ export class PlaceMenuItemVariationInteractor implements IPlaceMenuItemVariation
         var variation = await this.repository.findUnique({ id: input.id })
         if (!variation)
             throw new BadRequestsException("Variation Not Found", ErrorCode.ENTITY_NOT_FOUND)
-        if (await this.repository.findFirst({ menuItemId: variation.menuItemId, size: input.size }))
+        if (await this.repository.findFirst({ menuItemId: variation.menuItemId, size: input.size,isWithDiscount:variation.isWithDiscount }))
             throw new BadRequestsException("Already have this size on this item", ErrorCode.ENTITY_ALREADY_EXISTS)
         var data: any = { ...input }
         delete data.id

@@ -14,7 +14,9 @@ export class PlaceMenuItemInteractor implements IPlaceMenuItemInteractor {
         this.imageService = imageService;
     }
     async getMenuItemById(id: number) {
-        return await this.repository.findUnique({ id }, null, { variations: true })
+        var menuItem  = await this.repository.findUnique({ id }, null, { variations: true })
+        if(!menuItem) throw new BadRequestsException("Menu item not found",ErrorCode.ENTITY_NOT_FOUND)
+        return menuItem
     }
     async getMenuItemWithDiscounts(id: number) {
         return await this.repository.findUnique({ id }, null, { variations: { where: { isWithDiscount: true } } })

@@ -1,4 +1,4 @@
-import {  ICreateFranchisePlace, ICreatePlace, IFindClosestPlace, IUpdatePlace } from "../../entities/interfaces/PlaceInterfaces";
+import {  IAddGivenPoints, ICreateFranchisePlace, ICreatePlace, IFindClosestPlace, IUpdatePlace } from "../../entities/interfaces/PlaceInterfaces";
 
 export interface IPlaceInteractor {
   createPlace(input: ICreatePlace): any;
@@ -8,6 +8,7 @@ export interface IPlaceInteractor {
   findWithLocation(city:String, district?:string):any;
   findClosest(input: IFindClosestPlace):any;
   updatePlace(input: IUpdatePlace):any
+  addGivenPoints(input: IAddGivenPoints):any
   deletePlace(id:number) :any
   checkIsComplete(id:number) :any
 }

@@ -1,12 +1,12 @@
 import { z } from "zod";
 
-const orderMenuItemSchema = z.object({
-    menuItemId:z.number(),
+const orderMenuItemVariationSchema = z.object({
+    menuItemVariationId:z.number(),
     amount:z.number()
 })
 export const ProcessUserOrderSchema = z.object({
     userId:z.number(),
-    menuItems: z.array(orderMenuItemSchema),
+    menuItemVariations: z.array(orderMenuItemVariationSchema),
     totalMoney:z.number(),
     totalEarnedPoint:z.number(),
     placeId: z.number()

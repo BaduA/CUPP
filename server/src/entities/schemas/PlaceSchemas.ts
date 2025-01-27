@@ -26,10 +26,23 @@ export const CreateMenuItemSchema = z.object({
     pointValue: z.string(),
     placeId: z.string(),
     size: z.string(),
-    isWithDiscount: z.boolean()
+    isWithDiscount: z.string()
 })
 export const UpdateMenuItemSchema = z.object({
     name: z.string().optional(),
+})
+
+export const CreateMenuItemVariationSchema = z.object({
+    size:z.string(),
+    price: z.number(),
+    pointValue:z.number(),
+    isWithDiscount: z.boolean(),
+    menuItemId:z.number()
+})
+export const UpdateMenuItemVariationSchema = z.object({
+    size:z.string().optional(),
+    price: z.number().optional(),
+    pointValue:z.number().optional(),
 })
 
 
