@@ -6,5 +6,5 @@ model EarnedPointMenuItem {
     placeMenuItemVariationId Int
 
     @@id([placeMenuItemVariationId, earnedPlacePointId])
-    @@map("earnedPointtMenuItems")
+    @@map("earnedPointMenuItems")
 }

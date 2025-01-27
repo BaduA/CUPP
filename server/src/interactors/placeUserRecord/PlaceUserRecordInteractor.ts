@@ -15,12 +15,12 @@ export class PlaceUserRecordInteractor implements IPlaceUserRecordInteractor {
         return await this.repository.create({ userId, placeId })
     }
     async addPoints(userId: number, placeId: number, value: number) {
-        var record = await this.repository.findUnique({ userId, placeId })
+        var record = await this.repository.findFirst({ userId, placeId })
         if (record == null) record = await this.repository.create({ userId, placeId })
         return await this.repository.update(record.id, { totalPoints: record.totalPoints + value })
     }
     async extractPoints(userId: number, placeId: number, value: number) {
-        var record = await this.repository.findUnique({ userId, placeId })
+        var record = await this.repository.findFirst({ userId, placeId })
         if (record == null) record = await this.repository.create({ userId, placeId })
         return await this.repository.update(record.id, { totalPoints: record.totalPoints - value })
     }

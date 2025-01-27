@@ -29,6 +29,7 @@ export class PrismaRepository implements IRepository {
     else if (type == "user") this.entity = prismaClient.user;
     else if (type == "placeWorker") this.entity = prismaClient.placeWorker;
     else if (type == "earnedPlacePoint") this.entity = prismaClient.earnedPlacePoint;
+    else if (type == "earnedPlacePointMenuItem") this.entity = prismaClient.earnedPointMenuItem;
     else if (type == "menuItem") this.entity = prismaClient.placeMenuItem;
     else if (type == "userRecord") this.entity = prismaClient.placeUserRecord;
     else if (type == "promotion") this.entity = prismaClient.placePromotion;
@@ -89,5 +90,5 @@ export const placeWorkerRepository = new PrismaRepository("placeWorker")
 export const menuItemRepository = new PrismaRepository("menuItem")
 export const promotionRepository = new PrismaRepository("promotion")
 export const userRecordRepository = new PrismaRepository("userRecord")
-export const earnedPlacePointMenuItemRepository = new PrismaRepository("userRecord")
+export const earnedPlacePointMenuItemRepository = new PrismaRepository("earnedPlacePointMenuItem")
 export const placeMenuItemVariationRepository = new PrismaRepository("placeMenuItemVariation")
