@@ -1,6 +1,6 @@
 import { BadRequestsException } from "../../entities/exceptions/bad-request";
 import { ErrorCode } from "../../entities/exceptions/root";
-import { IAddGivenPoints, ICreateFranchisePlace, ICreatePlace, IFindClosestPlace, IUpdatePlace } from "../../entities/interfaces/PlaceInterfaces";
+import { ICreateFranchisePlace, ICreatePlace, IFindClosestPlace, IPointTransaction, IUpdatePlace } from "../../entities/interfaces/PlaceInterfaces";
 import { IRepository } from "../../infrastructures/repositories/IRepository";
 import { IPlaceInteractor } from "./IPlaceInteractor";
 
@@ -56,12 +56,19 @@ export class PlaceInteractor implements IPlaceInteractor {
         delete data.id
         return await this.repository.update(input.id, data)
     }
-    async addGivenPoints(input: IAddGivenPoints) {
-        var place = await this.repository.findUnique({id:input.id})
-        if(!place) throw new BadRequestsException("Place Not Found", ErrorCode.ENTITY_NOT_FOUND)
+    async addGivenPoints(input: IPointTransaction) {
+        var place = await this.repository.findUnique({ id: input.id })
+        if (!place) throw new BadRequestsException("Place Not Found", ErrorCode.ENTITY_NOT_FOUND)
         var data: any = { ...input }
         delete data.id
-        return await this.repository.update(input.id, {totalGivenPoints:place.totalGivenPoints+input.points})
+        return await this.repository.update(input.id, { totalGivenPoints: place.totalGivenPoints + input.points })
+    }
+    async addPromotionPoints(input: IPointTransaction) {
+        var place = await this.repository.findUnique({ id: input.id })
+        if (!place) throw new BadRequestsException("Place Not Found", ErrorCode.ENTITY_NOT_FOUND)
+        var data: any = { ...input }
+        delete data.id
+        return await this.repository.update(input.id, { totalUsedPromotionPoints: place.totalUsedPromotionPoints + input.points })
     }
     async checkIsComplete(placeId: number) {
         var place = await this.repository.findUnique({ id: placeId }, null, { placeImages: true })

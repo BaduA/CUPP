@@ -13,14 +13,16 @@ export class PlacePromotionInteractor implements IPlacePromotionInteractor {
         this.imageService = imageService;
     }
     async getPlacePromotionById(promotionId: number) {
-        return await this.repository.findUnique({ id: promotionId })
+        var promotion = await this.repository.findUnique({ id: promotionId })
+        if (!promotion) throw new BadRequestsException("No promotion found.", ErrorCode.ENTITY_NOT_FOUND)
+        return promotion
     }
     async createPlacePromotion(input: ICreatePlacePromotion) {
         return await this.repository.create({
             name: input.name,
-            placeId: input.placeId,
+            place: input.place,
             pointValue: input.pointValue,
-            imageAddress: input.image == null ? null : await this.imageService.uploadSingleImage(input.image, "places/" + input.placeId + "/promotions/")
+            imageAddress: input.image == null ? null : await this.imageService.uploadSingleImage(input.image, "places/" + input.place.connect.id + "/promotions/")
         })
     }
     async deletePlacePromotion(id: number) {
@@ -35,8 +37,8 @@ export class PlacePromotionInteractor implements IPlacePromotionInteractor {
     async getPlacePromotions(placeId: number) {
         return await this.repository.findMany({ placeId })
     }
-    async getPlacePromotionsByName(placeId: number, promotionName:string) {
-        return await this.repository.findMany({ placeId, name:promotionName })
+    async getPlacePromotionsByName(placeId: number, promotionName: string) {
+        return await this.repository.findMany({ placeId, name: promotionName })
     }
     async getPlacePromotionsByPoint(placeId: number, pointValue: number) {
         return await this.repository.findMany({

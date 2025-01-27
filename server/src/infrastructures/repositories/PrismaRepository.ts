@@ -33,6 +33,7 @@ export class PrismaRepository implements IRepository {
     else if (type == "menuItem") this.entity = prismaClient.placeMenuItem;
     else if (type == "userRecord") this.entity = prismaClient.placeUserRecord;
     else if (type == "promotion") this.entity = prismaClient.placePromotion;
+    else if (type == "usedPromotion") this.entity = prismaClient.usedPromotion;
     else if (type == "placeMenuItemVariation") this.entity = prismaClient.placeMenuItemVariation;
   }
   async deleteWithUniqueData(data: any) {
@@ -92,3 +93,4 @@ export const promotionRepository = new PrismaRepository("promotion")
 export const userRecordRepository = new PrismaRepository("userRecord")
 export const earnedPlacePointMenuItemRepository = new PrismaRepository("earnedPlacePointMenuItem")
 export const placeMenuItemVariationRepository = new PrismaRepository("placeMenuItemVariation")
+export const usedPromotionRepository = new PrismaRepository("usedPromotion")

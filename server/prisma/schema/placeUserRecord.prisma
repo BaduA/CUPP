@@ -6,7 +6,8 @@ model PlaceUserRecord {
     user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId            Int
     placeId           Int
-    totalPoints        Int                @default(0)
+    totalPoints       Int                @default(0)
     createdAt         DateTime           @default(now())
+
     @@map("placeUserRecords")
 }

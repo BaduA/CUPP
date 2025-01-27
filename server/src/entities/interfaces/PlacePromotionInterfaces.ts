@@ -1,6 +1,6 @@
 export interface ICreatePlacePromotion {
     name: String
     image?: Express.Multer.File;
-    placeId: number
+    place: any
     pointValue: number
 }

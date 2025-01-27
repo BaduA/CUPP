@@ -1,9 +1,8 @@
 model UsedPromotion {
+    id               Int             @id @default(autoincrement())
     userRecord       PlaceUserRecord @relation(fields: [userRecordId], references: [id], onDelete: Cascade)
     userRecordId     Int
     placePromotion   PlacePromotion  @relation(fields: [placePromotionId], references: [id])
     placePromotionId Int
-
-    @@id([placePromotionId, userRecordId])
     @@map("usedPromotions")
 }

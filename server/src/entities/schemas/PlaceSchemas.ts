@@ -52,8 +52,7 @@ export const AddWorkerSchema = z.object({
 })
 
 export const CreatePromotionSchema = z.object({
-    pointValue: z.number(),
+    pointValue: z.string(),
     name: z.string()
-
 })
 

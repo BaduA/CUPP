@@ -11,3 +11,7 @@ export const ProcessUserOrderSchema = z.object({
     totalEarnedPoint:z.number(),
     placeId: z.number()
 })
+export const ProcessUserPromotionSchema = z.object({
+    userId:z.number(),
+    promotionId: z.number()
+})

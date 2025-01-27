@@ -21,7 +21,7 @@ export interface IUpdatePlace {
     latitude?: number;
     longtitude?: number;
 }
-export interface IAddGivenPoints {
+export interface IPointTransaction {
     id: number
     points: number
 }

@@ -14,10 +14,10 @@ export class PromotionController extends Validator {
     }
     onCreatePromotion = async (req: Request, res: Response, next: NextFunction) => {
         CreatePromotionSchema.parse(req.body)
-        var placeId: any = req.params.placeId
+        var placeId: any = parseInt(req.params.placeId)
         await this.placeAdminValidator(placeId, req.user.id)
         var file = req.file
-        var body = { placeId: placeId, image: file, pointValue: parseInt(req.body.pointValue), name: req.body.name }
+        var body = { place: { connect: { id: placeId} }, image: file, pointValue: parseInt(req.body.pointValue), name: req.body.name }
         var promotion = await this.placePromotionInteractor.createPlacePromotion(body)
         res.json(promotion)
     }
@@ -28,5 +28,25 @@ export class PromotionController extends Validator {
         await this.placeAdminValidator(promotion.placeId, req.user.id)
         var promotion = await this.placePromotionInteractor.deletePlacePromotion(promotionId)
         res.json(promotion)
+    }
+    onGetPlacePromotions = async (req: Request, res: Response, next: NextFunction) => {
+        var placeId: any = parseInt(req.params.placeId)
+        await this.placeAdminValidator(placeId, req.user.id)
+        var promotions = await this.placePromotionInteractor.getPlacePromotions(placeId)
+        res.json(promotions)
+    }
+    onGetPlacePromotionsByName = async (req: Request, res: Response, next: NextFunction) => {
+        var placeId: any = parseInt(req.params.placeId)
+        var name: any = (req.params.name)
+        await this.placeAdminValidator(placeId, req.user.id)
+        var promotions = await this.placePromotionInteractor.getPlacePromotionsByName(placeId, name)
+        res.json(promotions)
+    }
+    onGetPlacePromotionsByPointValue = async (req: Request, res: Response, next: NextFunction) => {
+        var placeId: any = parseInt(req.params.placeId)
+        var pointValue: any = (req.params.pointValue)
+        await this.placeAdminValidator(placeId, req.user.id)
+        var promotions = await this.placePromotionInteractor.getPlacePromotionsByPoint(placeId, pointValue)
+        res.json(promotions)
     }
 }
