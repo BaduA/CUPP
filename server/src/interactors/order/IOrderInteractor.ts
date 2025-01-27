@@ -1,4 +1,4 @@
-import { ICreateEarnedPlacePoint } from "../../entities/interfaces/EarnedPlacePointInterfaces"
+import { ICreateEarnedPlacePoint } from "../../entities/interfaces/OrderInterfaces"
 
 export interface IOrderInteractor {
     createOrder(input: ICreateEarnedPlacePoint): any

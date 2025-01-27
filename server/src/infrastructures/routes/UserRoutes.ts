@@ -10,6 +10,6 @@ export const userRouter: Router = Router();
 
 userRouter.use("/place", placeRoutes)
 userRouter.use("/userRecord", userRecordRoutes)
-userRouter.use("/earnedPoint", orderRoutes)
+userRouter.use("/order", orderRoutes)
 userRouter.use("/promotion", promotionRouter)
 

@@ -1,4 +1,4 @@
-import { ICreateEarnedPlacePoint } from "../../entities/interfaces/EarnedPlacePointInterfaces";
+import { ICreateOrder } from "../../entities/interfaces/OrderInterfaces";
 import { IRepository } from "../../infrastructures/repositories/IRepository";
 import { IOrderInteractor } from "./IOrderInteractor";
 
@@ -7,7 +7,7 @@ export class OrderInteracor implements IOrderInteractor {
     constructor(repository: IRepository) {
         this.repository = repository;
     }
-    async createOrder(input: ICreateEarnedPlacePoint) {
+    async createOrder(input: ICreateOrder) {
         return await this.repository.create({ userRecordId: input.userRecordId, earnedPoint: input.earnedPoint, totalMoney: input.totalMoney })
     }
     async getUserOrders(userId: number) {

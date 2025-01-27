@@ -12,5 +12,5 @@ adminRouter.use("/promotion", promotionAdminRouter)
 adminRouter.use("/placeWorker", placeWorkerAdminRoutes)
 adminRouter.use("/place", placeAdminRoutes)
 adminRouter.use("/menuItem", menuItemAdminRoutes)
-adminRouter.use("/earnedPoint", orderAdminRoutes)
+adminRouter.use("/order", orderAdminRoutes)
 

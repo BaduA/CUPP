@@ -2,7 +2,7 @@ import { NextFunction, Request, Response, Router } from "express";
 import { OrderInteracor } from "../../../interactors/order/OrderInteractor";
 import { orderRepository, placeWorkerRepository } from "../../repositories/PrismaRepository";
 import { PlaceWorkerInteractor } from "../../../interactors/placeWorker/PlaceWorkerInteractor";
-import { OrderController } from "../../../controllers/Company/EarnedPointController";
+import { OrderController } from "../../../controllers/Company/OrderController";
 import { authorizePrismaMiddleware } from "../../middlewares/auth";
 import { errorHandler } from "../../middlewares/error-handler";
 
