@@ -1,5 +1,4 @@
 import { useMutation } from "@tanstack/react-query";
-import * as SecureStore from 'expo-secure-store';
 import { client } from "..";
 
 var BASE_URL = "auth";

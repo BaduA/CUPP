@@ -65,6 +65,7 @@ export class UserInteractor implements IUserInteractor {
                 ErrorCode.INCORRECT_PASSWORD
             );
         const token = jwt.sign({ userId: user.id }, JWT_SECRET);
+        console.log(token)
         return token
 
     }

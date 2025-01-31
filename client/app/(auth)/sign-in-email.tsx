@@ -8,6 +8,7 @@ const SignInEmail = () => {
   const [email, setEmail] = useState<string>()
   const [emailValid, setEmailValid] = useState<boolean>(false)
   const [warningMessageDisplay, setDisplay] = useState<"none" | "flex" | undefined>("none")
+  const blurhash = "L4HK2sOa00-O00IpK6Xn16%1};Mx"
   var validate = (text: string) => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     if (reg.test(text) === false) {
@@ -32,8 +33,11 @@ const SignInEmail = () => {
     <ImageBackground
       source={require("../../assets/images/1.png")}
       resizeMode="cover"
-      style={{ flex: 1, backgroundColor: "red" }}
-      blurRadius={50}>
+      style={{ flex: 1 }}
+      blurRadius={50}
+      placeholder={{ blurhash }}
+    >
+
       <Brand></Brand>
 
       <View style={{ paddingHorizontal: 20, paddingVertical: 30 }}>

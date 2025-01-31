@@ -19,7 +19,6 @@ import { Text } from 'react-native';
 export default function RootLayout() {
 
   const { session, isLoading } = useSession();
-
   if (isLoading) return <Text>Loading...</Text>
   if (!session) return <Redirect href={"/(auth)"}></Redirect>
   return (
