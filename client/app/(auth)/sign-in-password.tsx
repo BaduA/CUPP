@@ -4,11 +4,11 @@ import Brand from '@/components/auth/brand'
 import { ImageBackground } from 'expo-image'
 import { Link, router } from 'expo-router'
 import { useSession } from '@/api/auth/ctx'
-import { useSearchParams } from 'expo-router/build/hooks'
+import { useLocalSearchParams, useSearchParams } from 'expo-router/build/hooks'
 
 const SignInPassword = () => {
     const { signIn } = useSession()
-    const params = useSearchParams()
+    const { email } = useLocalSearchParams()
     const [password, setPassword] = useState<string>()
     const [passwordValid, setPasswordValid] = useState<boolean>(false)
     const [warningMessageDisplay, setDisplay] = useState<"none" | "flex" | undefined>("none")
@@ -29,7 +29,7 @@ const SignInPassword = () => {
         if (!passwordValid) {
             setDisplay("flex")
         } else {
-            
+
         }
     }
     return (
@@ -43,7 +43,12 @@ const SignInPassword = () => {
             <View style={{ paddingHorizontal: 20, paddingVertical: 30 }}>
                 <Text style={{ color: "white", fontSize: 35, fontWeight: "700", marginBottom: 30 }}>Şifrenizi Girin</Text>
                 <View>
-                    <Text style={{ color: "white", fontSize: 16, marginBottom: 16 }}>Şifreniz</Text>
+                    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                        <Text style={{ color: "white", fontSize: 16, marginBottom: 16 }}>Şifreniz</Text>
+                        <Pressable onPress={()=>{
+                            router.back()
+                        }} ><Text style={{ color: "rgb(0, 22, 224)" ,fontSize:18}}>Go Back</Text></Pressable>
+                    </View>
                     <TextInput
                         style={{ color: "white", width: "100%", height: 50, backgroundColor: "rgba(40, 40, 40, 0.3)", borderRadius: 10, paddingLeft: 20, fontSize: 18 }}
                         placeholder='*********'
