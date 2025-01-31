@@ -21,7 +21,7 @@ export default function RootLayout() {
   const { session, isLoading } = useSession();
 
   if (isLoading) return <Text>Loading...</Text>
-  if (!session) return <Redirect href={"/sign-in"}></Redirect>
+  if (!session) return <Redirect href={"/(auth)"}></Redirect>
   return (
     <Stack>
     </Stack>
