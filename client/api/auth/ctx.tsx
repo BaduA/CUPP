@@ -28,14 +28,21 @@ export function useSession() {
 
 export function SessionProvider({ children }: PropsWithChildren) {
     const [[isLoading, session], setSession] = useStorageState('session');
-    const signInFunction = signIn()
+    const signInFunction:any = signIn()
     return (
         <AuthContext.Provider
             value={{
-                signIn: (data: any) => {
-                    var token = signInFunction.mutate(data)
-                    console.log(data)
-                    setSession('xxx');
+                signIn: async (data: any) => {
+                    var token = await signInFunction.mutate(data)
+                    if (signInFunction.isError) {
+                        console.log(signInFunction.error.response.data)
+                    } else if (signInFunction.isSuccess) {
+                        console.log(signInFunction.data)
+                    }
+                    else if (signInFunction.isLoading) {
+                        console.log("loading")
+                    }
+                    setSession(null);
                 },
                 signOut: () => {
                     setSession(null);

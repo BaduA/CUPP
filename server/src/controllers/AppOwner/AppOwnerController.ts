@@ -12,7 +12,6 @@ export class AppOwnerController {
         this.placeInteractor = placeInteractor;
         this.placeWorkerInteractor = placeWorkerInteractor
     }
-    console.log("AA")
     onCreatePlace = async (req: Request, res: Response, next: NextFunction) => {
         if (req.user.role != "APP_ADMIN") throw new BadRequestsException("Not authorized", ErrorCode.UNAUTHORIZED)
         CreatePlaceSchema.parse(req.body)
