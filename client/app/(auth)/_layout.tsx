@@ -9,7 +9,10 @@ const Layout = () => {
             <Stack.Screen name="index" options={{
                 headerShown:false
             }}/>
-            <Stack.Screen name="sign-in" options={{
+            <Stack.Screen name="sign-in-email" options={{
+                headerShown:false
+            }}/>
+            <Stack.Screen name="sign-in-password" options={{
                 headerShown:false
             }}/>
         </Stack>
