@@ -11,7 +11,8 @@ model User {
   role                  UserRole          @default(USER)
   placeUserRecords      PlaceUserRecord[]
   workerTo              PlaceWorker[]
-  verified              Boolean           @default(true)
+  verifyUserCodes       VerifyUserCode[]
+  verified              Boolean           @default(false)
   createdAt             DateTime          @default(now())
   updatedAt             DateTime          @updatedAt
   @@map("users")

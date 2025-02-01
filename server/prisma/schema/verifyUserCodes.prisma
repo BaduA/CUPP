@@ -1,0 +1,8 @@
+model VerifyUserCode {
+    id        String   @unique
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    Int
+    createdAt DateTime @default(now())
+    expiresAt DateTime @default(dbgenerated("NOW() + interval '5 minute'"))
+    @@map("verifyUserCodes")
+}

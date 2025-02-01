@@ -15,6 +15,7 @@ export interface IUpdateUser {
     email?: string
     password?: string
     phoneNumber?: string
+    verified?:boolean
 }
 export interface IChangeProfilePicture {
     id: number
