@@ -17,7 +17,6 @@ const SignInPassword = () => {
     const [passwordValid, setPasswordValid] = useState<boolean>(false)
     const [warningMessageDisplay, setDisplay] = useState<"none" | "flex" | undefined>("none")
     const blurhash = "L4HK2sOa00-O00IpK6Xn16%1};Mx"
-
     var validate = (text: string) => {
         let reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
         if (reg.test(text) === false) {

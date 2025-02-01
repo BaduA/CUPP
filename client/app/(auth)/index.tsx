@@ -4,6 +4,7 @@ import Brand from '@/components/auth/brand'
 import { ImageBackground } from 'expo-image'
 import { Link, router } from 'expo-router'
 import Loading from '@/components/Loading'
+import { useRoute } from '@react-navigation/native'
 
 const AuthIndex = () => {
   const [imageLoaded, setImageLoaded] = useState(false)
@@ -15,7 +16,7 @@ const AuthIndex = () => {
       style={{ flex: 1 }}
       blurRadius={50}
       onLoad={() => { setImageLoaded(true) }}
-      placeholder={{blurhash}}
+      placeholder={{ blurhash }}
     >
       <Brand></Brand>
 
