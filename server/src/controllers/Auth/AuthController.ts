@@ -99,7 +99,6 @@ export class UserController {
     );
     res.status(200).send();
   };
-
   onSignIn = async (req: Request, res: Response, next: NextFunction) => {
     SignInSchema.parse(req.body);
     var result = await this.userInteractor.signIn(req.body);
