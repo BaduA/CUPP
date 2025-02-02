@@ -5,10 +5,10 @@ const smtpTransport = require('nodemailer-smtp-transport');
 export class SendMailService implements ISendMailService {
   private transporter = nodemailer.createTransport(smtpTransport({
     port: 465, // true for 465, false for other ports
-    host: "mail.ecopmo.com",
+    host: "smtp.gmail.com",
     auth: {
-      user: "noreply@ecopmo.com",
-      pass: "Ecopmo101..",
+      user: "batualpustaguel@gmail.com",
+      pass: "yibd luoq ercj iigk",
     },
     secureConnection: false,
     tls: {
@@ -18,7 +18,7 @@ export class SendMailService implements ISendMailService {
   sendVerifyUserMail(email: string, code: string) {}
   async sendHelloMail(email: string) {
     const mailData = {
-      from: "noreply@ecopmo.com", // sender address
+      from: "batualpustaguel@gmail.com", // sender address
       to: email, // list of receivers
       subject: "Welcome to ecompo!",
       html: "<html><body><b>Hey there! </b><br> This is our first message sent with Nodemailer<br/></body></html>",
