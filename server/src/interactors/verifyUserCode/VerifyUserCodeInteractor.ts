@@ -27,6 +27,20 @@ export class VerifyUserCodeInteractor implements IVerifyUserCodeInteractor {
     this.sendMailService.sendVerifyUserMail(email, id.toString());
     return await this.repository.create({ userId, id: id.toString() });
   }
+  async createForForgotPassword(email: string, userId: number) {
+    let id;
+    while (true) {
+      let code = this.generateCode();
+      if (await this.repository.findUnique({ id: code.toString() })) {
+        continue;
+      } else {
+        id = code;
+        break;
+      }
+    }
+    this.sendMailService.sendVerifyForgotPassword(email, id.toString());
+    return await this.repository.create({ userId, id: id.toString() });
+  }
   async delete(code: string) {
     var codeFromDB = await this.repository.findFirst({ id: code });
     if (!codeFromDB)
@@ -38,6 +52,18 @@ export class VerifyUserCodeInteractor implements IVerifyUserCodeInteractor {
   }
   async getUnique(code: string, userId: number) {
     var codeFromDB = await this.repository.findFirst({ id: code, userId });
+    if (!codeFromDB)
+      throw new BadRequestsException(
+        "Code Not Found",
+        ErrorCode.ENTITY_NOT_FOUND
+      );
+    return codeFromDB;
+  }
+  async getUniqueWithEmail(code: string, email: string) {
+    var codeFromDB = await this.repository.findFirst({
+      id: code,
+      user: { email },
+    });
     if (!codeFromDB)
       throw new BadRequestsException(
         "Code Not Found",

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { IUserInteractor } from "../../interactors/user/IUserInteractor";
 import {
   ChangePasswordSchema,
+  CodeGenerateSchema,
   CreateUserSchema,
   SignInSchema,
   UpdateUserSchema,
@@ -29,12 +30,22 @@ export class UserController {
     // var code = await this.verifyCodeInteractor.create(result.id);
     return res.json(result);
   };
-  onVerifyCode = async (req: Request, res: Response, next: NextFunction) => {
+  onVerifyUserAccount = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     const { verifyCode } = req.params;
+    CodeGenerateSchema.parse(req.body);
     var code = await this.verifyCodeInteractor.getUnique(
       verifyCode,
       req.user.id
     );
+    if (!code)
+      throw new BadRequestsException(
+        "Code not found",
+        ErrorCode.ENTITY_NOT_FOUND
+      );
     if (code.expiresAt - Date.now() > 0) {
       await this.userInteractor.updateUser({ id: req.user.id, verified: true });
     } else {
@@ -45,12 +56,47 @@ export class UserController {
     }
     return res.status(200).send();
   };
-  onGenerateNewCode = async (
+  onVerifyCode = async (req: Request, res: Response, next: NextFunction) => {
+    const { verifyCode } = req.params;
+    CodeGenerateSchema.parse(req.body);
+
+    var code = await this.verifyCodeInteractor.getUniqueWithEmail(
+      verifyCode,
+      req.body.email
+    );
+    if (!code)
+      throw new BadRequestsException(
+        "Code not found",
+        ErrorCode.ENTITY_NOT_FOUND
+      );
+    if (code.expiresAt - Date.now() > 0) {
+    } else {
+      throw new BadRequestsException(
+        "Token Expired",
+        ErrorCode.UNPROCESSIBLE_ENTITY
+      );
+    }
+    return res.status(200).send();
+  };
+  onGenerateForEmail = async (
     req: Request,
     res: Response,
     next: NextFunction
   ) => {
-    await this.verifyCodeInteractor.create(req.user.id);
+    CodeGenerateSchema.parse(req.body);
+    await this.verifyCodeInteractor.create(req.body.email, req.user.id);
+    res.status(200).send();
+  };
+  onGenerateForForgotPassword = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    CodeGenerateSchema.parse(req.body);
+    await this.verifyCodeInteractor.createForForgotPassword(
+      req.body.email,
+      req.user.id
+    );
     res.status(200).send();
   };
 
@@ -76,6 +122,19 @@ export class UserController {
     return res.json(result);
   };
   onChangePassword = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    ChangePasswordSchema.parse(req.body);
+    var result = await this.userInteractor.changePassword({
+      id: req.user.id,
+      lastPassword: req.body.lastPassword,
+      newPassword: req.body.newPassword,
+    });
+    return res.json(result);
+  };
+  onChangeEmail = async (
     req: Request,
     res: Response,
     next: NextFunction

@@ -18,8 +18,26 @@ export class SendMailService implements ISendMailService {
     const mailData = {
       from: "batualpustaguel@gmail.com", // sender address
       to: email, // list of receivers
-      subject: "ecopmo'ya hoşgeldin!",
-      html: `<html><body><h1>Ecopmo'ya hoşgeldin!</h1><br>Aşağıdaki kodu hesabını doğrulamak için kullan.<br/><h2>${code}<h2/></body></html>`,
+      subject: "ECOPMO",
+      html: `<html><body><h1>Hey ecopmo'lu!</h1><br>Aşağıdaki kodu hesabını doğrulamak için kullan.<br/><h2>${code}<h2/></body></html>`,
+    };
+    var result = this.transporter.sendMail(
+      mailData,
+      function (err: any, info: any) {
+        if (err) console.log(err);
+        else {
+          console.log("sent");
+        }
+      }
+    );
+    console.log(result);
+  }
+  sendVerifyForgotPassword(email: string, code: string) {
+    const mailData = {
+      from: "batualpustaguel@gmail.com", // sender address
+      to: email, // list of receivers
+      subject: "ECOPMO",
+      html: `<html><body><h1>Hey ecopmo'lu!</h1><br>Aşağıdaki kodu şifreni değiştirmek için kullan.<br/><h2>${code}<h2/></body></html>`,
     };
     var result = this.transporter.sendMail(
       mailData,
