@@ -106,7 +106,7 @@ export class UserController {
   onSignIn = async (req: Request, res: Response, next: NextFunction) => {
     SignInSchema.parse(req.body);
     var result = await this.userInteractor.signIn(req.body);
-    return res.json({ token: result });
+    return res.json(result);
   };
   onUpdate = async (req: Request, res: Response, next: NextFunction) => {
     UpdateUserSchema.parse(req.body);

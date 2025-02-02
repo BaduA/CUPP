@@ -36,7 +36,6 @@ const placeRecordInteractor = new PlaceUserRecordInteractor(
 const userInteractor = new UserInteractor(
   userRepository,
   s3ImageService,
-  new SendMailService()
 );
 const placeWorkerInteractor = new PlaceWorkerInteractor(placeWorkerRepository);
 const placeInteractor = new PlaceInteractor(placeRepository);

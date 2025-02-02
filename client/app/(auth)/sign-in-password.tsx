@@ -8,6 +8,7 @@ import { useLocalSearchParams, useSearchParams } from 'expo-router/build/hooks'
 import { signIn } from '@/api/auth/auth_calls'
 import Loading from '@/components/Loading'
 import { AxiosError } from 'axios'
+import { useDispatch } from 'react-redux'
 
 const SignInPassword = () => {
     const { signInSession, session } = useSession()
@@ -16,6 +17,8 @@ const SignInPassword = () => {
     const [password, setPassword] = useState<string>()
     const [passwordValid, setPasswordValid] = useState<boolean>(false)
     const [warningMessageDisplay, setDisplay] = useState<"none" | "flex" | undefined>("none")
+    const dispatch = useDispatch()
+
     const blurhash = "L4HK2sOa00-O00IpK6Xn16%1};Mx"
     var validate = (text: string) => {
         let reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -39,7 +42,6 @@ const SignInPassword = () => {
     }
     useEffect(() => {
         if (isSuccess) {
-            console.log(data.data.token)
             signInSession(data.data.token)
             router.replace("/(app)/(root)")
         }
