@@ -77,6 +77,11 @@ export class PrismaRepository implements IRepository {
       where: { id },
     });
   }
+  async deleteMany(whereData:any) {
+    return await this.entity!.delete({
+      where: whereData,
+    });
+  }
   async update(id: number, data: any, selectData: any = null) {
     return await this.entity!.update({
       where: { id },

@@ -64,18 +64,6 @@ export class UserController {
       verifyCode,
       req.body.email
     );
-    if (!code)
-      throw new BadRequestsException(
-        "Code not found",
-        ErrorCode.ENTITY_NOT_FOUND
-      );
-    if (code.expiresAt - Date.now() > 0) {
-    } else {
-      throw new BadRequestsException(
-        "Token Expired",
-        ErrorCode.UNPROCESSIBLE_ENTITY
-      );
-    }
     return res.status(200).send();
   };
   onGenerateForEmail = async (
@@ -84,7 +72,10 @@ export class UserController {
     next: NextFunction
   ) => {
     CodeGenerateSchema.parse(req.body);
-    await this.verifyCodeInteractor.create(req.body.email, req.user.id);
+    await this.verifyCodeInteractor.createForEmailVertification(
+      req.body.email,
+      req.user.id
+    );
     res.status(200).send();
   };
   onGenerateForForgotPassword = async (
@@ -97,6 +88,19 @@ export class UserController {
       req.body.email,
       req.user.id
     );
+    res.status(200).send();
+  };
+  onDeleteExpiredOnes = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    if (req.user.role != "APP_ADMIN")
+      throw new BadRequestsException(
+        "Unauthorized to delete",
+        ErrorCode.UNAUTHORIZED
+      );
+    await this.verifyCodeInteractor.deleteExpiredOnes();
     res.status(200).send();
   };
   onSignIn = async (req: Request, res: Response, next: NextFunction) => {
@@ -126,6 +130,10 @@ export class UserController {
     next: NextFunction
   ) => {
     ChangePasswordSchema.parse(req.body);
+    var code = await this.verifyCodeInteractor.getUnique(
+      req.body.code,
+      req.user.id
+    );
     var result = await this.userInteractor.changePassword({
       id: req.user.id,
       lastPassword: req.body.lastPassword,
@@ -133,17 +141,17 @@ export class UserController {
     });
     return res.json(result);
   };
-  onChangeEmail = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
+  onChangeEmail = async (req: Request, res: Response, next: NextFunction) => {
     ChangePasswordSchema.parse(req.body);
-    var result = await this.userInteractor.changePassword({
+    var result = await this.userInteractor.updateUser({
       id: req.user.id,
-      lastPassword: req.body.lastPassword,
-      newPassword: req.body.newPassword,
+      email: req.body.email,
+      verified: false,
     });
+    await this.verifyCodeInteractor.createForEmailVertification(
+      req.body.email,
+      req.user.id
+    );
     return res.json(result);
   };
   onFindWithId = async (req: Request, res: Response, next: NextFunction) => {

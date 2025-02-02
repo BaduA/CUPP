@@ -30,6 +30,24 @@ authRouter.post(
   errorHandler(controller.onSignUp)
 );
 authRouter.post("/signIn", errorHandler(controller.onSignIn));
+authRouter.put(
+  "/verifyUserAccount/:verifyCode",
+  authorizeMiddleware.authorizeUser,
+  errorHandler(controller.onVerifyUserAccount)
+);
+authRouter.post(
+  "/verifyCode/:verifyCode",
+  errorHandler(controller.onVerifyCode)
+);
+authRouter.post(
+  "/generateCodeForMail",
+  authorizeMiddleware.authorizeUser,
+  errorHandler(controller.onGenerateForEmail)
+);
+authRouter.post(
+  "/generateForForgotPassword",
+  errorHandler(controller.onGenerateForEmail)
+);
 authRouter.put("/update", errorHandler(controller.onUpdate));
 authRouter.put(
   "/changePassword",
@@ -37,9 +55,19 @@ authRouter.put(
   errorHandler(controller.onChangePassword)
 );
 authRouter.put(
+  "/changeEmail",
+  authorizeMiddleware.authorizeUser,
+  errorHandler(controller.onChangePassword)
+);
+authRouter.put(
   "/changeProfilePicture",
   [authorizeMiddleware.authorizeUser, upload.single("profilePicture")],
   errorHandler(controller.onChangeProfilePicture)
+);
+authRouter.delete(
+  "/deleteExpiredOnes",
+  [authorizeMiddleware.authorizeUser],
+  errorHandler(controller.onDeleteExpiredOnes)
 );
 authRouter.get("/:id", errorHandler(controller.onFindWithId));
 

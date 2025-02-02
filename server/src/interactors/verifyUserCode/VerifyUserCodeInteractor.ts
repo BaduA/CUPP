@@ -13,7 +13,7 @@ export class VerifyUserCodeInteractor implements IVerifyUserCodeInteractor {
     this.sendMailService = sendMailService;
   }
 
-  async create(email: string, userId: number) {
+  async createForEmailVertification(email: string, userId: number) {
     let id;
     while (true) {
       let code = this.generateCode();
@@ -50,6 +50,15 @@ export class VerifyUserCodeInteractor implements IVerifyUserCodeInteractor {
       );
     return await this.repository.delete(code);
   }
+  async deleteExpiredOnes() {
+    return await this.repository.deleteMany({
+      where: {
+        expiresAt: {
+          lt: new Date(),
+        },
+      },
+    });
+  }
   async getUnique(code: string, userId: number) {
     var codeFromDB = await this.repository.findFirst({ id: code, userId });
     if (!codeFromDB)
@@ -57,6 +66,13 @@ export class VerifyUserCodeInteractor implements IVerifyUserCodeInteractor {
         "Code Not Found",
         ErrorCode.ENTITY_NOT_FOUND
       );
+    if (codeFromDB.expiresAt - Date.now() < 0) {
+      throw new BadRequestsException(
+        "Code Expired",
+        ErrorCode.UNPROCESSIBLE_ENTITY
+      );
+    }
+
     return codeFromDB;
   }
   async getUniqueWithEmail(code: string, email: string) {
@@ -69,6 +85,12 @@ export class VerifyUserCodeInteractor implements IVerifyUserCodeInteractor {
         "Code Not Found",
         ErrorCode.ENTITY_NOT_FOUND
       );
+    if (codeFromDB.expiresAt - Date.now() < 0) {
+      throw new BadRequestsException(
+        "Code Expired",
+        ErrorCode.UNPROCESSIBLE_ENTITY
+      );
+    }
     return codeFromDB;
   }
   private generateCode() {

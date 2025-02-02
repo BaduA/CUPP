@@ -24,6 +24,7 @@ export const UpdateUserSchema = z.object({
 export const ChangePasswordSchema = z.object({
   lastPassword: z.string(),
   newPassword: z.string(),
+  code:z.string(),
 });
 export const ChangeEmailSchema = z.object({
   lastPassword: z.string(),

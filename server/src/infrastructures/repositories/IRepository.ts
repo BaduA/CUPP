@@ -4,6 +4,7 @@ export interface IRepository {
     findMany(whereData: any, selectData?: any, includeData?: any): any;
     create(data: any, selectData?: any, includeData?: any): any;
     delete(id: any): any;
+    deleteMany(whereData:any): any;
     deleteWithUniqueData(data: any):any;
     update(id: number, data: any, selectData?: any, includeData?: any): any;
 }
