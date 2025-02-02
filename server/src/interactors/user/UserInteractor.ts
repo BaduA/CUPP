@@ -19,15 +19,9 @@ import { ISendMailService } from "../../infrastructures/services/ISendMailServic
 export class UserInteractor implements IUserInteractor {
   private repository: IRepository;
   private imageService: IImageUploadService;
-  private sendMailService: ISendMailService;
-  constructor(
-    repository: IRepository,
-    imageService: IImageUploadService,
-    sendMailService: ISendMailService
-  ) {
+  constructor(repository: IRepository, imageService: IImageUploadService) {
     this.repository = repository;
     this.imageService = imageService;
-    this.sendMailService = sendMailService;
   }
   async increaseUserPoint(input: IUserPoint) {
     var user = await this.repository.findUnique({ id: input.userId });
@@ -75,7 +69,6 @@ export class UserInteractor implements IUserInteractor {
         "User with this email or phone number already exists.",
         ErrorCode.ENTITY_ALREADY_EXISTS
       );
-    this.sendMailService.sendHelloMail(input.email);
     return null;
     // return await this.repository.create({
     //   name: input.name,

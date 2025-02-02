@@ -1,15 +1,19 @@
 import { BadRequestsException } from "../../entities/exceptions/bad-request";
 import { ErrorCode } from "../../entities/exceptions/root";
 import { IRepository } from "../../infrastructures/repositories/IRepository";
+import { ISendMailService } from "../../infrastructures/services/ISendMailService";
 import { IVerifyUserCodeInteractor } from "./IVerifyUserCodeInteractor";
 
 export class VerifyUserCodeInteractor implements IVerifyUserCodeInteractor {
   private repository: IRepository;
-  constructor(repository: IRepository) {
+  private sendMailService: ISendMailService;
+
+  constructor(repository: IRepository, sendMailService: ISendMailService) {
     this.repository = repository;
+    this.sendMailService = sendMailService;
   }
 
-  async create(userId: number) {
+  async create(email: string, userId: number) {
     let id;
     while (true) {
       let code = this.generateCode();
@@ -20,7 +24,8 @@ export class VerifyUserCodeInteractor implements IVerifyUserCodeInteractor {
         break;
       }
     }
-    return await this.repository.create({ userId, id:id.toString() });
+    this.sendMailService.sendVerifyUserMail(email, id.toString());
+    return await this.repository.create({ userId, id: id.toString() });
   }
   async delete(code: string) {
     var codeFromDB = await this.repository.findFirst({ id: code });

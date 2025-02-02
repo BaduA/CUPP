@@ -12,13 +12,10 @@ import { UserController } from "../../controllers/Auth/AuthController";
 import { VerifyUserCodeInteractor } from "../../interactors/verifyUserCode/VerifyUserCodeInteractor";
 import { SendMailService } from "../services/SendMailService";
 
-const userInteractor = new UserInteractor(
-  userRepository,
-  new S3ImageService(),
-  new SendMailService()
-);
+const userInteractor = new UserInteractor(userRepository, new S3ImageService());
 const verifyUserCodeInteractor = new VerifyUserCodeInteractor(
-  verifyUserCodeRepository
+  verifyUserCodeRepository,
+  new SendMailService()
 );
 const controller = new UserController(userInteractor, verifyUserCodeInteractor);
 const authorizeMiddleware = new AuthMiddleware(userRepository);
