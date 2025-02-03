@@ -69,22 +69,21 @@ export class UserInteractor implements IUserInteractor {
         "User with this email or phone number already exists.",
         ErrorCode.ENTITY_ALREADY_EXISTS
       );
-    return null;
-    // return await this.repository.create({
-    //   name: input.name,
-    //   lastname: input.lastname,
-    //   username: input.username,
-    //   email: input.email,
-    //   password: hashSync(input.password, 10),
-    //   phoneNumber: input.phoneNumber,
-    //   profilePictureAddress:
-    //     input.profilePicture == null
-    //       ? null
-    //       : await this.imageService.uploadSingleImage(
-    //           input.profilePicture,
-    //           "users/" + input.username + "/profilePicture/"
-    //         ),
-    // });
+    return await this.repository.create({
+      name: input.name,
+      lastname: input.lastname,
+      username: input.username,
+      email: input.email,
+      password: hashSync(input.password, 10),
+      phoneNumber: input.phoneNumber,
+      profilePictureAddress:
+        input.profilePicture == null
+          ? null
+          : await this.imageService.uploadSingleImage(
+              input.profilePicture,
+              "users/" + input.username + "/profilePicture/"
+            ),
+    });
   }
   async signIn(input: ISignIn) {
     let user = await this.repository.findFirst({

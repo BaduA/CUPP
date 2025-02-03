@@ -1,11 +1,15 @@
-import { signIn } from "@/api/auth/auth_calls";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 
-const userLogin = createAsyncThunk("users/login", async (body) => {
-  const signInFunction = signIn();
-  const response = await signInFunction.mutate(body);
-  return response;
+export const userLogin = createAsyncThunk("users/login", async (body: any, { rejectWithValue }) => {
+  try{
+    var response = await axios.post("http://172.20.10.9:3000/auth/signIn",body)
+    return response;
+  }catch(err){
+    throw rejectWithValue(err)
+  }
+
 });
 interface UsersState {
   user: any;
@@ -35,12 +39,15 @@ export const authSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(userLogin.fulfilled, (state: any, action: any) => {
-      var token = action.payload.data.data.token;
-      var user = action.payload.data.data.user;
+      var token = action.payload.data.token;
+      var user = action.payload.data.user;
       state.user = user;
       state.isSuccess = true;
       state.isLoading = false;
+      console.log(token)
       SecureStore.setItem("token", token);
+      var stateToken = SecureStore.getItem("token")
+      console.log(stateToken)
     });
     builder.addCase(userLogin.rejected, (state: any, action: any) => {
       state.isError = true;

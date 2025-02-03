@@ -5,10 +5,13 @@ import { ImageBackground } from 'expo-image'
 import { Link, router } from 'expo-router'
 import Loading from '@/components/Loading'
 import { useRoute } from '@react-navigation/native'
+import * as SecureStore from "expo-secure-store";
 
 const AuthIndex = () => {
   const [imageLoaded, setImageLoaded] = useState(false)
   const blurhash = "L4HK2sOa00-O00IpK6Xn16%1};Mx"
+  var token = SecureStore.getItem("token")
+  console.log("tokenIndex"+token)
   return (
     <ImageBackground
       source={require("../../assets/images/1.png")}
