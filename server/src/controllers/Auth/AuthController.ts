@@ -27,8 +27,18 @@ export class UserController {
     CreateUserSchema.parse(req.body);
     const body = { ...req.body, profilePicture: profilePicture };
     var result = await this.userInteractor.signUp(body);
-    var code = await this.verifyCodeInteractor.createForEmailVertification(req.body.email,result.id);
+    var code = await this.verifyCodeInteractor.createForEmailVertification(
+      req.body.email,
+      result.id
+    );
     return res.json(result);
+  };
+  onGetCurrentUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    res.json(await this.userInteractor.findWithId(req.user.id));
   };
   onVerifyUserAccount = async (
     req: Request,

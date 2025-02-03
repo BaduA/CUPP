@@ -39,6 +39,11 @@ authRouter.post(
   "/verifyCode/:verifyCode",
   errorHandler(controller.onVerifyCode)
 );
+authRouter.get(
+  "/getCurrentUser",
+  authorizeMiddleware.authorizeUser,
+  errorHandler(controller.onGetCurrentUser)
+);
 authRouter.post(
   "/generateCodeForMail",
   authorizeMiddleware.authorizeUser,

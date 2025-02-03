@@ -14,6 +14,7 @@ export class AuthMiddleware {
   }
 
   authorizeUser(req: Request, res: Response, next: NextFunction) {
+    console.log("authorizing")
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(" ")[1];
     if (token == null)
@@ -39,7 +40,7 @@ export class AuthMiddleware {
           new UnauthorizedException("Unauthorized", ErrorCode.UNAUTHORIZED)
         );
       req.user = userFromId!;
-
+      console.log(userFromId)
       next();
     })
   }

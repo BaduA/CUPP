@@ -2,15 +2,20 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 
-export const userLogin = createAsyncThunk("users/login", async (body: any, { rejectWithValue }) => {
-  try{
-    var response = await axios.post("http://172.20.10.9:3000/auth/signIn",body)
-    return response;
-  }catch(err){
-    throw rejectWithValue(err)
+export const userLogin = createAsyncThunk(
+  "users/login",
+  async (body: any, { rejectWithValue }) => {
+    try {
+      var response = await axios.post(
+        "http://172.20.10.9:3000/auth/signIn",
+        body
+      );
+      return response;
+    } catch (err) {
+      throw rejectWithValue(err);
+    }
   }
-
-});
+);
 interface UsersState {
   user: any;
   isLoading: boolean;
@@ -32,7 +37,11 @@ export const authSlice = createSlice({
   reducers: {
     logout: (state: any) => {
       state.user = null;
+      SecureStore.deleteItemAsync("token");
     },
+    setUser(state:any, action:any){
+      state.user = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(userLogin.pending, (state: any, action: any) => {
@@ -44,10 +53,9 @@ export const authSlice = createSlice({
       state.user = user;
       state.isSuccess = true;
       state.isLoading = false;
-      console.log(token)
       SecureStore.setItem("token", token);
-      var stateToken = SecureStore.getItem("token")
-      console.log(stateToken)
+      var stateToken = SecureStore.getItem("token");
+      console.log(stateToken);
     });
     builder.addCase(userLogin.rejected, (state: any, action: any) => {
       state.isError = true;
@@ -57,6 +65,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setUser } = authSlice.actions;
 
 export default authSlice.reducer;
