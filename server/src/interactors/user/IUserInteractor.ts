@@ -4,6 +4,7 @@ export interface IUserInteractor {
   signUp(input: ISignUp): any;
   signIn(input: ISignIn):any;
   findWithId(id:number):any;
+  findWithUniqueValue(value:any):any;
   updateUser(input: IUpdateUser):any
   increaseUserPoint(input: IUserPoint):any
   decreaseUserPoint(input: IUserPoint):any

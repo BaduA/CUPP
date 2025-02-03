@@ -15,6 +15,12 @@ const Layout = () => {
             <Stack.Screen name="sign-in-password" options={{
                 headerShown: false
             }} />
+            <Stack.Screen name="confirm-forgot-password-code" options={{
+                headerShown: false
+            }} />
+            <Stack.Screen name="change-forgot-password" options={{
+                headerShown: false
+            }} />
             <Stack.Screen name="confirm-account" options={{
                 headerShown: false
             }} />

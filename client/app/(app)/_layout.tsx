@@ -21,11 +21,11 @@ export default function RootLayout() {
     refetch()
   }, [])
   var token = SecureStore.getItem("token")
-  
+
   if (!token) return <Redirect href={"/(auth)"}></Redirect>
   if (isError && error instanceof AxiosError) {
     console.log(error.response!.data)
-    dispatch(logout())
+    // dispatch(logout())
   }
   if (!isSuccess) {
     return <Text>Loading</Text>
@@ -33,7 +33,6 @@ export default function RootLayout() {
   if (!authState.user.verified) {
     return <Redirect href={"/(auth)/confirm-account"}></Redirect>
   }
-
   return (
     <Stack>
     </Stack>

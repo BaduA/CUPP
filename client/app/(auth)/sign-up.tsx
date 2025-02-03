@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native'
+import { View, Text, StyleSheet, KeyboardAvoidingView, Platform, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import Brand from '@/components/auth/brand'
 import { ImageBackground } from 'expo-image'
@@ -41,9 +41,17 @@ const SignUp = () => {
                     <PasswordTextInput password={password!} setPassword={setPassword} passwordValid={passwordValid!} setPasswordValid={setPasswordValid} />
                 </View>
                 <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 20 }}>
-                    <TextInputDark value={username} setValue={setUsername} width={"48%"} placeholder='İsminizi girin' label={"İsminiz"} />
-                    <TextInputDark value={phoneNumber} setValue={setPhoneNumber} width={"48%"} placeholder='Soyisminizi girin' label={"Soyisminiz"} type='numeric'/>
+                    <TextInputDark value={username} setValue={setUsername} width={"48%"} placeholder='Username girin' label={"Username"} />
+                    <TextInputDark value={phoneNumber} setValue={setPhoneNumber} width={"48%"} placeholder='05XX-XXX-XX-XX' label={"Telefon Numaranız"} type='numeric'/>
                 </View>
+                <Pressable style={{
+                    width:"100%",
+                    height:50,
+                    backgroundColor:"#008D8C",
+                    justifyContent:"center",
+                    alignItems:"center",
+                    borderRadius:10
+                }}><Text style={{color:"white", fontSize:18}}>Kayıt Ol</Text></Pressable>
             </KeyboardAvoidingView>
         </ImageBackground>
     )

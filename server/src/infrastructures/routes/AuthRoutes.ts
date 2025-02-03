@@ -51,7 +51,7 @@ authRouter.post(
 );
 authRouter.post(
   "/generateForForgotPassword",
-  errorHandler(controller.onGenerateForEmail)
+  errorHandler(controller.onGenerateForForgotPassword)
 );
 authRouter.put("/update", errorHandler(controller.onUpdate));
 authRouter.put(

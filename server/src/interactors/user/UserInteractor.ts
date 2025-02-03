@@ -23,6 +23,13 @@ export class UserInteractor implements IUserInteractor {
     this.repository = repository;
     this.imageService = imageService;
   }
+  async findWithUniqueValue(email: any) {
+    console.log(email)
+    var user =  await this.repository.findUnique({ email });
+    console.log(user)
+    if(!user) throw new BadRequestsException("User with this email does not exists",ErrorCode.ENTITY_NOT_FOUND)
+    return user
+  }
   async increaseUserPoint(input: IUserPoint) {
     var user = await this.repository.findUnique({ id: input.userId });
     if (user == null)

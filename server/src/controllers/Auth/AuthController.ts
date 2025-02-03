@@ -94,9 +94,10 @@ export class UserController {
     next: NextFunction
   ) => {
     CodeGenerateSchema.parse(req.body);
+    const user = await this.userInteractor.findWithUniqueValue(req.body.email)
     await this.verifyCodeInteractor.createForForgotPassword(
       req.body.email,
-      req.user.id
+      user.id
     );
     res.status(200).send();
   };

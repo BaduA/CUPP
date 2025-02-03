@@ -7,7 +7,7 @@ export const userLogin = createAsyncThunk(
   async (body: any, { rejectWithValue }) => {
     try {
       var response = await axios.post(
-        "http://172.20.10.9:3000/auth/signIn",
+        "http://192.168.1.4:3000/auth/signIn",
         body
       );
       return response;

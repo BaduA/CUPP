@@ -15,6 +15,43 @@ export const signIn = () => {
   });
   return mutation;
 };
+export const sendEmailCodeAgain = () => {
+  const mutation = useMutation({
+    mutationFn: async (email: any) => {
+      return await client.post(`${BASE_URL}/generateCodeForMail`, {email});
+    },
+    retry: 1,
+  });
+  return mutation;
+};
+export const sendForForgotPassword = () => {
+  const mutation = useMutation({
+    mutationFn: async (email: any) => {
+      return await client.post(`${BASE_URL}/generateForForgotPassword`, {email});
+    },
+    retry: 1,
+  });
+  return mutation;
+};
+export const verifyAccount = () => {
+  const mutation = useMutation({
+    mutationFn: async (code: string) => {
+      return await client.put(`${BASE_URL}/verifyUserAccount/${code}`);
+    },
+    retry: 1,
+  });
+  return mutation;
+};
+export const verifyForgotPasswordCode = () => {
+  const mutation = useMutation({
+    mutationFn: async (code: string) => {
+      return await client.post(`${BASE_URL}/verifyCode/${code}`);
+    },
+    retry: 1,
+  });
+  return mutation;
+};
+
 export const getCurrentUser = () => {
   const dispatch = useDispatch();
   const mutation = useQuery({

@@ -61,7 +61,7 @@ const SignInPassword = () => {
                         <Text style={{ color: "white", fontSize: 16, marginBottom: 16 }}>Şifreniz</Text>
                         <Pressable onPress={() => {
                             router.back()
-                        }} ><Text style={{ color: "rgb(0, 22, 224)", fontSize: 18 }}>Go Back</Text></Pressable>
+                        }} ><Text style={{ color: "rgb(25, 38, 151)", fontSize: 18 }}>Go Back</Text></Pressable>
                     </View>
                     <TextInput
                         style={{ color: "white", width: "100%", height: 50, backgroundColor: "rgba(40, 40, 40, 0.3)", borderRadius: 10, paddingLeft: 20, fontSize: 18 }}
@@ -74,7 +74,7 @@ const SignInPassword = () => {
                     <Text style={{ marginTop: 5, color: "rgb(255, 109, 109)", fontWeight: "bold", display: warningMessageDisplay }}>En az 8 harften oluşan ve harf ile sayı içeren bir şifre oluşturun.</Text>
                     <TouchableOpacity onPress={onPress} style={{ marginTop: 20, width: "100%", height: 50, backgroundColor: "rgba(59, 59, 59, 0.37)", borderRadius: 10, justifyContent: "center", alignItems: "center" }}><Text style={{ color: "white", fontSize: 18, }}>Giriş Yap</Text></TouchableOpacity>
                     <View style={{ marginTop: 20, flexDirection: "row", justifyContent: "space-between" }}>
-                        <Link href="/" style={{ color: "white" }}>Yardıma mı ihtiyacınız var?</Link>
+                        <Pressable onPress={() => { router.push({ pathname: "/(auth)/confirm-forgot-password-code", params: { email } }) }}><Text style={{ color: "white" }}>Şifreni mi unuttun?</Text></Pressable>
                         <Link href="/" style={{ color: "white" }}>Hesap Oluştur </Link>
                     </View>
                 </View>
