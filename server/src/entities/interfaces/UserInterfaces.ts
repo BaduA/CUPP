@@ -8,7 +8,7 @@ export interface ISignUp {
     profilePicture?: Express.Multer.File
 }
 export interface IUpdateUser {
-    id: number
+    id: string
     name?: string
     lastname?: string
     username?: string
@@ -18,11 +18,11 @@ export interface IUpdateUser {
     verified?:boolean
 }
 export interface IChangeProfilePicture {
-    id: number
+    id: string
     profilePicture: Express.Multer.File
 }
 export interface IChangePassword {
-    id: number
+    id: string
     lastPassword: string
     newPassword: string
 }
@@ -33,6 +33,6 @@ export interface ISignIn {
 }
 
 export interface IUserPoint{
-    userId: number
+    userId: string
     point : number
 }

@@ -13,7 +13,7 @@ export class VerifyUserCodeInteractor implements IVerifyUserCodeInteractor {
     this.sendMailService = sendMailService;
   }
 
-  async createForEmailVertification(email: string, userId: number) {
+  async createForEmailVertification(email: string, userId: string) {
     let id;
     while (true) {
       let code = this.generateCode();
@@ -27,7 +27,7 @@ export class VerifyUserCodeInteractor implements IVerifyUserCodeInteractor {
     this.sendMailService.sendVerifyUserMail(email, id.toString());
     return await this.repository.create({ userId, id: id.toString() });
   }
-  async createForForgotPassword(email: string, userId: number) {
+  async createForForgotPassword(email: string, userId: string) {
     let id;
     while (true) {
       let code = this.generateCode();
@@ -59,7 +59,7 @@ export class VerifyUserCodeInteractor implements IVerifyUserCodeInteractor {
       },
     });
   }
-  async getUnique(code: string, userId: number) {
+  async getUnique(code: string, userId: string) {
     var codeFromDB = await this.repository.findFirst({ id: code, userId });
     if (!codeFromDB)
       throw new BadRequestsException(

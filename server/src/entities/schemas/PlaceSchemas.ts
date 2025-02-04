@@ -47,7 +47,7 @@ export const UpdateMenuItemVariationSchema = z.object({
 
 
 export const AddWorkerSchema = z.object({
-    userId: z.number(),
+    userId: z.string(),
     placeId: z.number()
 })
 

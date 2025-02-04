@@ -1,6 +1,6 @@
 export interface ICreatePlaceWorker {
     placeId:number
-    userId:number
+    userId:string
 }
 
 export interface IDeletePlaceWorker{

@@ -14,7 +14,7 @@ import { IImageUploadService } from "../../infrastructures/services/IImageUpload
 import { IUserInteractor } from "./IUserInteractor";
 import * as jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../../secrets";
-import { ISendMailService } from "../../infrastructures/services/ISendMailService";
+import { v4 as uuidv4 } from "uuid";
 
 export class UserInteractor implements IUserInteractor {
   private repository: IRepository;
@@ -24,11 +24,15 @@ export class UserInteractor implements IUserInteractor {
     this.imageService = imageService;
   }
   async findWithUniqueValue(email: any) {
-    console.log(email)
-    var user =  await this.repository.findUnique({ email });
-    console.log(user)
-    if(!user) throw new BadRequestsException("User with this email does not exists",ErrorCode.ENTITY_NOT_FOUND)
-    return user
+    console.log(email);
+    var user = await this.repository.findUnique({ email });
+    console.log(user);
+    if (!user)
+      throw new BadRequestsException(
+        "User with this email does not exists",
+        ErrorCode.ENTITY_NOT_FOUND
+      );
+    return user;
   }
   async increaseUserPoint(input: IUserPoint) {
     var user = await this.repository.findUnique({ id: input.userId });
@@ -77,6 +81,7 @@ export class UserInteractor implements IUserInteractor {
         ErrorCode.ENTITY_ALREADY_EXISTS
       );
     return await this.repository.create({
+      id: uuidv4(),
       name: input.name,
       lastname: input.lastname,
       username: input.username,
@@ -107,9 +112,9 @@ export class UserInteractor implements IUserInteractor {
         ErrorCode.INCORRECT_PASSWORD
       );
     const token = jwt.sign({ userId: user.id }, JWT_SECRET);
-    return {token, user : user};
+    return { token, user: user };
   }
-  async findWithId(id: number) {
+  async findWithId(id: string) {
     return await this.repository.findUnique({ id });
   }
   async updateUser(input: IUpdateUser) {
@@ -156,7 +161,7 @@ export class UserInteractor implements IUserInteractor {
       password: hashSync(input.newPassword, 10),
     });
   }
-  async deleteUser(id: number) {
+  async deleteUser(id: string) {
     return await this.repository.delete(id);
   }
 }

@@ -94,7 +94,7 @@ export class UserController {
     next: NextFunction
   ) => {
     CodeGenerateSchema.parse(req.body);
-    const user = await this.userInteractor.findWithUniqueValue(req.body.email)
+    const user = await this.userInteractor.findWithUniqueValue(req.body.email);
     await this.verifyCodeInteractor.createForForgotPassword(
       req.body.email,
       user.id
@@ -166,7 +166,7 @@ export class UserController {
     return res.json(result);
   };
   onFindWithId = async (req: Request, res: Response, next: NextFunction) => {
-    const id = parseInt(req.params.id);
+    const id = req.params.id;
     var result = await this.userInteractor.findWithId(id);
     return res.json(result);
   };

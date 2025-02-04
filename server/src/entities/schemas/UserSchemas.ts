@@ -17,7 +17,7 @@ export const CodeGenerateSchema = z.object({
   email: z.string().optional(),
 });
 export const UpdateUserSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   name: z.string().optional(),
   lastname: z.string().optional(),
 });

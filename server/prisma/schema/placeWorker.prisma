@@ -1,7 +1,7 @@
 model PlaceWorker {
   place   Place           @relation(fields: [placeId], references: [id], onDelete: Cascade)
   user    User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId  Int
+  userId  String
   placeId Int
   role    PlaceWorkerRole
 

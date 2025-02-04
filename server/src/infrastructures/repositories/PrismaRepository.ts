@@ -82,7 +82,7 @@ export class PrismaRepository implements IRepository {
       where: whereData,
     });
   }
-  async update(id: number, data: any, selectData: any = null) {
+  async update(id: number | string, data: any, selectData: any = null) {
     return await this.entity!.update({
       where: { id },
       data: data,
