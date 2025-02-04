@@ -80,7 +80,7 @@ export class UserInteractor implements IUserInteractor {
         "User with this email or phone number already exists.",
         ErrorCode.ENTITY_ALREADY_EXISTS
       );
-    return await this.repository.create({
+    var user = await this.repository.create({
       id: uuidv4(),
       name: input.name,
       lastname: input.lastname,
@@ -96,6 +96,8 @@ export class UserInteractor implements IUserInteractor {
               "users/" + input.username + "/profilePicture/"
             ),
     });
+    const token = jwt.sign({ userId: user.id }, JWT_SECRET);
+    return {token, user}
   }
   async signIn(input: ISignIn) {
     let user = await this.repository.findFirst({

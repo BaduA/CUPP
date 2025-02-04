@@ -29,7 +29,7 @@ export class UserController {
     var result = await this.userInteractor.signUp(body);
     var code = await this.verifyCodeInteractor.createForEmailVertification(
       req.body.email,
-      result.id
+      result.user.id
     );
     return res.json(result);
   };

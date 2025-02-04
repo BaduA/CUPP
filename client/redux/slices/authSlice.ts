@@ -7,7 +7,21 @@ export const userLogin = createAsyncThunk(
   async (body: any, { rejectWithValue }) => {
     try {
       var response = await axios.post(
-        "http://192.168.1.4:3000/auth/signIn",
+        "http://10.201.158.191:3000/auth/signIn",
+        body
+      );
+      return response;
+    } catch (err) {
+      throw rejectWithValue(err);
+    }
+  }
+);
+export const userRegister = createAsyncThunk(
+  "users/register",
+  async (body: any, { rejectWithValue }) => {
+    try {
+      var response = await axios.post(
+        "http://10.201.158.191:3000/auth/signUp",
         body
       );
       return response;
@@ -58,6 +72,22 @@ export const authSlice = createSlice({
       console.log(stateToken);
     });
     builder.addCase(userLogin.rejected, (state: any, action: any) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(userRegister.pending, (state: any, action: any) => {
+      state.isLoading = true;
+    });
+    builder.addCase(userRegister.fulfilled, (state: any, action: any) => {
+      var token = action.payload.data.token;
+      var user = action.payload.data.user;
+      state.user = user;
+      state.isSuccess = true;
+      state.isLoading = false;
+      SecureStore.setItem("token", token);
+    });
+    builder.addCase(userRegister.rejected, (state: any, action: any) => {
       state.isError = true;
       state.isLoading = false;
       state.error = action.payload;

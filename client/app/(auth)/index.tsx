@@ -25,7 +25,11 @@ const AuthIndex = () => {
       <View style={{ paddingHorizontal: 20, paddingVertical: 30, flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text style={{ color: "white", fontSize: 35, fontWeight: "bold" }}>Çevreni Koru,</Text>
         <Text style={{ color: "white", fontSize: 35, fontWeight: "bold", textAlign: "center" }}>Kazanarak Kahveni İç!</Text>
-        <TouchableOpacity activeOpacity={0.5} style={{ width: "80%", height: 50, backgroundColor: "#008D8C", borderRadius: 10, justifyContent: "center", alignItems: "center", marginVertical: 10 }}><Text style={{ color: "white", fontSize: 16 }}>Hesap Oluştur</Text></TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            router.push("/(auth)/sign-up")
+          }}
+          activeOpacity={0.5} style={{ width: "80%", height: 50, backgroundColor: "#008D8C", borderRadius: 10, justifyContent: "center", alignItems: "center", marginVertical: 10 }}><Text style={{ color: "white", fontSize: 16 }}>Hesap Oluştur</Text></TouchableOpacity>
         <TouchableOpacity onPress={() => {
           router.push("/(auth)/sign-in-email")
         }} activeOpacity={0.5} style={{ width: "80%", height: 50, backgroundColor: "#E9DFC4", borderRadius: 10, justifyContent: "center", alignItems: "center" }}><Text style={{ color: "black", fontSize: 16 }}>Hesabım Var</Text></TouchableOpacity>
