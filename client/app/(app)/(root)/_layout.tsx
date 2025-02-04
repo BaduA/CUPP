@@ -1,13 +1,21 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { Stack } from 'expo-router'
-
+import { Tabs, TabList, TabTrigger, TabSlot } from 'expo-router/ui';
 const Layout = () => {
     return (
-        <Stack>
-            <Stack.Screen name='index' options={{headerShown:false}}></Stack.Screen>
-            <Stack.Screen name='contributionToNature' options={{}}></Stack.Screen>
-        </Stack>
+        <Tabs>
+            <TabSlot />
+            <TabList style={{ backgroundColor: "red" }}>
+                <TabTrigger name="index" href="/(app)/(root)">
+                    <Text>Home</Text>
+                </TabTrigger>
+                <TabTrigger name="article" href="/article">
+                    <Text>Article</Text>
+                </TabTrigger>
+
+            </TabList>
+        </Tabs>
     )
 }
 
