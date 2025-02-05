@@ -8,7 +8,7 @@ import { logout } from '@/redux/slices/authSlice'
 const Home = () => {
   const dispatch = useDispatch()
   return (
-    <View style={{backgroundColor:"blue"}}>
+    <View style={{backgroundColor:"rgb(153, 184, 99)", flex:1}}>
       <Text>Home</Text>
       <Pressable style={{ width: "30%", height: 50, backgroundColor: "red" }} onPress={() => {
         dispatch(logout())

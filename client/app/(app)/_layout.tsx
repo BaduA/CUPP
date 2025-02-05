@@ -35,7 +35,7 @@ export default function RootLayout() {
     return <Redirect href={"/(auth)/confirm-account"}></Redirect>
   }
   return (
-    <Stack>
+    <Stack screenOptions={{headerShown:false}}>
     </Stack>
   );
 }
