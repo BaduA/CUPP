@@ -24,7 +24,8 @@ export default function RootLayout() {
 
   if (!token) return <Redirect href={"/(auth)"}></Redirect>
   if (isError && error instanceof AxiosError) {
-    console.log(error.response!.data)
+    console.log(process.env.EXPO_PUBLIC_LOCALHOST_ADDRESS)
+    console.log(error.response)
     // dispatch(logout())
   }
   if (!isSuccess) {
