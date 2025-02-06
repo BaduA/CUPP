@@ -4,9 +4,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { routeToScreen } from 'expo-router/build/useScreens';
 import { TabTriggerSlotProps } from 'expo-router/ui';
-import { ComponentProps, Ref, forwardRef } from 'react';
+import { ComponentProps, Ref, forwardRef, useEffect } from 'react';
 import { Text, Pressable, View } from 'react-native';
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, { Easing, interpolate, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 
 type Icon = ComponentProps<typeof FontAwesome>['name'];
 
@@ -16,17 +16,28 @@ export type TabButtonProps = TabTriggerSlotProps & {
 
 export const TabButton = forwardRef(
     ({ icon, children, isFocused, ...props }: any, ref: Ref<View>) => {
-        const randomWidth = useSharedValue(10);
-        const config = {
-            duration: 500,
-            easing: Easing.bezier(0.5, 0.01, 0, 1),
-        };
+        const scale = useSharedValue(0);
 
-        const style = useAnimatedStyle(() => {
+        useEffect(()=>{
+            scale.value = withSpring(
+                typeof isFocused === 'boolean'? (isFocused? 1: 0): isFocused,
+                {duration: 350}
+            );
+        },[scale, isFocused]);
+    
+        const animatedIconStyle = useAnimatedStyle(()=>{
+    
+            const scaleValue = interpolate(
+                scale.value,
+                [0, 1],
+                [1, 1.2]
+            );
+
             return {
-                width: withTiming(randomWidth.value, config),
-            };
-        });
+                // styles
+                transform: [{scale: scaleValue}]
+            }
+        })
         return (
 
             <Pressable
@@ -40,7 +51,7 @@ export const TabButton = forwardRef(
                 isFocused ? {} : undefined,
                 ]}>
 
-                <Animated.View style={[{}, props.isMiddle ? { width: 90, height: 90, backgroundColor: "rgb(2, 228, 28)", borderRadius: 100, justifyContent: "center", alignItems: "center" } : {}]}>
+                <Animated.View style={[animatedIconStyle, props.isMiddle ? { width: 90, height: 90, backgroundColor: "rgb(2, 228, 28)", borderRadius: 100, justifyContent: "center", alignItems: "center" } : {}]}>
                     <FontAwesome5 name={props.iconName} size={props.isMiddle ? 36 : 26} color={isFocused?"green":"rgb(255,255,255)"} />
                 </Animated.View>
             </Pressable>

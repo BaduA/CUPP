@@ -11,7 +11,15 @@ import { TabButton } from '@/components/root/tabbutton';
 const Layout = () => {
     return (
         <Tabs>
-            <TabSlot style={{ flex: 1 }} />
+            <LinearGradient
+                colors={['rgb(77, 180, 73)', 'rgb(194, 255, 199)']}
+                start={{ x: 0.5, y: 0 }}
+                end={{ x: 0.5, y: 1 }}
+                style={{ flex: 1, padding: 30 }}
+            >
+                <TabSlot />
+            </LinearGradient>
+
             <TabList style={{
                 height: 75,
                 padding: 20,
