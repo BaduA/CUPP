@@ -14,7 +14,7 @@ const MyQR = () => {
       colors={['rgb(77, 180, 73)', 'rgb(194, 255, 199)']}
       start={{ x: 0.5, y: 0 }}
       end={{ x: 0.5, y: 1 }}
-      style={{ flex: 1, padding: 30 }}
+      style={{ flex: 1, padding: 20 }}
     >
       <View>
         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 50 }}>
