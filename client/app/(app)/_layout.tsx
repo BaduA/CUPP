@@ -34,6 +34,9 @@ export default function RootLayout() {
   if (!authState.user.verified) {
     return <Redirect href={"/(auth)/confirm-account"}></Redirect>
   }
+  if(authState.user.role === "APP_ADMIN")
+    return <Redirect href={"/(app)/(owner)"}></Redirect>
+
   return (
     <Stack screenOptions={{headerShown:false}}>
     </Stack>

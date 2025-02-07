@@ -25,7 +25,8 @@ const Layout = () => {
                 bottom: 0,
                 left: 0,
                 right: 0,
-                paddingHorizontal: 30
+                paddingHorizontal: 30,
+                overflow:"visible"
             }} asChild>
                 <LinearGradient
                     colors={['rgba(217, 217, 217, 0.8)', 'hsla(116, 100.00%, 56.10%, 0.80)']}
