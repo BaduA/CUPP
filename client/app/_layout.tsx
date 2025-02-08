@@ -17,18 +17,20 @@ SplashScreen.preventAutoHideAsync();
 const queryClient = new QueryClient()
 
 export default function RootLayout() {
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+  const [loaded, error] = useFonts({
+    'VeganStyle': require('../assets/fonts/VeganStyle.ttf'),
   });
+
   useEffect(() => {
-    if (loaded) {
+    if (loaded || error) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [loaded, error]);
 
-  if (!loaded) {
+  if (!loaded && !error) {
     return null;
   }
+
   return (
     <QueryClientProvider client={queryClient}>
       <SessionProvider>

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
 import AppBackground from '@/components/AppBackground'
 import { getTotalPointsDaily } from '@/api/owner/owner_calls'
@@ -12,8 +12,9 @@ const OwnerIndex = () => {
   if (query.isLoading) return <BlurView style={{ flex: 1 }} intensity={100} />
   return (
     <AppBackground>
-      <Text style={{ position: "absolute", top: 50, width: "100%", textAlign: "center", fontSize:40, fontWeight:"bold" }}>Ecopmo Dashboard</Text>
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center", paddingTop: 50 }}>
+      <Text style={{ fontFamily:"VeganStyle", position: "absolute", top: 50, width: "100%", textAlign: "center", fontSize: 40, fontWeight: "bold" }}>Ecopmo Dashboard</Text>
+      <ScrollView contentContainerStyle={{ flex: 1, alignItems: "center", justifyContent: "center", paddingTop: 50 }}>
+
         <View style={{ alignItems: "center", marginBottom: 50 }}>
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>Bugünün Kullanıcı Kazancı</Text>
           <Text style={{ fontSize: 70, fontWeight: "bold" }}>{query.data!.data}</Text>
@@ -33,7 +34,7 @@ const OwnerIndex = () => {
           </TouchableOpacity>
         </View>
 
-      </View>
+      </ScrollView>
     </AppBackground>
   )
 }

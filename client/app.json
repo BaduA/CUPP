@@ -35,8 +35,12 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-font",
+      ["expo-font",
+      {
+        "fonts": ["./assets/fonts/VeganStyle.ttf"]
+      }],
       "expo-secure-store"
+      
     ],
     "experiments": {
       "typedRoutes": true
