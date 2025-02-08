@@ -5,7 +5,7 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 const AppBackground = ({ children }: { children: any }) => {
     return (
-        <LinearGradient colors={["rgb(10, 27, 0)", "rgba(0, 144, 19, 0.72)"]}
+        <LinearGradient colors={["rgb(0, 93, 0)", "rgba(0, 144, 106, 0.72)"]}
             start={[0, 1]}
             end={[1, 0]}
             style={{ flex: 1 }}>

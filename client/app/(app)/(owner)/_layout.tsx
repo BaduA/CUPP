@@ -10,9 +10,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 const OwnerLayout = () => {
     const authState = useSelector((state: RootState) => state.auth)
-    if(authState.user.role!=="APP_ADMIN")
-        return <Redirect href={"/(app)/(root)"}/>
-  return (
+    if (authState.user.role !== "APP_ADMIN")
+        return <Redirect href={"/(app)/(root)"} />
+    return (
         <Tabs>
 
             <TabSlot />
@@ -35,13 +35,13 @@ const OwnerLayout = () => {
                     colors={['rgba(41, 255, 69, 0.8)', 'rgba(1, 190, 140, 0.8)']}
 
                 >
-                    <TabTrigger name="index" href="/(app)/(root)" asChild>
+                    <TabTrigger name="(dashboard)" href="/(app)/(owner)/(dashboard)" asChild>
                         <TabButton iconName={"home"} /></TabTrigger>
-                    <TabTrigger name="admins" href="/(app)/(root)/contributionToNature"
+                    <TabTrigger name="admins" href="/(app)/(owner)/admins"
                         asChild>
                         <TabButton iconName={"leaf"} />
                     </TabTrigger>
-                    <TabTrigger name="settings" href="/(app)/(root)/contributionToNature"
+                    <TabTrigger name="settings" href="/(app)/(owner)/settings"
                         asChild>
                         <TabButton iconName={"cog"} />
                     </TabTrigger>
@@ -50,7 +50,7 @@ const OwnerLayout = () => {
                 </LinearGradient>
             </TabList>
         </Tabs >
-  )
+    )
 }
 
 export default OwnerLayout

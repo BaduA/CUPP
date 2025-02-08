@@ -1,11 +1,6 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import { Tabs, TabList, TabTrigger, TabSlot } from 'expo-router/ui';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { TabButton } from '@/components/root/tabbutton';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
@@ -15,7 +10,7 @@ const Layout = () => {
     const authState = useSelector((state: RootState) => state.auth)
 
     if (authState.user.role !== "APP_ADMIN")
-        return <Redirect href={"/(app)/(owner)"} />
+        return <Redirect href={"/(app)/(owner)/(dashboard)"} />
     return (
         <Tabs>
 
