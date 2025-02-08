@@ -7,4 +7,5 @@ export interface IRepository {
     deleteMany(whereData:any): any;
     deleteWithUniqueData(data: any):any;
     update(id: number | string, data: any, selectData?: any, includeData?: any): any;
+    count():any
 }

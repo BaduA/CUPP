@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userRegister } from '@/redux/slices/authSlice';
 import { AppDispatch, RootState } from '@/redux/store';
 import { AxiosError } from 'axios';
+import { router } from 'expo-router';
 
 const SignUp = () => {
     const blurhash = "L4HK2sOa00-O00IpK6Xn16%1};Mx"

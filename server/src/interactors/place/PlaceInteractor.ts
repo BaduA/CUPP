@@ -83,4 +83,7 @@ export class PlaceInteractor implements IPlaceInteractor {
         var place = await this.repository.findUnique({ id })
         return await this.repository.delete(id)
     }
+    async getTotalPlaceNumber(){
+        return await this.repository.count()
+    }
 }

@@ -49,6 +49,9 @@ export class PrismaRepository implements IRepository {
       include: includeData
     });
   }
+  async count() {
+    return await this.entity!.count();
+  }
   async findFirst(whereData: any, selectData: any = null, includeData: any = null) {
     return await this.entity!.findFirst({
       where: whereData,

@@ -7,8 +7,15 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { TabButton } from '@/components/root/tabbutton';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { Redirect } from 'expo-router';
 
 const Layout = () => {
+    const authState = useSelector((state: RootState) => state.auth)
+
+        if(authState.user.role!=="APP_ADMIN")
+            return <Redirect href={"/(app)/(root)"}/>
     return (
         <Tabs>
 

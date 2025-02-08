@@ -30,6 +30,9 @@ export const userRegister = createAsyncThunk(
     }
   }
 );
+async function deleteToken(key: string) {
+  await SecureStore.deleteItemAsync(key);
+}
 interface UsersState {
   user: any;
   isLoading: boolean;
@@ -51,15 +54,16 @@ export const authSlice = createSlice({
   reducers: {
     logout: (state: any) => {
       state.user = null;
-      SecureStore.deleteItemAsync("token");
+      deleteToken("token")
     },
-    setUser(state:any, action:any){
-      state.user = action.payload
-    }
+    setUser(state: any, action: any) {
+      state.user = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(userLogin.pending, (state: any, action: any) => {
       state.isLoading = true;
+      state.isSuccess = false;
     });
     builder.addCase(userLogin.fulfilled, (state: any, action: any) => {
       var token = action.payload.data.token;
@@ -74,10 +78,12 @@ export const authSlice = createSlice({
     builder.addCase(userLogin.rejected, (state: any, action: any) => {
       state.isError = true;
       state.isLoading = false;
+      state.isSuccess = false;
       state.error = action.payload;
     });
     builder.addCase(userRegister.pending, (state: any, action: any) => {
       state.isLoading = true;
+      state.isSuccess = false;
     });
     builder.addCase(userRegister.fulfilled, (state: any, action: any) => {
       var token = action.payload.data.token;
@@ -90,6 +96,7 @@ export const authSlice = createSlice({
     builder.addCase(userRegister.rejected, (state: any, action: any) => {
       state.isError = true;
       state.isLoading = false;
+      state.isSuccess = false;
       state.error = action.payload;
     });
   },

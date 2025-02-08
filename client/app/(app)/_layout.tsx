@@ -21,12 +21,10 @@ export default function RootLayout() {
     refetch()
   }, [])
   var token = SecureStore.getItem("token")
-
   if (!token) return <Redirect href={"/(auth)"}></Redirect>
   if (isError && error instanceof AxiosError) {
     console.log(process.env.EXPO_PUBLIC_LOCALHOST_ADDRESS)
-    // console.log(error.response.data)
-    // dispatch(logout())
+    dispatch(logout())
   }
   if (!isSuccess) {
     return <Text>Loading</Text>
@@ -34,11 +32,8 @@ export default function RootLayout() {
   if (!authState.user.verified) {
     return <Redirect href={"/(auth)/confirm-account"}></Redirect>
   }
-  if(authState.user.role === "APP_ADMIN")
-    return <Redirect href={"/(app)/(owner)"}></Redirect>
-
   return (
-    <Stack screenOptions={{headerShown:false}}>
+    <Stack screenOptions={{ headerShown: false }}>
     </Stack>
   );
 }

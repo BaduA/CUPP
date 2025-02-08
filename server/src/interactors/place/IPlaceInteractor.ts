@@ -12,4 +12,5 @@ export interface IPlaceInteractor {
   addPromotionPoints(input: IPointTransaction): any
   deletePlace(id: number): any
   checkIsComplete(id: number): any
+  getTotalPlaceNumber():any
 }
