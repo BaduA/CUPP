@@ -40,10 +40,10 @@ const SignInPassword = () => {
         }
     }
     useEffect(() => {
-        if (authState.isSuccess) {
+        if (authState.user) {
             router.replace("/(app)/(root)")
         }
-    }, [authState.isSuccess])
+    }, [authState.user])
     return (
         <ImageBackground
             source={require("../../assets/images/1.png")}

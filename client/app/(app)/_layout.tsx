@@ -23,6 +23,7 @@ export default function RootLayout() {
   var token = SecureStore.getItem("token")
   if (!token) return <Redirect href={"/(auth)"}></Redirect>
   if (isError && error instanceof AxiosError) {
+    console.log(error.response!.data)
     console.log(process.env.EXPO_PUBLIC_LOCALHOST_ADDRESS)
     dispatch(logout())
   }

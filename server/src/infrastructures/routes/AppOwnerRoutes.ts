@@ -24,5 +24,6 @@ appOwnerRouter.post("/createPlace", authorizePrismaMiddleware.authorizeUser, err
 appOwnerRouter.delete("/deletePlace/:placeId", authorizePrismaMiddleware.authorizeUser, errorHandler(controller.onDeletePlace))
 appOwnerRouter.get("/getTotalPointsDaily", authorizePrismaMiddleware.authorizeUser, errorHandler(controller.onGetPointsDaily))
 appOwnerRouter.get("/getTotalPointsMonthly", authorizePrismaMiddleware.authorizeUser, errorHandler(controller.onGetPointsMonthly))
+appOwnerRouter.get("/getTotalPlaces", authorizePrismaMiddleware.authorizeUser, errorHandler(controller.onGetTotalPlaces))
 
 export default appOwnerRouter;

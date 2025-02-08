@@ -9,7 +9,9 @@ const OwnerLayout = () => {
     if(authState.user.role!=="APP_ADMIN")
         return <Redirect href={"/(app)/(root)"}/>
   return (
-    <Stack></Stack>
+    <Stack screenOptions={{headerShown:false}}>
+      <Stack.Screen name='index' options={{headerShown:false}}></Stack.Screen>
+    </Stack>
   )
 }
 

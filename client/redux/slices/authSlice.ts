@@ -72,8 +72,6 @@ export const authSlice = createSlice({
       state.isSuccess = true;
       state.isLoading = false;
       SecureStore.setItem("token", token);
-      var stateToken = SecureStore.getItem("token");
-      console.log(stateToken);
     });
     builder.addCase(userLogin.rejected, (state: any, action: any) => {
       state.isError = true;

@@ -14,8 +14,8 @@ import { Redirect } from 'expo-router';
 const Layout = () => {
     const authState = useSelector((state: RootState) => state.auth)
 
-        if(authState.user.role!=="APP_ADMIN")
-            return <Redirect href={"/(app)/(root)"}/>
+    if (authState.user.role !== "APP_ADMIN")
+        return <Redirect href={"/(app)/(owner)"} />
     return (
         <Tabs>
 
@@ -33,7 +33,7 @@ const Layout = () => {
                 left: 0,
                 right: 0,
                 paddingHorizontal: 30,
-                overflow:"visible"
+                overflow: "visible"
             }} asChild>
                 <LinearGradient
                     colors={['rgba(217, 217, 217, 0.8)', 'hsla(116, 100.00%, 56.10%, 0.80)']}
