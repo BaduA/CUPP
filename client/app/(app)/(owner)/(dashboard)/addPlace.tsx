@@ -2,6 +2,7 @@ import { View, Text, SafeAreaView, TextInput, TouchableOpacity } from 'react-nat
 import React from 'react'
 import AppBackground from '@/components/AppBackground'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { router } from 'expo-router';
 
 const AddPlace = () => {
   return (
@@ -20,7 +21,8 @@ const AddPlace = () => {
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: "rgba(62, 177, 209, 0.98)"
-        }}>
+        }}
+        onPress={()=>{router.push("/(app)/(owner)/(dashboard)/readQR")}}>
           <MaterialCommunityIcons name="qrcode-scan" size={32} color="black" />
         </TouchableOpacity>
         <TouchableOpacity style={{
