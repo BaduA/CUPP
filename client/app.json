@@ -11,13 +11,22 @@
     "ios": {
       "supportsTablet": true,
       "usesAppleSignIn": true,
-      "plugins": ["expo-apple-authentication"]
+      "plugins": [
+        "expo-apple-authentication",
+        "expo-apple-authentication"
+      ],
+      "bundleIdentifier": "com.anonymous.client"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.anonymous.client"
     },
     "web": {
       "bundler": "metro",
@@ -29,18 +38,29 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/ecopmowallpaper.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
       ],
-      ["expo-font",
-      {
-        "fonts": ["./assets/fonts/VeganStyle.ttf"]
-      }],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/VeganStyle.ttf"
+          ]
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ],
       "expo-secure-store"
-      
     ],
     "experiments": {
       "typedRoutes": true
