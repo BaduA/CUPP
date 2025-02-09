@@ -27,14 +27,14 @@ const OwnerIndex = () => {
         <View style={{ flexDirection: "row", justifyContent: "space-around", width: "100%" }}>
           <TouchableOpacity onPress={() => {
             router.push("/(app)/(owner)/(dashboard)/addPlace")
-          }} style={{ justifyContent: "center", alignItems: "center", borderRadius: 100, width: 80, height: 80, backgroundColor: "rgba(0, 200, 255, 0.62)", marginBottom: 50 }}>
+          }} style={{ justifyContent: "center", alignItems: "center", borderRadius: 100, width: 80, height: 80, backgroundColor: "#008d8c", marginBottom: 50 }}>
             <Entypo name="plus" size={32} color="black" />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
               router.push("/(app)/(owner)/(dashboard)/deletePlace")
             }}
-            style={{ justifyContent: "center", alignItems: "center", borderRadius: 100, width: 80, height: 80, backgroundColor: "rgba(200, 2, 2, 0.69)" }}>
+            style={{ justifyContent: "center", alignItems: "center", borderRadius: 100, width: 80, height: 80, backgroundColor: "#e9dfc4" }}>
             <Entypo name="minus" size={32} color="black" />
           </TouchableOpacity>
         </View>

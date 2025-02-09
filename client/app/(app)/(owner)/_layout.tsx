@@ -32,7 +32,7 @@ const OwnerLayout = () => {
                 overflow: "visible"
             }} asChild>
                 <LinearGradient
-                    colors={['rgba(41, 255, 69, 0.8)', 'rgba(1, 190, 140, 0.8)']}
+                    colors={['rgba(59,123,120, 0.8)', 'rgba(1, 190, 140, 0.8)']}
 
                 >
                     <TabTrigger name="(dashboard)" href="/(app)/(owner)/(dashboard)" asChild>

@@ -52,7 +52,7 @@ export const TabButton = forwardRef(
                 ]}>
 
                 <Animated.View style={[animatedIconStyle, props.isMiddle ? { width: 90, height: 90, backgroundColor: "rgb(2, 228, 28)", borderRadius: 100, justifyContent: "center", alignItems: "center" } : {}]}>
-                    <FontAwesome5 name={props.iconName} size={props.isMiddle ? 36 : 26} color={isFocused?"green":"rgb(255,255,255)"} />
+                    <FontAwesome5 name={props.iconName} size={props.isMiddle ? 36 : 26} color={isFocused?"#e9dfc4":"rgb(255,255,255)"} />
                 </Animated.View>
             </Pressable>
         );

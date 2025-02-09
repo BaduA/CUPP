@@ -7,7 +7,7 @@ const DeletePlace = () => {
   return (
     <AppBackground>
       <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ marginBottom: 50, paddingTop: 20, fontFamily: "VeganStyle", width: "100%", textAlign: "center", fontSize: 40, fontWeight: "bold" }}>Add Place</Text>
+        <Text style={{ marginBottom: 50, paddingTop: 20, fontFamily: "VeganStyle", width: "100%", textAlign: "center", fontSize: 40, fontWeight: "bold" }}>Mekanı Kaldır</Text>
         <TextInput
           style={{ paddingLeft: 20, width: "80%", height: 70, borderRadius: 20, borderWidth: 2, borderColor: "rgba(0,0,0,0.3)" }}
           placeholder='Adı kontrol et'
